@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/job-form.css">
+  <link rel="stylesheet" href="css/bs-custom.css">
+  <title> Edit Job Post | PandaHires </title>
+</head>
+<body>
+  <header class="primary-header">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">PandaHires</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#"></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                My Dashboard
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="container mt-5">
+      <h2>Edit Your Post</h2>
+      <div class="card my-5">
+        <div class="card-header">JOB INFO</div>
+        <form class="row g-4 m-2 needs-validation" novalidate>
+          <div class="col-md-12">
+            <label for="job-name" class="form-label">Job Name</label>
+            <input type="text" class="form-control" id="job-name" value="" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="department" class="form-label">Department</label>
+            <input type="text" class="form-control" id="department" value="" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="location" class="form-label">Office Location</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text">Country</span>
+              <input type="text" class="form-control" id="country" value="" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <span class="input-group-text">City</span>
+              <input type="text" class="form-control" id="city" value="" required>
+              <div class="invalid-feedback">
+                Please provide a valid city.
+              </div>
+            </div>
+            <div class="form-check form-switch ms-1">
+              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+              <label class="form-check-label" for="flexSwitchCheckChecked">Able to work remotely</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="employment-type" class="form-label">Employment Type</label>
+            <select class="form-select" id="employment-type" required>
+              <option selected disabled value="">Select an option</option>
+              <option>Full-time</option>
+              <option>Part-time</option>
+              <option>Contract</option>
+              <option>Intern</option>
+              <option>Temporary</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid state.
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="opening-reason" class="form-label">Reason for Opening</label>
+            <select class="form-select" id="opening-reason" required>
+              <option selected disabled value="">Select an Option</option>
+              <option>Add</option>
+              <option>Replacement</option>
+              <option>Contract</option>
+              <option>Intern</option>
+              <option>Temporary</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid state.
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="job-name" class="form-label">Hiring Manger</label>
+            <input type="text" class="form-control" id="job-name" value="" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="floatingTextarea2">Job Description</label>
+            <textarea class="form-control" placeholder="Job Details" id="floatingTextarea2" style="height: 100px"></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="floatingTextarea2">Responsibility</label>
+            <textarea class="form-control" placeholder="Job Responsibility" id="floatingTextarea2" style="height: 100px"></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="floatingTextarea2">Minimum Qualifications</label>
+            <textarea class="form-control" placeholder="Qualifications" id="floatingTextarea2" style="height: 100px"></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="floatingTextarea2">Preferred Qualifications (optional)</label>
+            <textarea class="form-control" placeholder="" id="floatingTextarea2" style="height: 100px"></textarea>
+          </div>
+          <div class="d-grid gap-3 d-md-flex justify-content-md-end mt-5 mb-3">
+            <a href="/user/dashboard" class="btn btn-primary" type="submit">Cancel </a>
+            <button class="btn btn-primary" id="temp-btn" type="submit">Edit Job </button>
+          </div>
+        </form>
+      </div>
+     
+    </div>
+  </main>
+  <%- include('../common/footer.ejs') %>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="js/form.js"></script> -->
+  <script src="js/temp.js"></script>
+</body>
+</html>

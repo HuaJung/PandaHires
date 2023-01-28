@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Team | Career </title>
+  <link rel="stylesheet" href="css/bs-custom.css">
+  <link rel="stylesheet" href="css/apply.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
+      <div class="container">
+        <a class="navbar-brand" href="/career/company_name/about">Company Logo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav ">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">Jobs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="#">Team</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="container my-5">
+      <h2 class="my-5">Apply for this job</h2>
+      <form class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label for="first-name" class="form-label">First name <small style="color: red;">*</small></label>
+          <input type="text" class="form-control" id="frist-name" value="" placeholder="First name" required>
+        </div>
+        <div class="col-md-4">
+          <label for="last-name" class="form-label">Last name <small style="color: red;">*</small></label>
+          <input type="text" class="form-control" id="last-name" value="" placeholder="Last name" required>
+        </div>
+        <div class="col-md-4">
+          <label for="email" class="form-label">Email <small style="color: red;">*</small></label>
+          <input type="email" class="form-control" id="email"  aria-describedby="inputGroupPrepend2" placeholder="Email" required>
+        </div>
+        <div class="col-md-5">
+          <label for="tel" class="form-label">Tel <small style="color: red;">*</small></label>
+          <input type="tel" placeholder="Telephone no." id="tel" class="form-control" required>
+        </div>
+        <div class="col-md-7">
+          <label for="location" class="form-label">Location <small style="color: red;">*</small></label>
+          <div class="input-group">
+            <span class="input-group-text">Country</span>
+            <input type="text" class="form-control" id="country" value="" required>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+            <span class="input-group-text">City</span>
+            <input type="text" class="form-control" id="city" value="" required>
+            <div class="invalid-feedback">
+              Please provide a valid city.
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <label for="validationDefault04" class="form-label">Degree <small style="color: red;">*</small></label>
+          <select class="form-select" id="validationDefault04" required>
+            <option selected disabled value="">Select a Degree</option>
+            <option>High School</option>
+            <option>Asscoiate's Degree</option>
+            <option>Bachelor's Degree</option>
+            <option>Master's Degree</option>
+            <option>Master of Business Administration (M.B.A)</option>
+            <option>Jusri Doctor (J.D.)</option>
+            <option>Doctor of Medicine (M.D.)</option>
+            <option>Doctor of Philosophy (Ph.D)</option>
+            <option>Engineer's Degree</option>
+          </select>
+        </div>
+        <div class="col-md-8">
+          <label for="discipline" class="form-label">Discipline <small style="color: red;">*</small></label>
+          <input type="text" class="form-control" id="discipline" value="" placeholder="Discipline" required>
+        </div>
+        <div class="col-md-12">
+          <label for="formFile" class="form-label">Resume/CV <small style="color: red;">*</small> </label>
+          <input class="form-control" type="file" id="formFile">
+          <small>( File type: PDF only )</small>
+        </div>
+
+        <div class="col-md-12">
+          <label for="linkedIn" class="form-label">LinkedIn Profile</label>
+          <input type="url" class="form-control" id="linkedIn" value="" placeholder="LinkedIn URL" required>
+        </div>
+        <div class="col-md-12">
+          <label for="website" class="form-label">Website</label>
+          <input type="url" class="form-control" id="website" value="" placeholder="Website URL" required>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+            <label class="form-check-label" for="invalidCheck2"> <small style="color: red;">*</small>
+              Agree to terms and conditions
+            </label>
+          </div>
+        </div>
+        <div class="d-grid gap-3 mt-5 d-md-flex justify-content-md-end">
+          <a href="/career/company_name/job/number" class="btn btn-primary" type="submit">Cancel </a>
+          <button class="btn btn-primary" type="submit">Apply</button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <%- include('../common/footer.ejs') %>
+
+
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

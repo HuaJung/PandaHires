@@ -1,0 +1,50 @@
+[class*='btn-'] {
+  background-color: var(--rifle-green);
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  cursor: pointer;
+}
+[class*='btn-'] span {
+  color: var(--ivory);
+  font-size: 18px;
+}
+[class*='small-btn-'] {
+  background-color: var(--rifle-green);
+  padding: 10px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+  border: 0;
+  box-shadow: 0 3px 6px 0 var(--shadow-gray);
+  /* height: 3.5rem; */
+  color: var(--baby-powder);
+}
+
+[class*='small-btn-'] span {
+  color: var(--baby-powder);
+  font-size: 16px;
+}
+.button-wrapper {
+  margin: 6rem 0 2rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+[class*='mini-btn-'] {
+  background-color: var(--rifle-green);
+  padding: 10px 15px;
+  border-radius: 100px;
+  cursor: pointer;
+  border: 0;
+  box-shadow: 0 2px 5px 0 var(--shadow-gray);
+  height: 2rem;
+  color: var(--baby-powder);
+  font-size: 14px;
+  line-height: 14px;
+  width: 65px;
+  text-align: center;
+}
+[class*='mini-btn-'] span {
+  color: var(--baby-powder);
+  font-size: 14px;
+}

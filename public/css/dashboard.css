@@ -1,0 +1,81 @@
+@import url(button.css);
+
+.container {
+  max-width: 1200px;
+  margin: 3rem auto;
+}
+
+.panel-group{
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0 2rem;
+}
+.panel-group input {
+  position: absolute;
+  opacity: 0;
+}
+.panel-group label {
+  order: -1;
+  display: inline-block;
+  padding: 10px 30px;
+  flex-grow: 1;
+  /* height: 4.5rem; */
+  /* background-color: #ccc; */
+  border: 1px solid #ccc;
+  border-radius: 10px 10px 0 0;
+  border-bottom: #ffffff;
+  /* margin-right: 6px ; */
+  position: relative;
+  /* bottom: -1px; */
+  cursor: pointer;
+}
+
+.panel-group .content {
+  display: none;
+  padding: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  /* margin: 2rem 0.5rem; */
+}
+.panel-control:checked + label {
+  background-color: var(--yellow);
+  border-bottom: none;
+}
+.panel-control:checked + label + .content{
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  padding: 20px;
+  opacity: 1;
+  transition: opacity 1s;
+  /* background-color: var(--blue-yonder); */
+}
+
+.grid-job-listing {
+  gap: 1rem;
+
+}
+.grid-job-listing li {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: space-between;
+  align-items: center;
+  /* height: 3rem; */
+  border: 1px solid var(--ash-gray);
+  /* line-height: 3rem; */
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0px 4px 0 var(--shadow-gray);
+  font-size: 18px;
+  transition: all 300ms ease-out;
+}
+.grid-job-listing li:hover {
+  transform: scale(1.02);
+}
+.button-wrapper {
+  margin: 0;
+}
+

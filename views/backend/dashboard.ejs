@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <title>My Dashboard | PandaHires </title>
+</head>
+<body>
+  <%- include('../common/dashboard-nav.ejs') %>
+  
+  <main>
+    <div class="container">
+      <div class="panel-group">
+        <input type="radio" name="radio" id="radio1" class="panel-control" checked>
+        <label for="radio1">All Jobs</label>
+        <div class="content">
+          <ul class="grid-job-listing">
+            <li>
+              <a href="">Senior Software Engineer, Backend </a>
+              <div class="button-wrapper">
+                <a class="mini-btn-edit" href="/user/edit_job">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+            </li>
+            <li>
+              <a href="">Sr. Product Designer </a>
+              <div class="button-wrapper">
+                <a class="mini-btn-edit" href="">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+            </li>
+            <li>
+              <a href="">IT Specialist (Hybrid) </a>
+              <div class="button-wrapper">
+                <a class="mini-btn-edit" href="">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+            </li>
+            <li>
+              <a href="">Principal Product Designer </a>
+              <div class="button-wrapper">
+                <a class="mini-btn-edit" href="">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+            </li>
+            <li>
+              <a href="">Principal Product Manager, Ads </a><div class="button-wrapper">
+                <a class="mini-btn-edit" href="">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+              
+            </li>
+            <li>
+              <a href="">Senior Financial Analyst </a><div class="button-wrapper">
+                <a class="mini-btn-edit" href="">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+              
+            </li>
+            <li>
+              <a href="">Director of Accounting </a><div class="button-wrapper">
+                <a class="mini-btn-edit" href="">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+              
+            </li>
+            <li>
+              <a href="">Senior Securities Counsel </a><div class="button-wrapper">
+                <a class="mini-btn-edit" href="">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+              
+            </li>
+            <li>
+              <a href="">Director of Engineering </a><div class="button-wrapper">
+                <a class="mini-btn-edit" href="">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+              
+            </li>
+            <li>
+              <a href="">Network Engineer, Infrastructure Networks</a><div class="button-wrapper">
+                <a class="mini-btn-edit" href="">Edit</a>
+                <button class="mini-btn-close">Close</button>
+              </div>
+              
+            </li>
+          </ul>
+         </div>
+        <input type="radio" name="radio" id="radio2" class="panel-control">
+        <label for="radio2">All Candidates</label>
+        <div class="content">2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque fugiat porro dolor quae sapiente temporibus mollitia. Dolores nam, </div>
+        <input type="radio" name="radio" id="radio3" class="panel-control">
+        <label for="radio3">Applications to Review</label>
+        <div class="content">3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque fugiat porro dolor quae sapiente temporibus mollitia. </div>
+        <input type="radio" name="radio" id="radio4" class="panel-control">
+        <label for="radio4">Candidates to Schedule</label>
+        <div class="content">4 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque fugiat porro dolor quae sapiente temporibus mollitia. Dolores nam, deserunt quia reiciendis ducimus pariatur voluptatum, similique consequuntur explicabo fugiat provident iure.</div>
+        <input type="radio" name="radio" id="radio5" class="panel-control"
+        ><label for="radio5">Tab5</label>
+        <div class="content">5 Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque fugiat porro dolor quae sapiente temporibus mollitia. Dolores nam, deserunt quia reiciendis ducimus pariatur voluptatum, similique consequuntur explicabo fugiat provident iure.</div>
+        </div>
+    </div>
+  </main>
+  <%- include('../common/footer.ejs') %>
+
+  
+</body>
+</html>

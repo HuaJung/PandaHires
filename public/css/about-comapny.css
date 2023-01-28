@@ -1,0 +1,60 @@
+@import url(layout.css);
+@import url(button.css);
+
+.banner {
+  background-color: var(--morning-blue);
+  background-image: url(../images/company-img.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 300px;
+  background-position: 10% 30%;
+}
+.grid-banner {
+  gap: 2rem;
+  height: 100%;
+  margin:0 2rem;
+  padding: 2rem;
+  color: var(--ivory);
+  /* overflow: hidden; */
+}
+.banner-text {
+  margin: 2rem;
+}
+.company-logo {
+  font-size: 20px;
+}
+.company-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  grid-row: 1/5;
+}
+
+.location {
+  align-self: end;
+  line-height: 16px;
+}
+.company {
+  margin: 2rem;
+  padding: 2rem;
+}
+.company.who h2 {
+  margin: 1rem 0;
+}
+.company.who p {
+  padding: 0.5rem;
+}
+.company p {
+  line-height: 2rem;
+}
+.company li {
+  list-style: disc;
+  line-height: 2rem;
+}
+
+@media (min-width:800px) {
+  /* .location {
+    grid-row: 3/4;
+  } */
+
+}
