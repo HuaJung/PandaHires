@@ -1,4 +1,3 @@
-import exp from "constants"
 import express from "express"
 import path, { join } from "path"
 import { fileURLToPath } from "url"
@@ -16,11 +15,12 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 // app.use(express.static(path.join(__dirname,'/public')))
+// server static files
 app.use(express.static('public'))
 app.use('/user', express.static('public'))
-app.use('/career/company_name', express.static('public'))
-app.use('/career/company_name/job', express.static('public'))
-app.use('/career/company_name/job/number', express.static('public'))
+app.use('/career/*', express.static('public'))
+
+// routes
 app.use('/user', userRoute)
 app.use('/career/company_name', careerRoute)
 app.use('/', baseRoute)

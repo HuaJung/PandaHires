@@ -23,7 +23,7 @@ router.get('/dashboard', (req, res) => {
 })
 
 router.get('/create_job', (req, res) => {
-  res.render('backend/job-form')
+  res.render('backend/create-job')
 })
 
 router.get('/create_candidate', (req, res) => {
@@ -33,4 +33,10 @@ router.get('/create_candidate', (req, res) => {
 router.get('/edit_job', (req, res) => {
   res.render('backend/edit-job')
 })
+
+router.get('/preview_job', (req, res) => {
+  res.render('backend/preview-job')
+})
+
+
 export {router}
