@@ -6,32 +6,31 @@
         <a href="/"><h1 class="logo">PandaHires</h1></a>
       </div>
       <ul class="nav-items">
-        <li><a href="/user/dashboard">My Dashboard</a></li>
-        <li><a href="/career/company_name/about">Home</a></li>
+        <li>My Dashboard</li>
+        <li><a href="/careers/<%=companyName%>/job_openings">Home</a></li>
     </nav>
     <nav class="secondary-nav">
       <ul class="nav-items">
-        <li><a href="/user/create_job"> + Jobs </a></li>
-        <li><a href="/user/create_candidate"> + Candidates</a></li>
+        <li><a href="/recruiting/create_job"> + Jobs </a></li>
+        <li><a href="/recruiting/add_candidate"> + Candidates</a></li>
         </li>
       </ul>
     </nav>
     <input type="checkbox" id="toggle-expanded">
-    <label for="toggle-expanded" class="profile-toggle">P
+    <label for="toggle-expanded" class="profile-toggle">
     </label>
     <div class="user-menu">
       <ul class="mobile-menu-items">
-        <li><a href="">Create a Job</a></li>
-        <li><a href="">Create a Candidate</a></li>
-        <li><a href="">Profile</a></li>
+        <li><a href="/recruiting/create_job">Create a Job</a></li>
+        <li><a href="/recruiting/add_candidate">add a Candidate</a></li>
         <li><a href="">Setting</a></li>
       </ul>
       <ul class="menu-items">
-        <li><a href="">Profile</a></li>
+        <!-- <li><a href="">Profile</a></li> -->
         <li><a href="">Settings</a></li>
       </ul>
       <div class="button-wrapper">
-        <button class="btn-signout">Sign out</button>
+        <button class="small-btn-signout"><span>Sign out</span></button>
       </div>
     </div>
 </header>

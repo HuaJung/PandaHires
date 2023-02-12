@@ -3,7 +3,6 @@
 
 .banner {
   background-color: var(--morning-blue);
-  background-image: url(../images/company-img.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   height: 300px;
@@ -31,13 +30,19 @@
 }
 
 .job-title {
+  padding: 0 1rem;
   align-self: center;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 .location {
   align-self: end;
   line-height: 16px;
+  padding: 0 1rem;
 }
+.location span {
+  color: white;
+}
+
 .button-wrapper {
   margin: 2rem 0;
   justify-content: flex-end;
@@ -54,6 +59,30 @@
   line-height: 2rem;
 }
 
+.error-msg{
+  display: flex;
+  opacity: 0;
+  align-items: center;
+  padding: 0.6rem;
+  background-color: rgba(229, 11, 11, 0.2);
+  color: rgba(165, 42, 42, 0.707);
+  border: 2px solid rgba(165, 42, 42, 0.707);
+  border-radius: 8px;
+
+}
+.error-msg svg {
+  margin: 0 10px;
+}
+
+.error-msg span {
+  color: rgba(165, 42, 42, 0.707);
+}
+
+.error {
+  color: red;
+  padding-left: 1rem;
+
+}
 @media (min-width:800px) {
   .job-title {
     grid-row: 2/3;

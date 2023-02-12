@@ -3,7 +3,7 @@
 
 .banner {
   background-color: var(--morning-blue);
-  background-image: url(../images/company-img.jpg);
+  background-image: url(../images/company-banner.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   height: 300px;
@@ -33,6 +33,7 @@
 .location {
   align-self: end;
   line-height: 16px;
+  /* padding: 0 2rem; */
 }
 .company {
   margin: 2rem;

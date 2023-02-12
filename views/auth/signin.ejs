@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SignIn | PandaHires </title>
+<%- include('../common/head.ejs') %> 
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/signin.css">
+  <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
   <div class="grid-container">
@@ -14,12 +8,15 @@
     </div>
     <div class="grid-content">
       <div class="header-text">
-        <h3 class="mini-logo">PandaHires</h1>
+        <%-include('../common/error.ejs')  %> 
+        <a href="/"><h3 class="mini-logo">PandaHires</h1></a>
         <h1>Let's start hiring.</h1>
       </div>
-      <form class="grid-form" action="">
-        <input type="email" placeholder="Email"  class="user-email">
-        <input type="password" placeholder="Password" class="user-password">
+      <form class="grid-form" method="POST">
+        <input type="email" placeholder="Email" class="user-email" name="email">
+        <div class="email error"></div>
+        <input type="password" placeholder="Password" class="user-password" name="password">
+        <div class="password error"></div>
         <div class="other-options">
           <div class="remember-me">
             <input type="checkbox" id="user-remember-me">          
@@ -30,16 +27,16 @@
           </div>
         </div>
         <div class="button-wrapper">
-          <button class="btn-signin" type="submit"><span>Sign in</span></button>
+          <button class="large-btn-signin" type="submit"><span>Sign in</span></button>
           <a href="" class="google-sign-in"></a>
-          <p>Not a member yet? <a href="/user/signup">Sign up</a></p>
+          <p>Not a member yet? <a href="/signup">Sign up</a></p>
           
         </div>
       </form>
     </div>
     
 
-    <script src="js/temp.js"></script>
+    <script type="module" src="js/signin.js"></script>
   </div>
 </body>
 </html>

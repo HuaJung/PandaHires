@@ -14,10 +14,12 @@
 body {
   overflow-x: hidden;
 }
+[class*="grid-"] {
+  display: grid;
+}
 a {
   text-decoration: none;
 }
-
 .primary-header {
   position: relative;
   padding: 1rem 0;

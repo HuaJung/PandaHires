@@ -1,13 +1,23 @@
-[class*='btn-'] {
+[class*='large-btn-'], [class*='btn-'] {
   background-color: var(--rifle-green);
   padding: 1rem 2rem;
+  border: 1px solid var(--rifle-green);
   border-radius: 100px;
+  box-shadow: 0 3px 4px 0 var(--shadow-gray);
   cursor: pointer;
+  transition: all 300ms ease-out;
 }
-[class*='btn-'] span {
+[class*='large-btn-']:hover ,[class*='small-btn-']:hover {
+  background-color: var(--baby-powder);
+}
+[class*='large-btn-']:hover span, [class*='small-btn-']:hover span {
+  color: var(--rifle-green);
+}
+[class*='large-btn-'] span {
   color: var(--ivory);
-  font-size: 18px;
+  font-size: 20px;
 }
+
 [class*='small-btn-'] {
   background-color: var(--rifle-green);
   padding: 10px 20px;
@@ -21,15 +31,26 @@
 
 [class*='small-btn-'] span {
   color: var(--baby-powder);
-  font-size: 16px;
+  font-size: 15px;
 }
+
 .button-wrapper {
-  margin: 6rem 0 2rem 0;
+  margin: 2rem 0;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   gap: 1rem;
 }
+.mini-button-wrapper {
+  /* margin: 2rem 0; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
 [class*='mini-btn-'] {
   background-color: var(--rifle-green);
   padding: 10px 15px;

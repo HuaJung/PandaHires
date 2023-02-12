@@ -1,61 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/job-form.css">
-  <link rel="stylesheet" href="css/bs-custom.css">
-  <title> Edit Job Post | PandaHires </title>
+<%- include('../common/head.ejs') %> 
+  <link rel="stylesheet" href="/css/job-form.css">
+  <link rel="stylesheet" href="/css/bs-custom.css">
+  <link rel="stylesheet" href="/css/bs-footer.css">
 </head>
 <body>
   <header class="primary-header">
-    <%- include('../common/bs-nav.ejs') %>
-   
+  <%- include('../common/bs-nav.ejs') %>
   </header>
   <main>
     <div class="container mt-5">
-      <h2>Edit Your Post</h2>
+      <h2>Edit A Job Post</h2>
       <div class="card my-5">
         <div class="card-header">JOB INFO</div>
-        <form class="row g-4 m-2 needs-validation" novalidate>
+        <form class="row g-4 m-2 needs-validation">
           <div class="col-md-12">
-            <label for="job-name" class="form-label">Job Name</label>
-            <input type="text" class="form-control" id="job-name" value="Software Engineer, Systems ML" required>
+            <label for="job-name" class="form-label">Job Name <small style="color: red;">*</small></label>
+            <input type="text" class="form-control" id="job-name" value="<%=job.name %>" name="name" required>
             <div class="valid-feedback">
               Looks good!
             </div>
           </div>
           <div class="col-md-6">
-            <label for="department" class="form-label">Department</label>
-            <input type="text" class="form-control" id="department" value="Engineering" required>
+            <label for="team" class="form-label">Team <small style="color: red;">*</small></label>
+            <input type="text" class="form-control" id="team" value="<%=job.team %>" name="team" required>
             <div class="valid-feedback">
               Looks good!
             </div>
           </div>
           <div class="col-md-6">
-            <label for="location" class="form-label">Office Location</label>
+            <label for="location" class="form-label">Office Location <small style="color: red;">*</small></label>
             <div class="input-group mb-3">
               <span class="input-group-text">Country</span>
-              <input type="text" class="form-control" id="country" value="Taiwan" required>
+              <input type="text" class="form-control" id="country" value="<%=job.country %>" name="country" required>
               <div class="valid-feedback">
                 Looks good!
               </div>
               <span class="input-group-text">City</span>
-              <input type="text" class="form-control" id="city" value="Taipei" required>
+              <input type="text" class="form-control" id="city" value="<%=job.city %>" name="city" required>
               <div class="invalid-feedback">
                 Please provide a valid city.
               </div>
             </div>
-            <div class="form-check form-switch ms-1">
-              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-              <label class="form-check-label" for="flexSwitchCheckChecked">Able to work remotely</label>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Work Type <small style="color: red;">*</small></label>
+            <div class="input-group">
+              <div class="form-check me-3">
+                
+                <input class="form-check-input" type="radio" name="workType" id="flexRadioDefault1" value="remote" <% if (job.work_type === 'remote') { %> checked <% } %>>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Remote
+                </label>
+              </div>
+               
+              <div class="form-check me-3">
+                <input class="form-check-input" type="radio" name="workType" id="flexRadioDefault2" value="onsite" <% if (job.work_type === 'onsite') { %> checked <% } %>>
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Onsite
+                </label>
+              </div>
+              
+              <div class="form-check me-3">
+                <input class="form-check-input" type="radio" name="workType" id="flexRadioDefault3" value="hybird" <% if (job.work_type === 'hybird') { %> checked <% } %>>
+                <label class="form-check-label" for="flexRadioDefault3">
+                  Hybird
+                </label>
+              </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <label for="employment-type" class="form-label">Employment Type</label>
-            <select class="form-select" id="employment-type" required>
-              <option selected disabled value="Full-time">Select an option</option>
+          <div class="col-md-6">
+            <label for="employment-type" class="form-label">Employment Type <small style="color: red;">*</small></label>
+            <select class="form-select" id="employment-type" name="employmentType" required>
+              <option selected disabled value="<%=job.employment_type %>">Select an option</option>
               <option>Full-time</option>
               <option>Part-time</option>
               <option>Contract</option>
@@ -66,10 +82,10 @@
               Please select a valid state.
             </div>
           </div>
-          <div class="col-md-4">
-            <label for="opening-reason" class="form-label">Reason for Opening</label>
-            <select class="form-select" id="opening-reason" required>
-              <option selected disabled value="Add">Select an Option</option>
+          <div class="col-md-6">
+            <label for="opening-reason" class="form-label">Reason for Opening <small style="color: red;">*</small></label>
+            <select class="form-select" id="opening-reason" name="reason" required>
+              <option selected disabled value="<%=job.reason %>">Select an Option</option>
               <option>Add</option>
               <option>Replacement</option>
               <option>Contract</option>
@@ -81,50 +97,42 @@
             </div>
           </div>
 
-          <div class="col-md-4">
-            <label for="job-name" class="form-label">Hiring Manger</label>
-            <input type="text" class="form-control" id="job-name" value="Panda" required>
+          <div class="col-md-6">
+            <label for="hm-email" class="form-label">Hiring Manger Email <small style="color: red;">*</small></label>
+            <input type="email" class="form-control" id="hm-email" value="<%=job.hiring_manager_email %>" name="hiringManagerEmail" required>
             <div class="valid-feedback">
               Looks good!
             </div>
           </div>
           <div class="col-12">
-            <label class="form-label" for="floatingTextarea2">Job Description</label>
-            <textarea class="form-control" placeholder="Job Details" id="floatingTextarea2" style="height: 100px">We are seeking an AI Software Engineer to join our Research & Development teams. The ideal candidate will have industry experience working on AI Infrastructure related topics. The position will involve taking these skills and applying them to solve for some of the most crucial & exciting problems that exist on the web. We are hiring in multiple locations.</textarea>
+            <label class="form-label" for="jd">Job Description <small style="color: red;">*</small></label>
+            <textarea class="form-control" placeholder="Job Details" id="jd" style="height: 200px" name="description" required> <%=job.description %></textarea>
           </div>
           <div class="col-12">
-            <label class="form-label" for="floatingTextarea2">Responsibility</label>
-            <textarea class="form-control" placeholder="Job Responsibility" id="floatingTextarea2" style="height: 100px">
-            * Apply relevant AI and machine learning techniques to build & optimize our intelligent systems that improve Metas products and experiences	
-            * Assist in goal setting related to project impact, AI system design, and ML excellence
-            * Drive large efforts across multiple teams
-            * Mentor other AI Engineers & improve the quality of AI work in the broader team	
-            * Develop custom/novel architectures, define use cases, and develop methodology & benchmarks to evaluate different approaches	
-            * Apply in depth knowledge of how the machine learning system interacts with the other systems around it</textarea>
+            <label class="form-label" for="responsibilities">Responsibilities <small style="color: red;">*</small></label>
+            <textarea class="form-control" placeholder="Job Responsibilities" id="responsibility" style="height: 200px" name="responsibilities" required><%=job.responsibility %></textarea>
           </div>
           <div class="col-12">
-            <label class="form-label" for="floatingTextarea2">Minimum Qualifications</label>
-            <textarea class="form-control" placeholder="Qualifications" id="floatingTextarea2" style="height: 100px">
-            * Experience developing AI algorithms or AI-System infrastructure in C/C++ or Python
-            * Bachelor's degree in Computer Science, Computer Engineering, relevant technical field, or equivalent practical experience
-            * Specialized experience in one or more of the following machine learning/deep learning domains: ML systems: AI infrastructure, machine learning accelerators, high performance computing, machine learning compilers, GPU architecture, machine learning frameworks, on-device optimization	</textarea>
+            <label class="form-label" for="qualifications">Minimum Qualifications <small style="color: red;">*</small></label>
+            <textarea class="form-control" placeholder="Qualifications" id="qualifications" style="height: 200px" name="qualifications"><%=job.qualification %></textarea>
           </div>
           <div class="col-12">
-            <label class="form-label" for="floatingTextarea2">Preferred Qualifications (optional)</label>
-            <textarea class="form-control" placeholder="" id="floatingTextarea2" style="height: 100px"></textarea>
+            <label class="form-label" for="preferred">Preferred Qualifications </label>
+            <textarea class="form-control" placeholder="Preferred Qualification" id="preferred" style="height: 200px" name="preferred"><% if(job.preferred){ %><%=job.preferred %> <% } %></textarea>
           </div>
           <div class="d-grid gap-3 d-md-flex justify-content-md-end mt-5 mb-3">
-            <a href="/user/dashboard" class="btn btn-primary" type="submit">Cancel </a>
-            <button class="btn btn-primary" id="temp-btn" type="submit">Preview </button>
+            <a href="/recruiting/dashboard" class="btn btn-primary" type="submit">Cancel </a>
+            <button class="btn btn-primary" type="submit"> Preview Job </button>
           </div>
         </form>
       </div>
-     
     </div>
+    
   </main>
   <%- include('../common/footer.ejs') %>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="js/form.js"></script> -->
-  <script src="js/temp.js"></script>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="/js/navDashboard.js"></script>
+  <script type="module" src="/js/editJob.js"></script>
 </body>
 </html>

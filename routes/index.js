@@ -1,18 +1,16 @@
 import express from "express"
+import { homePage, signInPage, signUpPage, signUpCompanyPage } from "../controllers/pageController.js"
 
 const router = express.Router()
 
 
-router.get('^/$|/index(.html)?', (req, res) => {
-  res.render('index')
-})
+router.get('^/$|/index(.html)?',homePage)
 
+router.get('/signin', signInPage)
 
+router.get('/signup', signUpPage)
 
-// 404 page
-router.use('/*', (req, res) => {
-  res.status(404).render('404')
-})
+router.get('/company_info', signUpCompanyPage)
 
 
 export {router}

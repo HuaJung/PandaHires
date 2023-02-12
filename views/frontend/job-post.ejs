@@ -1,94 +1,61 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Development Manager, Company Name </title>
+  <title>  </title>
   <link rel="stylesheet" href="/css/bs-custom.css">
   <link rel="stylesheet" href="/css/job-post.css">
 </head>
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
-      <div class="container">
-        <a class="navbar-brand" href="/career/company_name/about">Company Logo</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav ">
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/career/company_name/all_jobs">Jobs</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/career/company_name/about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/career/company_name/team">Team</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
+  <%- include('../common/nav-company.ejs') %>
   <main>
     <div class="banner">
       <div class="grid-banner">
-          <div class="company-logo">Company Logo</div>
-          <div class="job-title">Software Engineer, Systems ML</div>
-          <div class="location"> <img src="/icons/location.svg" alt="location icon"> Taiwan, Taipei</div>
-          <div class="button-wrapper"><button class="small-btn-apply"><span>Apply to Job</span></button></div>
+          <!-- <div class="company-logo"><%=companyName %></div> -->
+          <div class="job-title"><%=job.name %></div>
+          <div class="location"><img src="/icons/location.svg" alt="location icon">  <span><%=job.city  %>, <%=job.country %></span> </div>
+          <div class="button-wrapper"><a href="/careers/<%=companyName %>/job_openings/<%=job.id%>/apply"  class="small-btn-apply"><span>Apply to Job</span></a></div>
       </div>
     </div>
     <div class="container my-5">
       <div class="jd job-detail">
-        <p>
-          We are seeking an AI Software Engineer to join our Research & Development teams. The ideal candidate will have industry experience working on AI Infrastructure related topics. The position will involve taking these skills and applying them to solve for some of the most crucial & exciting problems that exist on the web. We are hiring in multiple locations.
+        <p><%=job.description %>
+          
         </p>
       </div>
       <hr>
-      <div class="jd responsibility">
-        <h2>Software Engineer, Systems ML Responsibilities
+      <div class="jd responsibilities">
+        <h2>Responsibilities
         </h2>
         <p>
-          <ul>
-            <li>Apply relevant AI and machine learning techniques to build & optimize our intelligent systems that improve Metas products and experiences	
-            </li>
-            <li>Assist in goal setting related to project impact, AI system design, and ML excellence
-            </li>
-            <li>Drive large efforts across multiple teams
-            </li>
-            <li>Mentor other AI Engineers & improve the quality of AI work in the broader team	
-            </li>
-            <li>Develop custom/novel architectures, define use cases, and develop methodology & benchmarks to evaluate different approaches	
-            </li>
-            <li>Apply in depth knowledge of how the machine learning system interacts with the other systems around it
-            </li>
-          </ul>
+          <%=job.responsibility %>
         </p>
       </div>
       <hr>
       <div class="jd min-qualifications">
         <h2>Minimum Qualifications</h2>
-        <p>
-          <ul>
-            <li>Experience developing AI algorithms or AI-System infrastructure in C/C++ or Python
-            </li>
-            <li>Bachelor's degree in Computer Science, Computer Engineering, relevant technical field, or equivalent practical experience
-            </li>
-            <li>Specialized experience in one or more of the following machine learning/deep learning domains: ML systems: AI infrastructure, machine learning accelerators, high performance computing, machine learning compilers, GPU architecture, machine learning frameworks, on-device optimization	
-            </li>
-          </ul>
+        <p><%=job.qualification %>
+          
         </p>
       </div>
+      <div class="jd preferred-qualifications">
+        <% if (job.preferred) { %>
+        <h2>Preferred Qualifications</h2>
+        <p><%=job.preferred %> 
+          <% } %>
+          
+        </p>
+      </div>
+
     </div>
+    <%-include('../common/error.ejs')  %> 
   </main>
+
+
   <%- include('../common/footer.ejs') %>
 
-
-
   <script src="/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/temp.js"></script>
+  <script type="module" src="/js/jobPost.js"></script>
 </body>
 </html>

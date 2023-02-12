@@ -1,37 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up | PandaHires </title>
+<%-include('../common/head.ejs')  %> 
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/signup.css">
+  <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
   <div class="grid-container">
     <div class="background-pic"><img src="images/signup.jpg" alt="">
     </div>
     <div class="grid-content">
+      
       <div class="header-text">
-        <h3 class="mini-logo">PandaHires</h1>
+        <%-include('../common/error.ejs')  %> 
+        <a href="/"><h3 class="mini-logo">PandaHires</h3></a>
         <h1>Ready to become great at hiring?</h1>
       </div>
-      <form class="grid-form" action="">
-        <input type="text" placeholder="Your Name" class="user-name" required>
-        <input type="text" placeholder="Your Position" class="user-position" required>
-        <input type="email" placeholder="Email"  class="user-email" required>
-        <input type="password" placeholder="Password" class="user-password" required>
+      <form class="grid-form" method="POST">
+
+        <input type="text" placeholder="Your Name" class="user-name" name="name">
+        <div class="name error"></div>
+        <input type="text" placeholder="Your Position" class="user-position" name="position">
+        <div class="position error"></div>
+        <input type="email" placeholder="Email"  class="user-email" name="email">
+        <div class="email error"></div>
+        <input type="password" placeholder="Password" class="user-password" name="password">
+        <div class="password error"></div>
     
         <div class="button-wrapper">
-          <button class="btn-signup" type="submit"><span>Sign up</span></button>
+          <button class="large-btn-signup" type="submit"><span>Next</span></button>
           <a href="" class="google-sign-in"></a>
-          <p>Already have an account? <a href="/user/signin">Sign in</a> </p>
+          <p>Already have an account? <a href="/signin">Sign in</a> </p>
           
         </div>
       </form>
     </div>
   </div>
-  <script src="js/temp.js"></script>
+  <script type="module" src="js/signup.js"></script>
 </body>
 </html>

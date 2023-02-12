@@ -1,8 +1,7 @@
 
-
 const companyPage = new URL('/user/company_info', `${window.origin}`)
-const dashboardPage = new URL('/user/dashboard', `${window.origin}`)
-const applyPage = new URL('career/company_name/job/number/apply', `${window.origin}`)
+const dashboardPage = new URL('/hiring/dashboard', `${window.origin}`)
+const applyPage = new URL('careers/company_name/job/number/apply', `${window.origin}`)
 const previewPage = new URL('user/preview_job', `${window.origin}`)
 
 
