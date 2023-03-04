@@ -1,6 +1,6 @@
 <%- include('../common/head.ejs') %> 
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/common/layout.css">
+  <link rel="stylesheet" href="css/auth/auth.css">
 </head>
 <body>
   <div class="grid-container">
@@ -8,11 +8,14 @@
     </div>
     <div class="grid-content">
       <div class="header-text">
-        <%-include('../common/error.ejs')  %> 
-        <h3 class="mini-logo">PandaHires</h3>
+        <a href="/">
+          <h3 class="mini-logo">PandaHires</h3>
+        </a>
         <h1>Company Info</h1>
       </div>
+      
       <form class="grid-form" action="">
+        <%-include('../common/error.ejs')  %> 
         <input type="text" placeholder="Company Name" class="company-name" name="name">
         <div class="name error"></div>
         <!-- <label>Country</label> -->
@@ -24,13 +27,14 @@
         <!-- <label for="">Telephone</label> -->
         <input type="tel" placeholder="Telephone no." class="company-tel" name="tel">
         <div class="tel error"></div>
-        <div class="button-wrapper">
+        <div class="large-button-wrapper">
           <button class="large-btn-submit" type="submit"><span>Sign up</span></button>
           <a href="" class="google-sign-in"></a>
         </div>
       </form>
+
     </div>
   </div>
-  <script type="module" src="js/signupCompany.js"></script>
+  <script type="module" src="js/pages/auth/signupCompany.js"></script>
 </body>
 </html>

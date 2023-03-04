@@ -1,0 +1,27 @@
+.error-msg{
+  /* display: none; */
+  /* opacity: 0; */
+  align-items: center;
+  margin: 1rem auto;
+  /* margin-bottom: 1rem; */
+  /* text-align: center; */
+  max-width: fit-content;
+  padding: 5px 10px;
+  background-color: rgba(229, 11, 11, 0.2);
+  color: rgba(165, 42, 42, 0.707);
+  border: 2px solid rgba(165, 42, 42, 0.707);
+  border-radius: 8px;
+  z-index: 7;
+}
+
+.error-msg span {
+  color: rgba(165, 42, 42, 0.707);
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.error {
+  color: red;
+  padding-left: 1rem;
+
+}

@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@100;300;400;500&family=Barlow:wght@400;500;600&family=Heebo:wght@300;400;600&family=Nunito:wght@300;400;600;700&family=Poppins:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;600&family=Voltaire&display=swap');
+
+@import url(../util/button.css);
+@import url(../util/color.css);
+@import url(../common/error.css);
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  color: var(--black-coffee);
+  font-family: 'Poppins', sans-serif;
+}
+body {
+  overflow-x: hidden;
+}
+
+[class*="grid-"] {
+  display: grid;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 3rem 3rem 3rem;
+  position: relative;
+}
+
+a {
+  text-decoration: none;
+}
+.primary-header {
+  position: relative;
+  padding: 1rem 0;
+  /* box-shadow: 0 0 20px rgba(21, 55, 44, .1) ; */
+  border-bottom: 0.5px solid var(--primary-background-color);
+  font-family: 'Nunito', sans-serif;
+}
+.navbar {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.company-logo{
+  height:50px;
+  width: 180px;
+  overflow: hidden;
+}
+.logo-txt{
+  /* font-family: 'Barlow', sans-serif; */
+  /* font-family: 'Heebo', sans-serif; */
+  /* font-family: 'Nunito', sans-serif; */
+  /* font-family: 'Poppins', sans-serif; */
+  /* font-family: 'Work Sans', sans-serif; */
+  /* margin: 0 2rem; */
+  color: var(--green);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 50px;
+}
+.logo-img {
+  width: 100%;
+  object-fit: fill;
+}
+
+.nav-items {
+  display: flex;
+  gap: 2.5rem;
+}
+.nav-items a {
+  /* margin-inline-end: 0.75em; */
+  color: var(--black-coffee);
+  font-size: 1rem;
+}
+
+.nav-link.active{
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-link:hover {
+  color: var(--black-text-hover)
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  text-align: center;
+  font-size: 13px;
+  color: var(--footer--primary-color);
+  background-color: var(--third-background-color);
+}
+footer a {
+  font-family: 'Voltaire', sans-serif;
+  color: var(--footer--secondary-color);
+  font-weight: 400;
+  font-size: 16px;
+
+}

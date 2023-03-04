@@ -1,6 +1,6 @@
 <%- include('../common/head.ejs') %> 
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/common/layout.css">
+  <link rel="stylesheet" href="css/auth/auth.css">
 </head>
 <body>
   <div class="grid-container">
@@ -8,11 +8,11 @@
     </div>
     <div class="grid-content">
       <div class="header-text">
-        <%-include('../common/error.ejs')  %> 
         <a href="/"><h3 class="mini-logo">PandaHires</h1></a>
         <h1>Let's start hiring.</h1>
       </div>
       <form class="grid-form" method="POST">
+        <%-include('../common/error.ejs')  %> 
         <input type="email" placeholder="Email" class="user-email" name="email">
         <div class="email error"></div>
         <input type="password" placeholder="Password" class="user-password" name="password">
@@ -26,17 +26,15 @@
             <a href="">Forget your password?</a>
           </div>
         </div>
-        <div class="button-wrapper">
+        <div class="large-button-wrapper">
           <button class="large-btn-signin" type="submit"><span>Sign in</span></button>
           <a href="" class="google-sign-in"></a>
           <p>Not a member yet? <a href="/signup">Sign up</a></p>
-          
         </div>
       </form>
-    </div>
-    
 
-    <script type="module" src="js/signin.js"></script>
+    </div>
+    <script type="module" src="js/pages/auth/signin.js"></script>
   </div>
 </body>
 </html>

@@ -1,0 +1,335 @@
+@import url(../common/layout.css);
+@import url(../common/error.css);
+
+.panel-group{
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0rem 3rem;
+  position: relative;
+
+}
+input[type=radio] {
+  position: absolute;
+  opacity: 0;
+}
+.panel-group label {
+  /* position: relative; */
+  order: -1;
+  display: inline-block;
+  padding: 10px 1.5rem;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 14px;
+  /* border: 1px solid #ccc; */
+  border-radius: 10px 10px 0 0;
+  /* border: 1px solid var(--additional-background-color); */
+  cursor: pointer;
+  color: var(--third-text-color);
+  /* background-color:  var(--forth-background-color); */
+  box-shadow: 0 -1px 1px 0 var(--shadow-gray);
+  background-color: white;
+  /* margin-top: 2rem; */
+}
+.fix-background {
+  position: sticky;
+  top: 9%;
+  height: 3rem;
+  right: 0;
+  left:0;
+  background-color: white;
+  z-index: 1;
+}
+
+.tab {
+  position: sticky;
+  top: 15%;
+  background-color: white;
+  z-index: 2;
+}
+.close {
+  cursor: pointer;
+}
+/* .tab.overview {
+  left: 3rem;
+}
+.tab.jobs {
+  left: 170px;
+}
+.tab.candidates {
+  left:280px;
+}
+.tab.others {
+  left:440px;
+} */
+
+
+.panel-group label:hover {
+  /* background-color: var(--primary-hover-backgound); */
+}
+.panel-group .content {
+  display: none;
+  padding: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  /* margin: 2rem 0.5rem; */
+}
+
+.panel-control:checked + label + .content{
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  /* border: 1px solid #ccc;
+  border-top: none; */
+  /* padding: 20px; */
+  padding: 2rem 1rem;
+  opacity: 1;
+  transition: opacity 1s;
+}
+.panel-control:checked + label {
+  color: var(--another-text-color);
+  border-bottom: none;
+  font-weight: 600;
+  /* border-radius: 10px; */
+}
+
+
+
+/* ---------Overview Table------- */
+
+.fix-wrapper {
+  position: sticky;
+  padding: 2rem 0 0 0;
+  /* top: 20%; */
+  width: 1104px;
+  background-color: white;
+}
+
+.grid-th.primary.overview {
+  grid-template-columns: repeat(3, 1fr);
+  padding: 1rem;
+  background-color: var(--forth-background-color);
+}
+
+.grid-th.secondary.overview {
+  grid-template-columns: repeat(6, 1fr);
+  padding: 1rem 1rem 0 1rem;
+  border-bottom: 1px solid var(--primary-black-color);
+}
+.grid-th.secondary.overview li:nth-child(1){
+  grid-column: 3/4 ;
+}
+.grid-th.secondary.overview li:nth-child(2){
+  grid-column: 4/5;
+}
+.grid-th.secondary.overview li:nth-child(3){
+  grid-column: 5/6;
+}
+.grid-th.secondary.overview li:nth-child(4){
+  grid-column: 6/7;
+}
+
+.grid-tr.primary.overview {
+  grid-template-columns: repeat(6, 1fr);
+  padding: 1rem;
+}
+.grid-tr.primary.overview:hover {
+  background-color: var(--fifth-background-color);
+}
+
+.grid-tr.primary.overview li:nth-child(1) {
+  grid-column: 2 span;
+
+}
+
+/* ---------all jobs table--------------- */
+.grid-th.primary.jobs {
+  grid-template-columns: 27% 12% 12% 10% 10% 9% 14% 6%;
+  padding: 1rem;
+  background-color: var(--forth-background-color);
+}
+
+.grid-th li{
+  color: var(--another-text-color);
+  font-size: 13px;
+  font-weight: 700;
+}
+/* .grid-th.primary li {
+  font-size: 12px;
+  font-weight: 700;
+} */
+/* --- team --- */
+
+
+.grid-td {
+  margin-top: 1rem;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  border-bottom: 1px solid var(--third-text-color);
+  padding: 1rem;
+}
+.triangle-down {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid var(--primary-text-color);
+  margin-right: 5px;
+}
+/* --- jobs table --- */
+.grid-tr {
+  align-items: center;
+
+}
+.grid-tr.primary.jobs {
+  grid-template-columns: 27% 12% 12% 10% 10% 9% 14% 6%;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--third-text-color);
+  /* grid-template-columns: 21% 14% 14% 12% 12% 10% 17%; */
+}
+
+.grid-tr.primary > li {
+  font-weight: 500;
+  font-size: 14px;
+}
+.grid-tr.primary.jobs > li {
+  /* padding: 1rem 0 1rem 1.4rem; */
+  padding-left: 5px;
+}
+.grid-tr.primary > li:nth-child(1) {
+  padding-left: 1.5rem;
+}
+/* .grid-tr.primary.candidates > li:nth-child(1) {
+  padding-left: 2rem;
+} */
+.edit {
+  margin-right: 10px;
+}
+.edit:hover{
+  transform: scale(1.3);
+}
+.close:hover{
+  transform: scale(1.3);
+}
+
+/* ------ Candidate table ------- */
+.tbody.secondary {
+  display: none;
+  grid-column: 1/-1;
+  margin: 1rem;
+  /* padding-top: 1rem; */
+  /* background-color: var(--primary-hover-backgound); */
+}
+/* .grid-th.secondary {
+  grid-template-columns: repeat(3, 1fr);
+  font-weight: 400;
+  padding: 0.5rem 1rem ;
+  border: 0.5px solid var(--third-text-color);
+  border-right: 0;
+  border-left: 0;
+  background-color: var(--fifth-background-color);
+} */
+
+.grid-tr.secondary {
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0.5rem 1rem;
+  background-color: var(--fifth-background-color);
+  border-bottom: 1px solid var(--third-background-color);
+}
+.grid-tr.secondary li {
+  font-size: 12px;
+  /* padding-left: 2px; */
+
+}
+.grid-tr.secondary:hover {
+  background-color: var(--third-background-color);
+}
+
+
+/* --- all candidates --- */
+
+.grid-form {
+  justify-content: end;
+  /* grid-template-columns: 50px 90px 90px 50px; */
+  grid-template-columns: repeat(5, minmax(50px, auto));
+  gap: 0.8rem;
+  background-color: var(--forth-background-color);
+  padding: 0.5rem;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.label {
+  color: var(--another-text-color);
+  justify-self: end;
+}
+select, input[type=datetime-local] {
+  height: 30px;
+  padding: 0 5px;
+  font-size: 12px;
+}
+option {
+  font-size: 12px;
+}
+/* .tbody.candidates {
+  margin-top: 6rem;
+} */
+.tbody-tr.candidates{
+  border-bottom: 1px solid var(--third-text-color);
+}
+.grid-th.primary.candidates {
+  grid-template-columns: 27% 15% 15% 17% 12% 10% 4%;
+  padding: 2rem 1rem 0 1rem;
+  border-bottom: 1px solid var(--primary-black-color);
+}
+.grid-td.candidates {
+  border-bottom: none;
+  gap: 0.5rem;
+  padding: 10px 1rem;
+}
+.grid-tr.primary.candidates {
+  grid-template-columns: 27% 15% 15% 17% 12% 10% 4%;
+  border-bottom: none;
+  padding: 0.5rem 1rem;
+}
+
+.candidate-name {
+  font-weight: 600;
+}
+.job-checkbox {
+  margin-right: 2px;
+}
+.job-status {
+  margin-left: 5px;
+  padding: 1px 4px;
+  background-color: var(--small-background-color);
+  border-radius: 3px;
+  color:var(--secondary-text-color);
+  font-size: 10px;
+}
+.job-status.active {
+  background-color: var(--small-active-background-color);
+}
+
+
+
+@media (min-width: 1250px) {
+  /* .tab.overvew {
+    left: 3rem;
+  }
+  .tab.jobs {
+    left: 208px;
+  }
+  .tab.candidates {
+    left:318px;
+  }
+  .tab.others {
+    left:479px;
+  } */
+  /* .fix-wrapper {
+    width: 1104px;
+  } */
+
+}

@@ -1,0 +1,79 @@
+@import url(layout.css);
+
+
+.banner {
+  background-color: var(--morning-blue);
+  /* background-size: cover;
+  background-repeat: no-repeat; */
+  min-height: 300px;
+}
+
+.grid-banner {
+  gap: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  color: var(--ivory);
+  grid-auto-rows: min-content;
+}
+
+.company-logo {
+  font-size: 20px;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  line-height: 16px;
+  padding: 0 1rem;
+  grid-row: 3/4;
+}
+
+.location span {
+  color: white;
+}
+
+.job {
+  padding: 2rem 0;
+  margin: 2rem 0;
+}
+
+.job.name {
+  padding: 0 1rem;
+  align-self: center;
+  font-size: 2rem;
+  color: var(--ivory);
+  grid-row: 2/3;
+}
+
+.teams {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  font-size: 14px;
+}
+
+.job h2 {
+  padding-bottom: 1.5rem;
+  font-weight: 500;
+}
+.job p {
+  line-height: 2rem;
+}
+.job li {
+  list-style: disc;
+  line-height: 2rem;
+}
+
+.button-wrapper {
+  grid-row: 4/5;
+}
+
+
+
+@media (min-width:800px) {
+  .button-wrapper {
+    grid-row: 2/3;
+  }
+}

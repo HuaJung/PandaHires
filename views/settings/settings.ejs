@@ -1,0 +1,127 @@
+<%- include('../common/head.ejs') %> 
+  <link rel="stylesheet" href="css/settings/settings.css">
+</head>
+<body>
+  <%- include('../common/nav-recruiting.ejs') %>
+  <main>
+    <div class="container">
+      <h2 class="header">Account</h2>
+      <%-include('../common/error.ejs')  %> 
+      <div class="success-msg"></div>
+      <div class="account-card">
+        <div class="grid-user-form">
+          <h4 class="label">NAME </h4>
+          <div class="user-input">
+            <div class="user name" contenteditable="true"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+            </svg>
+          </div>
+          <h4 class="label"> POSITION </h4>
+          <div class="user-input">
+            <div class="user position" contenteditable="true"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+            </svg>
+          </div>
+          <h4 class="label">EMAIL </h4>
+          <div class="user-input">
+            <div class="user email"  contenteditable="true"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+            </svg>
+          </div>
+          <h4 class="label">PASSWORD</h4>
+          <div class="user-input">
+            <div class="user password" contenteditable="true">********</div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+            </svg>
+          </div>
+          <h4 class="label">COMPANY INFO </h4>
+          <div class="company"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg></div>
+          <div class="modal">
+            <dialog class="modal-dialog">
+              <div class="card">
+                <div class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg></div>
+                  <form enctype="multipart/form-data" method="POST">
+                    <div class="grid-company-form">
+                      <label class="label">COMPANY NAME <small style="color: red;">*</small></label>
+                      <input class="input" type="text" name="name" required>
+                      <label class="label"> COUNTRY <small style="color: red;">*</small></label>
+                      <input class="input"  type="text" name="country" required>
+                      <label class="label">ADDRESS <small style="color: red;">*</small></label>
+                      <input class="input" type="text" name="address" required>
+                      <label class="label">TEL. <small style="color: red;">*</small></label>
+                      <input class="input" type="tel" name="tel" required>
+                      <label class="label">LOGO </label>
+                      <div class="form-group">
+                        <label for="logo" class="btn company-logo">ATTACH IMAGE</label> 
+                        <input type="file" accept="image/*" id="logo" name="logo">
+                        <div class="preview logo" id="logoOriginName"></div>
+                      </div>
+
+                      <label class="label">BANNNER </label>
+                      <div class="form-group">
+                        <label for="image" class="btn company-iamge">ATTACH IMAGE
+                          <input type="file" accept="image/*" id="image" name="image"> 
+                        </label>
+                        <div class="preview image" id="imageOriginName"></div>
+                      </div>
+
+                      <div class="grid-company-description">
+                        <h3>Company Page Introduction</h3>
+                        <div class="label">1. INTRO: <small style="color: red;">* </small></div>
+                        <input type="text" class="title title-1" placeholder="EX: WHO WE ARE" name="title1" required>
+                        <textarea class="paragraph paragraph-1" name="paragraph1" id="" cols="30" rows="10" placeholder="Write more about who we are"></textarea>
+                        
+                        <div class="label">2. INTRO: </div>
+                        <input type="text" class="title title-2" placeholder="EX: WHAT WE VALUE" name="title2" >
+                        <textarea class="paragraph paragraph-2" name="paragraph2" id="" cols="30" rows="10" placeholder="Tell more about what we value"></textarea>
+
+                        <div class="label">3. INTRO: </div>
+                        <input type="text" class="title title-3" placeholder="EX: BENEFITS & PERKS" name="title3" >
+                        <textarea class="paragraph paragraph-3" name="paragraph3" id="" cols="30" rows="10" placeholder="Show off our beneift & perks!"></textarea>
+                      </div>
+
+                      <div class="button-wrapper">
+                        <button type="submit" class="btn-submit"><span>Update</span></button>
+                      </div>
+                    </div>
+                  </form>
+              </div>
+
+
+            </dialog>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="delete-button">
+        <button class="delete" style="color: red"> Delete Account</button>
+      </div>
+      
+
+  </div>
+  
+
+
+  </main>
+  
+  <%- include('../common/footer.ejs') %>
+
+  <script type="module" src="js/pages/settings/settings.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,65 @@
+<%- include('../common/head.ejs') %> 
+  <link rel="stylesheet" href="css/common/layout.css">
+  <link rel="stylesheet" href="css/dashboard/dashboard.css">
+</head>
+<body>
+  <%- include('./nav-dashboard.ejs') %>
+  
+  <main>
+    <div class="container">
+      <div class="panel-group">
+        <input type="radio" name="radio" id="radio1" class="panel-control" checked>
+        <label for="radio1">Overview</label>
+        <div class="content">
+          <ul class="grid-job-listing">
+            <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-data-fill" viewBox="0 0 16 16">
+              <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1ZM10 8a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1Zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"/>
+            </svg> Let's get started</h3>
+            
+          </ul>
+         </div>
+        <input type="radio" name="radio" id="radio2" class="panel-control">
+        <label for="radio2">All Jobs</label>
+        <div class="content">
+          <% if (jobs.length > 0) { %>
+          <ul class="grid-job-listing">
+            <% for (let job of jobs) { %>
+              <li>
+                <h5> <%= job.name %></h5>
+                <div class="mini-button-wrapper">
+                  <a class="mini-btn-edit" href="/recruiting/edit_job/<%=job.id %>">Edit</a>
+                  <button class="mini-btn-close" name="<%=job.id%>">Close</button>
+                </div>
+              </li>
+              <% } %>
+          </ul>
+          <% } else { %>
+            <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-spreadsheet-fill" viewBox="0 0 16 16">
+              <path d="M6 12v-2h3v2H6z"/>
+              <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1h-3v2h3v1h-3v2H9v-2H6v2H5v-2H3v-1h2v-2H3V9z"/>
+            </svg> You haven't create any job yet</h3>
+            <% } %>
+        </div>
+        <input type="radio" name="radio" id="radio3" class="panel-control">
+        <label for="radio3">All Candidates</label>
+        <div class="content">
+          NOT DONE YET
+        </div>
+        <input type="radio" name="radio" id="radio4" class="panel-control">
+        <label for="radio4">Candidates to Schedule</label>
+        <div class="content">NOT DONE YET</div>
+        <input type="radio" name="radio" id="radio5" class="panel-control"
+        ><label for="radio5">Others</label>
+        <div class="content">NOT DONE YET</div>
+        </div>
+    </div>
+  </main>
+  <%- include('../common/footer.ejs') %>
+
+  <script type="module" src="js/pages/dashboard/navDashboard.js"></script>
+  <script type="module" src="js/pages/dashboard/dashboard.js"></script>
+
+  
+</body>
+</html>

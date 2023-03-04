@@ -1,0 +1,38 @@
+.banner {
+  position: relative;
+  color: var(--ivory);
+  overflow: hidden;
+  height: 20rem;
+  grid-template-columns: 1fr;
+  box-shadow: 0 0 30px rgba(35, 41, 39, 0.1) ;
+}
+
+.company-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--additional-background-color);
+}
+.image {
+  width: 100%;
+  object-fit: cover;
+}
+
+.image-txt {
+  color: var(--primary-button-hover-color);
+  font-size: 3rem;
+  text-align: center;
+  font-weight: 500;
+
+}
+.location {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left:0;
+  bottom: 0;
+  /* line-height: 16px; */
+  padding: 1.5rem;
+}

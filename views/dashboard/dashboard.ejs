@@ -1,0 +1,272 @@
+<%- include('../common/head.ejs') %> 
+  <link rel="stylesheet" href="css/dashboard/dashboard.css">
+</head>
+<body>
+  <%- include('../common/nav-recruiting.ejs') %>
+  
+  <main>
+    <div class="container">
+
+      <div class="fix-background"></div>
+      <%-include('../common/error.ejs')  %> 
+
+      <div class="panel-group">
+        <input type="radio" name="radio" id="radio1" class="panel-control" checked>
+        <label class="tab overview" for="radio1">OVERVIEW</label>
+        <div class="content">
+          <div class="sticky-wrapper">            
+            <ul class="grid-th primary overview">
+              <li>Job Name</li>
+              <li>New Application</li>
+              <li>Incoming Interview
+              </li>
+            </ul>
+            <ul class="grid-th secondary overview">
+              <li>Today</li>
+              <li>Last 7 Days</li>
+              <li>Today</li>
+              <li>This Week</li>
+            </ul>
+          </div>
+          <ul class="grid-tr primary overview">
+            <li data-title="Name"> QA Engineer</li>
+            <li>0</li>
+            <li>0</li>
+            <li>0</li>
+            <li>0</li>
+          </ul>
+          <ul class="grid-tr primary overview">
+            <li data-title="Name"> QA Engineer</li>
+            <li>0</li>
+            <li>0</li>
+            <li>0</li>
+            <li>0</li>
+          </ul>
+          <ul class="grid-tr primary overview">
+            <li data-title="Name"> QA Engineer</li>
+            <li>0</li>
+            <li>0</li>
+            <li>0</li>
+            <li>0</li>
+          </ul>
+<!-- 
+          <ul class="grid-list-group">
+            <h3><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-data-fill" viewBox="0 0 16 16">
+              <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1ZM10 8a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V8Zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1Zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"/>
+            </svg> Let's get started</h3>
+          </ul> -->
+        </div>
+        <input type="radio" name="radio" id="radio2" class="panel-control">
+        <label class="tab jobs" for="radio2">ALL JOBS</label>
+        <div class="content jobs">
+          <div class="sticky-wrapper jobs">
+            <ul class="grid-th primary jobs">
+              <li>Name</li>
+              <li>Em. Type</li>
+              <li>Work Type</li>
+              <li>Applicants</li>
+              <li>Interveiwed</li>
+              <li>Offered</li>
+              <li>Last Updated</li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+              </li>
+            </ul>
+          </div>
+          <ul class="tbody-td jobs">
+            <!-- <li class="grid-td">
+              <div class="triangle-down"></div>
+              <h4 class="team">QA</h4>
+            </li>
+            <li class="tbody-tr">
+              <ul class="grid-tr primary jobs">
+                <li data-title="Name"> QA Engineer</li>
+                <li data-title="Employment Tye">Full-time</li>
+                <li data-title="Work Type">Remote</li>
+                <li data-title="Applicants">0</li>
+                <li data-title="Interveiwed">0</li>
+                <li data-title="Offered">0</li>
+                <li data-title="Last Updated">2023-02-28</li>
+                <li data-title="Edit"> 
+                  <a class="edit" href="/recruiting/edit_job/6000005">
+                    <img  src="icons/pencil.svg" alt="">
+                  </a> 
+                  <img class="close" src="icons/x-lg.svg" alt="">
+                </li>
+              </ul>
+              <ul class="grid-tr primary jobs">
+                <li data-title="Name">SDET Engineering</li>
+                <li data-title="Employment Tye">Full-time</li>
+                <li data-title="Work Type">Remote</li>
+                <li data-title="Applicants">0</li>
+                <li data-title="Interveiwed">0</li>
+                <li data-title="Offered">0</li>
+                <li data-title="Last Updated">2023-02-28 </li>
+                <li data-title="Edit"> 
+                  <a href="/recruiting/edit_job/6000006">
+                    <img class="edit" src="icons/pencil.svg" alt="">
+                  </a> 
+                  <img class="close" src="icons/x-lg.svg" alt="">
+                </li>
+              </ul>      
+            </li>
+            <li class="grid-td">
+              <div class="triangle-down"></div>
+              <h4 class="team">Product</h4>
+            </li>
+            <li class="tbody">
+              <ul class="grid-tr primary jobs">
+                <li data-title="Name">Product Manager</li>
+                <li data-title="Employment Tye">Full-time</li>
+                <li data-title="Work Type">Remote</li>
+                <li data-title="Applicants">2</li>
+                <li data-title="Interveiwed">1</li>
+                <li data-title="Offered">0</li>
+                <li data-title="Last Updated">2023-02-28</li>
+                <li data-title="Edit"> 
+                  <a href="/recruiting/edit_job/6000003">
+                    <img class="edit" src="icons/pencil.svg" alt="">
+                  </a> 
+                  <img class="close" src="icons/x-lg.svg" alt="">
+                </li>
+              </ul>
+              <ul class="grid-tr primary jobs">
+                <li data-title="Name">UI/UX Designer</li>
+                <li data-title="Employment Tye">Full-time</li>
+                <li data-title="Work Type">Remote</li>
+                <li data-title="Applicants">1</li>
+                <li data-title="Interveiwed">1</li>
+                <li data-title="Offered">0</li>
+                <li data-title="Last Updated">2023-02-28</li>
+                <li data-title="Edit"> 
+                  <a href="/recruiting/edit_job/6000004">
+                    <img class="edit" src="icons/pencil.svg" alt="">
+                  </a> 
+                  <img class="close" src="icons/x-lg.svg" alt="">
+                </li>
+              </ul>
+            </li> -->
+          </ul>
+        </div>
+        <input type="radio" name="radio" id="radio3" class="panel-control">
+        <label class="tab candidates"  for="radio3">ALL CANDIDATES</label>
+        <div class="content">
+          <div class="sticky-wrapper candidates">
+            <form class="grid-form update" method="POST">
+              <div class="label">Stage:</div>
+              <select class="stage" name="name" id="" required>
+                <option disabled label="SELECT A STAGE" selected  ></option>
+                <option>New Application</option>
+                <option>Forwarded</option>
+                <option>Not Consider</option>
+                <option>Under Consideration</option>
+                <option>Contacted</option>
+                <option>Interview</option>
+                <option>First Interview</option>
+                <option>Second Interview</option>
+                <option>Final Interview</option>
+                <option>Offered</option>
+                <option>Rejected</option>
+                <option>On Hold</option>
+              </select>
+              <select class="status" name="status" id="" disabled required>
+                <option selected label="SELECT A STATUS"></option>
+                <option>Scheduled</option>
+                <option>To Be Rescheduled</option>
+                <option>Rescheduled</option>
+                <option>No Show</option>
+                <option>Cancelled</option>
+              </select>
+              <input type="datetime-local" disabled name="interviewDate">
+              <div class="mini-button-wrapper">
+                <button class="mini-btn-update" type="submit"><span>Update</span> </button>
+              </div>
+            </form>
+            <ul class="grid-th primary candidates">
+              <li>Name / Applied Job</li>
+              <li>Stage</li>
+              <li>Status</li>
+              <li>Interview</li>
+              <li>Applied Date</li>
+              <li>Origin</li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16">
+                  <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z"/>
+                </svg>
+              </li>
+            </ul>
+          </div>
+          <ul class="tbody-td candidates">
+            <!-- <li class="grid-td candidates">
+              <img src="icons/person-fill.svg" alt="">
+              <h4 class="candidate-name"><a href="/candidates/:candidateId"> Panda Panda</a></h4>
+            </li>
+            <li class="tbody-tr candidates">
+              <ul class="grid-tr primary candidates">
+                <li data-title="Name">
+                  <input type="checkbox"> Software Engineer 
+                  <small class="job-status active">open</small>
+                </li>
+                <li data-title="Applied Date">2023-03-03</li>
+                <li data-title="Stage">New Application</li>
+                <li data-title="Status">N/A</li>
+                <li data-title="Origin">Official</li>
+                <li data-title="Interview">2023-04-01 03:30PM</li>
+                <li data-title="Resume"> <a href="/recruiting/edit_job/"><img class="resume" src="icons/pdf.svg" alt=""></a></li>
+              </ul>
+              <ul class="grid-tr primary candidates">
+                <li data-title="Name"><input type="checkbox"> Software Engineer <small class="job-status">close</small></li>
+                <li data-title="Applied Date">2023-03-03</li>
+                <li data-title="Stage">New Application</li>
+                <li data-title="Status">N/A</li>
+                <li data-title="Origin">Official</li>
+                <li data-title="Resume"> <a href="/recruiting/edit_job/"><img class="resume" src="icons/pdf.svg" alt=""></a></li>
+              </ul>
+            </li>
+            <li class="grid-td candidates">
+              <div class="triangle-down"></div>
+              <h4 class="candidate-name">Panda Panda</h4>
+            </li>
+            <li class="tbody job">
+              <ul class="grid-tr primary candidates">
+                <li data-title="Name"><input type="checkbox"> Software Engineer</li>
+                <li data-title="Applied Date">2023-03-03</li>
+                <li data-title="Stage">New Application</li>
+                <li data-title="Status">N/A</li>
+                <li data-title="Origin">Official</li>
+                <li data-title="Resume"> <a href="/recruiting/edit_job/"><img class="resume" src="icons/pdf.svg" alt=""></a></li>
+              </ul>
+              <ul class="grid-tr primary candidates">
+                <li data-title="Name"><input type="checkbox"> Software Engineer</li>
+                <li data-title="Applied Date">2023-03-03</li>
+                <li data-title="Stage">New Application</li>
+                <li data-title="Status">N/A</li>
+                <li data-title="Origin">Official</li>
+                <li data-title="Resume"> <a href="/recruiting/edit_job/"><img class="resume" src="icons/pdf.svg" alt=""></a></li>
+              </ul>
+            </li> -->
+          </ul>
+
+        </div>
+        <!-- <input type="radio" name="radio" id="radio4" class="panel-control">
+        <label for="radio4">CANDIDATES TO SCHEDULE</label>
+        <div class="content">NOT DONE YET</div> -->
+
+
+    </div>
+
+  </div>
+  </main>
+  <%- include('../common/footer.ejs') %>
+
+
+  <script type="module" src="js/pages/dashboard/dashboard.js"></script>
+
+  
+</body>
+</html>

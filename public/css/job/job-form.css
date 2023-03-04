@@ -1,0 +1,69 @@
+@import url(../common/layout.css);
+@import url(../common/error.css);
+
+.header {
+  color: var(--header-text-color);
+  /* font-family: 'Libre Baskerville', serif; */
+  /* font-family: 'Nunito', sans-serif; */
+  font-family: 'Merriweather', serif;
+  text-align: center;
+  padding: 0 1rem 1rem 1rem;
+  border-bottom: 1px solid black;
+}
+
+.card {
+  margin: 1rem 0;
+  padding:0 2rem;
+  /* background-color: var(--ash-gray); */
+}
+form {
+  max-width: 700px;
+  margin: auto;
+  padding: 2rem;
+}
+.grid-form {
+  gap: 0.5rem;
+  /* align-items: center; */
+  padding-bottom: 2rem;
+}
+
+input, select {
+  height: 3rem;
+  border-radius: 7px;
+  padding: 0 1rem;
+}
+
+.city {
+  margin-top: 0.8rem;
+  width: 100%;
+}
+
+.label {
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.grid-jd {
+  margin-top: 1rem;
+  grid-column: 1/-1;
+  gap: 1rem;
+}
+textarea {
+  border-radius: 7px;
+  padding: 0.5rem 1rem;
+}
+
+input[type="radio"] {
+  margin-top: -1px;
+  vertical-align: middle;
+}
+
+@media (min-width: 600px) {
+  .grid-form{
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .label {
+    margin-top: 0rem;
+  }
+}

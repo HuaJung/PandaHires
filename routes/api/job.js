@@ -1,15 +1,26 @@
 import express from "express"
-import { handleNewJob, handleCloseJob, handleOneJob, handleJobUpdate } from "../../controllers/jobController.js"
+import { getAllJobs, createNewJob, updateJob, getJob, getOpenJobs, getOverviewJobs } from "../../controllers/jobController.js"
 
 
 const jobRoute = express.Router()
 
 
-jobRoute.get('/:companNname/jobs/:jobId', handleOneJob)
-jobRoute.delete('/:companNname/jobs/:jobId', handleCloseJob)
-jobRoute.patch('/:companNname/jobs/:jobId', handleJobUpdate)
+jobRoute.route('/all')  // ?page=1 or ....
+  .get(getAllJobs)
 
-jobRoute.get('/:companNname/jobs' )
-jobRoute.post('/:companNname/jobs', handleNewJob)
+jobRoute.route('/openings')  // candidate form would call this 
+  .get(getOpenJobs)
+
+jobRoute.route('/create')
+  .post(createNewJob)
+
+jobRoute.route('/overview')
+  .get(getOverviewJobs)
+
+jobRoute.route('/:jobID')
+  .get(getJob)
+  .patch(updateJob)
+
+
 
 export {jobRoute}

@@ -1,0 +1,131 @@
+.large-button-wrapper {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* edit company form, job form, candidate form, signout button, preview, apply */
+.button-wrapper {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}  
+
+
+.mini-button-wrapper {
+  /* margin: 2rem 0; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* -------- normal btn -----------*/
+[class*='btn-'] {
+  background-color: var(--primary-button-backgrond);
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--rifle-green);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 300ms ease-out;
+  box-shadow: 0 0px 4px var(--shadow-gray);
+}
+
+[class*='btn-'] span {
+  color: var(--primary-button-color);
+  font-size: 15px;
+}
+
+[class*='btn-']:hover {
+  background-color: var(--secondary-button-background);
+  /* box-shadow: none; */
+}
+[class*='btn-']:hover span{
+  color: var(--secondary-button-color);
+  font-weight: 500;
+}
+
+/* -------- large btn -----------*/
+
+[class*='large-btn-'] {
+  background-color: var(--rifle-green);
+  padding: 1rem 2rem;
+  border: 1px solid var(--rifle-green);
+  border-radius: 100px;
+  box-shadow: 0 3px 4px 0 var(--shadow-gray);
+  cursor: pointer;
+  transition: all 300ms ease-out;
+}
+
+[class*='large-btn-']:hover ,[class*='small-btn-']:hover {
+  background-color: var(--baby-powder);
+}
+[class*='large-btn-']:hover span, [class*='small-btn-']:hover span {
+  color: var(--rifle-green);
+}
+[class*='large-btn-'] span {
+  color: var(--ivory);
+  font-size: 20px;
+}
+
+
+
+/* -------- small btn -----------*/
+/* apply now */
+[class*='small-btn-'] {
+  background-color:var(--secondary-button-background);
+  padding: 10px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+  border: 0;
+  box-shadow: 0 2px 5px 0 var(--shadow-gray);
+  border: 1px solid var(--border-color);
+  /* height: 3.5rem; */
+  color: var(--baby-powder);
+}
+
+[class*='small-btn-'] span {
+  color:var(--secondary-button-color) ;
+  font-size: 15px;
+}
+
+[class*='small-btn-']:hover {
+  background-color:  var(--primary-hover-backgound);
+  /* box-shadow: none; */
+}
+[class*='small-btn-']:hover span{
+  color: var(--primary-button-color);
+  font-weight: 500;
+}
+
+
+/* -------- mini btn -----------*/
+
+[class*='mini-btn-'] {
+  background-color: var(--baby-powder);
+  padding: 5px 8px;
+  border-radius: 100px;
+  cursor: pointer;
+  border: 0;
+  border: 0.5px solid var(--rifle-green);
+  /* box-shadow: 0 2px 5px 0 var(--shadow-gray); */
+  /* height: 2rem; */
+  color: var(--baby-powder);
+  /* font-size: 14px;
+  line-height: 14px; */
+  /* width: 65px; */
+  text-align: center;
+}
+
+[class*='mini-btn-'] span {
+  color: var(--another-text-color);
+  font-size: 12px;
+  font-weight: 500;
+}
