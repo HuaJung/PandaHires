@@ -17,7 +17,6 @@ import { error404 } from "./controllers/errorController.js"
 import { sequelize } from "./models/dbConn.js"
 import { verifyJWT } from "./middleware/verifyUser.js"
 import { prebuildSatgeModel } from "./models/prebuild.js"
-import exp from "constants"
 
 
 
