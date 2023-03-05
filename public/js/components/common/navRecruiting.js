@@ -1,7 +1,7 @@
-import { signInChecker } from "../validator/userChecker.js"
+import { signInChecker, homePage, authApi } from "../validator/userChecker.js"
 import { companyInfo } from "./companyInfo.js"
 const dashboardPage = new URL('recruiting/dashboard', `${window.origin}`)
-// const authApi = new URL('api/auth', `${location.origin}`)
+
 
 
 signInChecker()

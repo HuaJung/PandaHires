@@ -17,4 +17,4 @@ async function signInChecker ()  {
 }
 
 
-export {signInChecker}
+export {signInChecker, homePage, authApi}

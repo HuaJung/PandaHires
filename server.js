@@ -33,18 +33,19 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())
 app.use(fileUpload())
-app.use(express.static(path.join(__dirname,'public')))
+// app.use(express.static(path.join(__dirname,'public')))
 // server static files
-// app.use(express.static('public'))
-app.use('/careers', express.static('public'))
+app.use(express.static('public'))
 app.use('/recruiting', express.static('public'))
-app.use('/recruiting/edit_job', express.static('public'))
+app.use('/careers', express.static('public'))
+
+// app.use('/recruiting/edit_job', express.static('public'))
 
 
 // routes
 app.use('/', baseRoute)
-app.use('/careers', careersRoute)
 app.use('/recruiting', recruitRoute)
+app.use('/careers', careersRoute)
 app.use('/api/career', careerRoute)
 app.use('/api/auth', authRoute) 
 

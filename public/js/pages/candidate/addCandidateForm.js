@@ -12,8 +12,6 @@ addCandidate()
 inputFile.addEventListener('change', updateFileDisplay)
 
 
-
-
 async function getAllJobs() {
   const allJobsApi = new URL('/api/job/openings', window.origin)
   const response = await fetch(allJobsApi)

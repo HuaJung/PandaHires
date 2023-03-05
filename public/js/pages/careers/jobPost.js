@@ -8,7 +8,7 @@ const thankyouBox = document.querySelector('.thankyou')
 
 
 renderSingleJob()
-showJobForm()
+showApplicationForm()
 submitApplication()
 closeBox()
 
@@ -50,7 +50,7 @@ async function renderSingleJob() {
 
 }
 
-function showJobForm() {
+function showApplicationForm() {
   applyBtn.addEventListener('click', (e)=> {
     e.stopPropagation()
     applyModal.showModal()

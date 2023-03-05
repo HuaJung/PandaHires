@@ -21,7 +21,19 @@ async function renderCompany() {
   companyImg.appendChild(element)
 
   // render about
-  if (!company.title1) return pageNotFound()
+  if (!company.title1) {
+    const conatiner =  document.querySelector('.container')
+    const h2 = document.createElement('h2')
+    conatiner.innerHTML = ''
+    const img = document.createElement('img')
+    h2.style.padding = '1rem'
+    h2.style.textAlign = 'center'
+    h2.style.fontWeight = '600'
+    img.src= '/icons/cone-striped.svg'
+    h2.append(img, `Wait more info to come`)
+    conatiner.appendChild(h2)
+
+  }
 
   Object.entries(company).forEach(([key, value]) => {
     if (key === 'id' || key === 'name' || key === 'tel'|| key === 'address' ||key === 'logo') return

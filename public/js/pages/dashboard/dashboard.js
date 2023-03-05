@@ -1,8 +1,10 @@
 import { renderErrorMsg } from "../../components/common/errorMsg.js";
 import { renderNavData, signout } from "../../components/common/navRecruiting.js";
 let page = 1
+const overviewApi = new URL('api/job/overview', window.origin)
 const jobApi = new URL(`api/job/all?page=${page}`, window.origin) 
 const candidateApi = new URL(`api/candidate?page=${page}`, window.origin)
+const tbodyOverview = document.querySelector('.tbody-td.overview')
 const tbodyJob = document.querySelector('.tbody-td.jobs')
 const tbodyCandidate = document.querySelector('.tbody-td.candidates')
 const li = document.createElement('li')
@@ -24,18 +26,20 @@ candidateStageSelection()
 candidateStageUpdate()
 candidateJobBoxChecked()
 
+
+
 function tabHeaderChecked() {
   const overViewTap = document.querySelector('#radio1')
   const allJobsTap = document.querySelector('#radio2')
   const allCandidatesTap = document.querySelector('#radio3')
   if (overViewTap.checked) {
-
+    getOverview()
   } else if (allJobsTap.checked) {
     getAllJobs()
   } else if (allCandidatesTap.checked) {
     getAllCandidates()
   }
-  overViewTap.addEventListener('change', () => { })
+  overViewTap.addEventListener('change', () => getOverview())
   allJobsTap.addEventListener('change', () => getAllJobs())
   allCandidatesTap.addEventListener('change', () => getAllCandidates() )
 }
@@ -43,10 +47,13 @@ function tabHeaderChecked() {
 
 function candidateStageSelection() {
   statusSelect.disabled = stageSelect.value.includes('Interview')? false: true
-  dateSelect.disabled = stageSelect.value.includes('Interview')? false: true
+  dateSelect.disabled = !statusSelect.disabled && statusSelect.value === 'Rescheduled' || statusSelect.value.includes('Rescheduled') ? true: false
   stageSelect.addEventListener('change', (e) => {
     statusSelect.disabled = e.target.value.includes('Interview')? false: true
-    dateSelect.disabled = stageSelect.value.includes('Interview')? false: true
+    dateSelect.disabled = !statusSelect.disabled && statusSelect.value === 'Rescheduled' || statusSelect.value.includes('Rescheduled') ? true: false
+  })
+  statusSelect.addEventListener('change', () => {
+    dateSelect.disabled = statusSelect.value.includes('Scheduled') || statusSelect.value=== 'Rescheduled' ? false: true
   })
 }
 
@@ -71,7 +78,6 @@ function candidateStageUpdate() {
     if (jobCandidateList.length < 1) return renderErrorMsg({message: 'Please check the canidate you want to update'})
 
     const stageFormData = new FormData(updateForm)
-
     const stageData = {
       jobCandidateId: jobCandidateList,
       interviewDate: stageFormData.has('interviewDate')? stageFormData.get('interviewDate'):null,
@@ -96,13 +102,34 @@ function candidateStageUpdate() {
         const jobSection = document.querySelector(`ul[data-id="${number}"]`)
         const jobStage = jobSection.querySelector('li[data-title=Stage]')
         const jobStatus = jobSection.querySelector('li[data-title=Status]')
+        const interview = jobSection.querySelector('li[data-title=Interview]')
+        const intervewDateFormat = stageFormData.get('interviewDate').split('T')[0] + " " +stageFormData.get('interviewDate').split('T')[1]
         jobStage.textContent = stageFormData.get('name')
         jobStatus.textContent = stageFormData.has('status')? stageFormData.get('status'): 'N/A'
+        interview.textContent = stageFormData.has('interviewDate')? intervewDateFormat: 'N/A'
       })
     } else {
       renderErrorMsg(result)
     }
   })
+}
+
+async function getOverview() {
+  tbodyOverview.innerHTML = ''
+  const response = await fetch(overviewApi)
+  const result = await response.json()
+  if (result.null) {
+    const h3 = document.createElement('h3')
+    const img = document.createElement('img')
+    h3.style.padding = '1rem'
+    img.src= '/icons/clipboard-data-fill.svg'
+    h3.append(img, `Let's get started`)
+    tbodyOverview.appendChild(h3)
+  } else if(result.data) {
+    renderOverview(result.data)
+  } else {
+    renderErrorMsg(result)
+  }
 }
 
 async function getAllCandidates() {
@@ -112,14 +139,18 @@ async function getAllCandidates() {
   if (result.data === null){
     const h3 = document.createElement('h3')
     const img = document.createElement('img')
-    img.src= 'icons/file-spreadsheet.svg'
-    h3.append(img, `You haven't created any job yet`)
+    h3.style.padding = '1rem'
+    img.src= '/icons/file-spreadsheet.svg'
+    h3.append(img, `You haven't add any candidates yet`)
     tbodyCandidate.appendChild(h3)
   } else if (result.data) {
     renderCandidatesAndJobs(result.data)
+
+    showResume()
   } else {
     renderErrorMsg(result)
   }
+
 }
 
 
@@ -130,8 +161,9 @@ async function getAllJobs() {
   if (result.data === null) {
     const h3 = document.createElement('h3')
     const img = document.createElement('img')
-    img.src= 'icons/file-spreadsheet.svg'
-    h3.append(img, `You haven't created any job yet`)
+    h3.style.padding = '1rem'
+    img.src= '/icons/file-spreadsheet.svg'
+    h3.append(img, `You haven't created any jobs yet`)
     tbodyJob.appendChild(h3)
   } else if (result.data) {
     renderTeamsAndJobs(result.data)
@@ -140,17 +172,69 @@ async function getAllJobs() {
   }
 }
 
+function renderOverview(overviewData) {
+  for (const [key,value] of Object.entries(overviewData)) {
+    if (key === 'total') {
+      const gridTd = li.cloneNode()
+      gridTd.className = 'grid-td overview'
+      const totalHeader = h4.cloneNode()
+      h4.textContent = 'Total'
+      const totalIcon = img.cloneNode()
+      totalIcon.src = '/icons/bar-chart-fill.svg'
+      const totalLi = li.cloneNode()
+      totalLi.className = 'grid-total'
+      totalLi.append(totalIcon,h4,)
+      gridTd.appendChild(totalLi)
+
+      const totalEle = [
+        { content: value.applicantToday},
+        { content: value.applicantPast7Day},
+        { content: value.interviewToday},
+        { content: value.interviewNext7Day},
+        { content: value.offerPast7Day}
+      ]
+      totalEle.forEach(ele => {
+        const element = li.cloneNode()
+        element.textContent = ele.content
+        gridTd.appendChild(element)
+      })
+      tbodyOverview.appendChild(gridTd)
+    } else {    
+      value.forEach(job => {
+      const gridTr = ul.cloneNode()
+      gridTr.className = 'grid-tr primary overview'
+  
+      const overviewEle = [
+        { content: job.name},
+        { content: job.applicantToday},
+        { content: job.applicantPast7Day},
+        { content: job.interviewToday},
+        { content: job.interviewNext7Day},
+        { content: job.offerPast7Day}
+      ]
+      overviewEle.forEach(ele => {
+        const element = li.cloneNode()
+        element.textContent = ele.content
+        gridTr.appendChild(element)
+      })
+      tbodyOverview.appendChild(gridTr)
+      })
+    }
+  }
+
+}
+
 function renderCandidatesAndJobs(candidateData) {
   candidateData.forEach(({id, firstName, lastName, jobs})=> {
     const gridTd = li.cloneNode()
     gridTd.className = 'grid-td candidates'
 
     const candidateLink = a.cloneNode()
-    candidateLink.href = `/candidates/${id}`
+    // candidateLink.href = `/candidates/${id}`
     candidateLink.textContent = `${firstName} ${lastName}`
 
     const personIcon = img.cloneNode()
-    personIcon.src = 'icons/person-fill.svg'
+    personIcon.src = '/icons/person-fill.svg'
 
     const candidateHeader = h4.cloneNode()
     candidateHeader.className = 'candidate-name'
@@ -179,14 +263,19 @@ function renderCandidatesAndJobs(candidateData) {
 
       gridTr.appendChild(candidateNameLi)
 
-      const resumeLink = a.cloneNode()
-      resumeLink.href = job.resume
+      const resumeObj = document.createElement('object')
+      resumeObj.data = job.resume
+      const resumeModal = document.createElement('dialog')
+      resumeModal.className = 'resume-modal'
+      resumeModal.appendChild(resumeObj)
+
       const resumeIcon = img.cloneNode()
-      resumeIcon.className = 'resume'
-      resumeIcon.src = 'icons/pdf.svg'
-      resumeLink.appendChild(resumeIcon)
+      resumeIcon.className = 'preview-resume'
+      resumeIcon.src = '/icons/pdf.svg'
+      // resumeObj.appendChild(resumeIcon)
       const resumeLi = li.cloneNode()
-      resumeLi.appendChild(resumeLink)
+      resumeLi.dataset.title = 'Resume'
+      resumeLi.append(resumeIcon, resumeModal)
 
       const jobEle = [
         { content: job.stage, data: 'Stage'},
@@ -250,10 +339,10 @@ function renderTeamsAndJobs(jobData) {
       editLink.className = 'edit'
       editLink.href = `/recruiting/edit_job/${job.id}`
       const pencil = img.cloneNode()
-      pencil.src = 'icons/pencil.svg'
+      pencil.src = '/icons/pencil.svg'
       const close = img.cloneNode()
       close.className = 'close'
-      close.src = 'icons/x-lg.svg'
+      close.src = '/icons/x-lg.svg'
       close.dataset.id = job.id
 
       editLink.appendChild(pencil)
@@ -299,8 +388,25 @@ function closeJob () {
       if (response.status === 200) {
         closeBtn.parentNode.parentElement.remove()
       } else {
-        console.log(result.message)
+        renderErrorMsg(result)
       }
     } )
     )
+}
+
+function showResume() {
+  tbodyCandidate.addEventListener('click', (e) => {
+    e.stopPropagation()
+    const resumeModal = tbodyCandidate.querySelector('.resume-modal')
+    const previewResumeBtn = e.target.closest('.preview-resume')
+    if (previewResumeBtn) {
+      resumeModal.showModal()
+    }
+    if (e.target === resumeModal) {
+      resumeModal.close()
+    }
+
+  })
+
+
 }

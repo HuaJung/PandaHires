@@ -1,4 +1,4 @@
-import { renderErrorMsg } from "../../components/common/errorMsg"
+import { renderErrorMsg } from "../../components/common/errorMsg.js"
 
 const companySignUpPage = new URL('/company_info', `${window.origin}`)
 const form = document.querySelector('form')

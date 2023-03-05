@@ -1,5 +1,6 @@
 import { signInChecker } from '../../components/validator/userChecker.js'
 import { emptyFieldChecker } from '../../components/validator/emptyFieldChecker.js'
+import { renderErrorMsg } from '../../components/common/errorMsg.js'
 const dashboardPage = new URL('/recruiting/dashboard', `${window.origin}`)
 const nameError = document.querySelector('.name.error')
 const countryError = document.querySelector('.country.error')
@@ -40,8 +41,6 @@ function companyForm() {
 }
 
 async function companySignUp(data) {
-  const errorMsg = document.querySelector('.error-msg')
-  const errorText = errorMsg.querySelector('span')
   const companyApi = new URL('api/company', `${window.origin}`)
   const request = {
     'method': 'POST',
@@ -61,7 +60,6 @@ async function companySignUp(data) {
     addError.textContent = result.message.address
     telError.textContent = result.message.tel
   } else {
-    errorText.textContent = 'something went wrong, please try again!'
-    errorMsg.style.display = 'flex'
+    renderErrorMsg({message: 'something went wrong, please try again!'})
   }
 }
