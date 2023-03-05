@@ -1,3 +1,5 @@
+@import url(../common/error.css);
+
 body {
   padding: 0;
 }
@@ -68,31 +70,6 @@ input:not(:focus):invalid {
   box-shadow: 0 0 4px 0 green;
 } */
 
-.error-msg{
-  display: none;
-  /* opacity: 0; */
-  align-items: center;
-  padding: 10px 5px;
-  background-color: rgba(229, 11, 11, 0.2);
-  color: rgba(165, 42, 42, 0.707);
-  border: 2px solid rgba(165, 42, 42, 0.707);
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 1rem;
-}
-.error-msg svg {
-  margin: 0 10px;
-}
-
-.error-msg span {
-  color: rgba(165, 42, 42, 0.707);
-}
-
-.error {
-  color: red;
-  padding-left: 1rem;
-
-}
 /* input:required:focus:invalid{
   border-color: brown;
   box-shadow: 0 0 4px 0 brown;

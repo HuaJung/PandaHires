@@ -16,12 +16,10 @@ async function getAllJobs() {
   const allJobsApi = new URL('/api/job/openings', window.origin)
   const response = await fetch(allJobsApi)
   const result = await response.json()
-
   if (response.status === 200) {
     renderAllJobs(result.data)
   } else {
-    errorText.textContent = result.message
-    errorMsg.style.display = 'flex'
+    renderErrorMsg(result)
   }
 }
 
@@ -29,6 +27,7 @@ function renderAllJobs(jobData) {
   const option = document.createElement('option')
   if (jobData === null) {
     option.label = 'No Open Jobs Yet'
+    option.disabled = true
     jobSelect.appendChild(option)
   } else {
     jobData.forEach(job => {

@@ -123,7 +123,7 @@ const getAllCandidates = async(req, res) => {
     const allCandidates = await sequelize.query(
       `SELECT c.id ,c.firstName, c.lastName, GROUP_CONCAT(
         CONCAT_WS(",,", jc.id, jobs.name, jobs.status, jc.resume, jc.origin, jc.createdAt, stages.name, COALESCE(stages.status, 'N/A'), COALESCE(sr.interviewDate, 'N/A')) ORDER BY sr.createdAt DESC SEPARATOR ",,") AS jobDetails FROM candidates c 
-        INNER JOIN JobCandidates jc ON c.id = jc.candidateID 
+        INNER JOIN jobCandidates jc ON c.id = jc.candidateID 
         INNER JOIN jobs ON jobs.id = jc.jobId 
         INNER JOIN (SELECT jobCandidateId, MAX(sr.createdAt) AS maxCreatedAt 
         FROM stageRecords sr GROUP BY jobCandidateId) latest_sr ON latest_sr.jobCandidateId= jc.id

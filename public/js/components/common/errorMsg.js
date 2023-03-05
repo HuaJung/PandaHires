@@ -5,6 +5,8 @@ const triangleWarningIcon = document.createElement('img')
 
 function renderErrorMsg(result) {
   errorMsg.className = 'error-msg'
+  errorMsg.style.display = 'flex'
+  errorMsg.style.gap = '5px'
   triangleWarningIcon.src = '/icons/triangle-warning.svg'
   errorText.textContent = result.message
   errorMsg.append(triangleWarningIcon, errorText)

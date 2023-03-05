@@ -40,6 +40,7 @@ async function userSignIn(data){
   }
   const response = await fetch(authApi, request)
   const result = await response.json()
+
   if (response.status === 200) {
     const dashboardPage = new URL('/recruiting/dashboard', `${window.origin}`)
     location.assign(dashboardPage)
@@ -47,6 +48,7 @@ async function userSignIn(data){
     emailError.textContent = result.message.email
     pwdError.textContent = result.message.password
   } else if (response.status === 401 || response.status === 403) {
+    console.log('hihihihi')
     renderErrorMsg(result)
   } else {
     renderErrorMsg(result)

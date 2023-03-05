@@ -16,6 +16,7 @@ const a = document.createElement('a')
 const stageSelect = document.querySelector('select[name=name]')
 const statusSelect = document.querySelector('select[name=status]')
 const dateSelect = document.querySelector('input[name=interviewDate]')
+const errorGroup = document.querySelector('.error-group')
 let jobCandidateList =[]
 
 
@@ -71,10 +72,9 @@ function candidateJobBoxChecked() {
 
 function candidateStageUpdate() { 
   const updateForm = document.querySelector('.grid-form.update')
-  // const upadteBtn = document.querySelector('.mini-btn-update')
   updateForm.addEventListener('submit', async(e) => {
     e.preventDefault()
-
+    errorGroup.innerHTML = ''
     if (jobCandidateList.length < 1) return renderErrorMsg({message: 'Please check the canidate you want to update'})
 
     const stageFormData = new FormData(updateForm)
@@ -96,8 +96,6 @@ function candidateStageUpdate() {
     const response = await fetch(stageApi, request)
     const result = await response.json()
     if (response.status === 200) {
-      const errorGroup = document.querySelector('.error-group')
-      errorGroup.innerHTML = ''
       jobCandidateList.forEach((number) => {
         const jobSection = document.querySelector(`ul[data-id="${number}"]`)
         const jobStage = jobSection.querySelector('li[data-title=Stage]')
@@ -115,10 +113,11 @@ function candidateStageUpdate() {
 }
 
 async function getOverview() {
+  errorGroup.innerHTML = ''
   tbodyOverview.innerHTML = ''
   const response = await fetch(overviewApi)
   const result = await response.json()
-  if (result.null) {
+  if (result.data === null) {
     const h3 = document.createElement('h3')
     const img = document.createElement('img')
     h3.style.padding = '1rem'
@@ -133,6 +132,7 @@ async function getOverview() {
 }
 
 async function getAllCandidates() {
+  errorGroup.innerHTML = ''
   tbodyCandidate.innerHTML = ''
   const response = await fetch(candidateApi)
   const result = await response.json()
@@ -155,6 +155,7 @@ async function getAllCandidates() {
 
 
 async function getAllJobs() {
+  errorGroup.innerHTML = ''
   tbodyJob.innerHTML = ''
   const response = await fetch(jobApi)
   const result = await response.json()
