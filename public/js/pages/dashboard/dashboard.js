@@ -141,7 +141,7 @@ async function getAllCandidates() {
     const img = document.createElement('img')
     h3.style.padding = '1rem'
     img.src= '/icons/file-spreadsheet.svg'
-    h3.append(img, `You haven't add any candidates yet`)
+    h3.append(img, `You haven't added any candidates yet`)
     tbodyCandidate.appendChild(h3)
   } else if (result.data) {
     renderCandidatesAndJobs(result.data)

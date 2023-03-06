@@ -57,6 +57,10 @@ function addCandidate() {
     const jobId = document.querySelector('select[name=jobId]').value
     const company = await companyInfo()
     const candidateApi = new URL(`/api/candidate/${company.id}/${jobId}`, window.origin)
+    const submitBtn = document.querySelector('.btn-submit')
+    submitBtn.disabled= true
+    const submitBtnTxt = submitBtn.querySelector('span')
+    submitBtnTxt.textContent = 'Creating...'
 
     const formData = new FormData(form)
     const request = {
@@ -70,6 +74,8 @@ function addCandidate() {
     } else {
       renderErrorMsg(result)
     }
+    submitBtn.disabled= false
+    submitBtnTxt.textContent = 'Submit'
   })
 }
 

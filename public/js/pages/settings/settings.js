@@ -7,6 +7,7 @@ const successMsg = document.querySelector('.success-msg')
 const editCompanyBtn = document.querySelector('.company .bi-pencil-square')
 const companyModal = document.querySelector('.modal-dialog')
 const closeModal = document.querySelector('.close-btn')
+const homePage = new URL('/', window.origin)
 
 
 getUser()
@@ -157,7 +158,7 @@ function deleteAccount() {
     const response = await fetch(userApi, {"method": "DELETE"})
     const result = await response.json()
     if (response.status === 204 ) {
-      location.assign('/')
+      location.assign(homePage)
     } else {
       renderErrorMsg(result)
     }
