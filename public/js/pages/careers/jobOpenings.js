@@ -28,12 +28,12 @@ function renderOpenings(jobData) {
     const span = document.createElement('span')
     const teamGroup = div.cloneNode()
     teamGroup.className = 'team-group'
+    const teamName = document.createElement('h3')
+    teamName.className = 'team'
+    teamName.textContent = team
+    teamGroup.appendChild(teamName)
 
     jobs.forEach((job) => {
-      const teamName = document.createElement('h3')
-      teamName.className = 'team'
-      teamName.textContent = team
-
       const jobLink = document.createElement('a')
       jobLink.className = 'grid-job-link'
       jobLink.href = `/careers/${companyName}/jobs/${job.id}`
@@ -63,7 +63,7 @@ function renderOpenings(jobData) {
 
       jobInfo.append(workType, ' - ', jobCity, ', ', jobCountry, ' | ', empolymentType)
       jobLink.append(jobName, updatedAt, jobInfo)
-      teamGroup.append(teamName, jobLink)
+      teamGroup.appendChild(jobLink)
     })
     listGroup.appendChild(teamGroup)
 

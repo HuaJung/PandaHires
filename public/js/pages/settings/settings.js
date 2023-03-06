@@ -14,6 +14,7 @@ updateUser()
 showCompanyForm()
 updateFileDisplay()
 updateCompany()
+deleteAccount()
 
 
 
@@ -148,19 +149,17 @@ function updateFileDisplay() {
     }
     
   }) 
+}
 
-  
-
-  // inputFiles.forEach((inputFile) => {
-  //   inputFile.addEventListener('change', (e) => {
-  //     console.log(inputFile)
-  //     const curFile = inputFile.files[0]
-  //     const curPreview = companyForm.querySelector(`.preview-${inputFile.id}`)
-  //     if (curFile.length === 0) {   
-  //      curPreview.textContent = 'No files currently selected for upload'
-  //     } else {
-  //       curPreview.textContent = curFile.name
-  //     };
-  //   })
-  // }) 
+function deleteAccount() {
+  const deleteBtn = document.querySelector('.delete')
+  deleteBtn.addEventListener('click', async() => {
+    const response = await fetch(userApi, {"method": "DELETE"})
+    const result = await response.json()
+    if (response.status === 204 ) {
+      location.assign('/')
+    } else {
+      renderErrorMsg(result)
+    }
+  })
 }
