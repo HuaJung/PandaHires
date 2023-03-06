@@ -77,10 +77,15 @@ function updateFileDisplay() {
 
 function submitApplication() {
   const form = document.querySelector('form')
+  const errorGroup = document.querySelector('.error-group')
+  errorGroup.innerHTML = ''
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
     const submitBtn = document.querySelector('.btn-submit')
     submitBtn.disabled= true
+    const submitBtnTxt = submitBtn.querySelector('span')
+    submitBtnTxt.textContent = 'Submitting...'
+
     const jobId = window.location.pathname.split('/')[4]
     const candidateApi = new URL(`/api/career/apply?id=${jobId}`, window.origin)
     const formData = new FormData(form)
@@ -90,15 +95,16 @@ function submitApplication() {
     }
     const response = await fetch(candidateApi, request)
     const result = await response.json()
+
     if (response.status === 201) {
       // popout thank you box
+      applyModal.close()
       thankyouBox.style.display = 'block'
-      const body = document.querySelector('body')
-      body.style.backgroudColor = 'var(--third-text-color)'
     } else {
-       renderErrorMsg()
+       renderErrorMsg(result)
     }
     submitBtn.disabled= false
+    submitBtnTxt.textContent = 'Submit'
   })
 }
 

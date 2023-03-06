@@ -106,16 +106,11 @@ const candidateApply = async (req, res) => {
   if (Object.keys(candidate).length < 6) return res.status(400).json({'error': true, 'message': 'missing fields'})
 
   try {
-    // let foundCandidate = await job.getCandidates({
-    //   where: {email: candidate.email}
-    // })
-    // console.log(JSON.stringify(foundCandidate, null, 2))
-    // if(foundCandidate.length > 1) return res.status(400).json({'error': 'already applied'})
     let jobCandidate
     const job = await Job.findByPk(jobID)
     candidate['companyId'] = job.companyId
     const resume = req.files.resume
-    const resumeName = `${Date.now()}.pdf` 
+    const resumeName = `resume-${Date.now()}.pdf` 
     const jobCandidateAttributes = {
       resume: resumeName,
       origin: 'Official',
@@ -147,7 +142,7 @@ const candidateApply = async (req, res) => {
     // save PDF to S3
     const params = {
       Bucket: bucketName,
-      Key: `pandahires/resume-${resumeName}`,
+      Key: `pandahires/${resumeName}`,
       Body: resume.data,
       ContentType: resume.mimetype
     };

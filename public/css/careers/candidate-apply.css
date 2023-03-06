@@ -103,7 +103,11 @@ input[type=file] {
   box-shadow: 3px 3px 6px 2px rgba(0, 0, 0, 0.4);
   color: var(--success-text-color);
   display: none;
+  z-index: 999;
 
+}
+.thankyou::backdrop{
+  background: var(--third-text-color);
 }
 .bi-file-earmark-check {
   fill: var(--success-text-color);

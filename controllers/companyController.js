@@ -82,7 +82,7 @@ const updateCompany = async (req, res) => {
       Object.entries(files).forEach(([key, value]) => {
         const param =  {
           Bucket: bucketName, 
-          Key: `pandahires/company/${key}-${Date.now()}.${value.name.split('.')[1]}`,
+          Key: `pandahires/${key}-${Date.now()}.${value.name.split('.')[1]}`,
           Body: value.data,
           ContentType: value.mimetype
         };
@@ -94,7 +94,7 @@ const updateCompany = async (req, res) => {
       const deleteParams = Object.keys(file).map((key)=> {
         return {
           Bucket: bucketName,
-          Key: `pandahires/company/${OldLogoOrImage[key]}`,
+          Key: `pandahires/${OldLogoOrImage[key]}`,
         }
       })
       updateParams.forEach(async(param) => await s3.send(new PutObjectCommand(param)))

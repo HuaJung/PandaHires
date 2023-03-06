@@ -8,6 +8,7 @@ import { sequelize } from "../models/dbConn.js";
 
 
 dotenv.config()
+
 const cloudfrontUrl = 'https://d1kd77tnohewk3.cloudfront.net'
 const bucketName=process.env.BUCKET_NAME
 const bucketRegion=process.env.BUCKET_REGION
@@ -27,8 +28,10 @@ const addNewCandidate = async(req, res) => {
   const jobID = Number(req.params.jobID)
   const companyID = Number(req.params.companyID)
   const candidate = req.body
+  const resume = req.files
+  console.log(resume)
   
-  if (!req.files || Object.keys(req.files).length === 0) return res.status(400).json({'error': true, 'message': 'No file is uploaded'})
+  if (!resume || Object.keys(resume).length === 0) return res.status(400).json({'error': true, 'message': 'No file is uploaded'})
   
   if (Object.keys(candidate).length < 6) return res.status(400).json({'error': true, 'message': 'missing fields'})
 
@@ -42,8 +45,8 @@ const addNewCandidate = async(req, res) => {
       include: Job
     })
     candidate['companyId'] = companyID
-    const resume = req.files.resume
-    const resumeName = `${Date.now()}.pdf`
+
+    const resumeName = `resume-${Date.now()}.pdf`
 
     let jobCandidate
     let origin
@@ -73,7 +76,7 @@ const addNewCandidate = async(req, res) => {
       // save PDF to S3
       const params = {
         Bucket: bucketName,
-        Key: `pandahires/resume-${resumeName}`,
+        Key: `pandahires/${resumeName}`,
         Body: resume.data,
         ContentType: resume.mimetype
       };
@@ -88,7 +91,7 @@ const addNewCandidate = async(req, res) => {
       // save PDF to S3
       const params = {
         Bucket: bucketName,
-        Key: `pandahires/resume-${resumeName}`,
+        Key: `pandahires/${resumeName}`,
         Body: resume.data,
         ContentType: resume.mimetype
       };
@@ -148,11 +151,11 @@ const getAllCandidates = async(req, res) => {
         lastName,
         jobs: jobDetails.split(',,').reduce((acc, curr, index, arr) => {
           if (index % 9 === 0) {
-            let interviewTimeFormat 
-            if(arr[index+8]!== 'N/A') {
-              const InterviewTimeList = 
-              interviewTimeFormat= arr[index+8].split(':')[0]+':'+arr[index+8].split(':')[1]
-            }
+            // let interviewTimeFormat 
+            const interviewTime  = arr[index+8]!== 'N/A'? arr[index+8].split(':')[0]+':'+arr[index+8].split(':')[1]: arr[index+8]
+            // if(arr[index+8]!== 'N/A') {
+            //   interviewTimeFormat= arr[index+8].split(':')[0]+':'+arr[index+8].split(':')[1]
+            // }
             acc.push({
               jobCandidateId: parseInt(curr),
               jobName: arr[index+1],
@@ -162,7 +165,7 @@ const getAllCandidates = async(req, res) => {
               appliedDate: arr[index+5],
               stage: arr[index+6],
               stageStatus: arr[index+7],
-              interviewDate: interviewTimeFormat
+              interviewDate: interviewTime
             })
           }
           return acc
@@ -279,7 +282,7 @@ const updateResume = async(req, res) => {
   try {
     const candidateID = req.params.candidateID
     const newResume = req.files.resume
-    const newResumeName = `${Date.now()}.pdf`
+    const newResumeName = `resume-${Date.now()}.pdf`
     const oldResume = await JobCandidate.findOne({
       attributes: ['resume'],
       where: {jobId: jobID , candidateId: candidateID}
@@ -289,11 +292,11 @@ const updateResume = async(req, res) => {
     // update resume in S3
     const deleteParams = {
       Bucket: bucketName,
-      Key: `pandahires/resume-${oldResume.resume}`,
+      Key: `pandahires/${oldResume.resume}`,
     }
     const updateParams = {
       Bucket: bucketName,
-      Key: `pandahires/resume-${newResumeName}`,
+      Key: `pandahires/${newResumeName}`,
       Body: newResume.data,
       ContentType: newResume.mimetype
     };

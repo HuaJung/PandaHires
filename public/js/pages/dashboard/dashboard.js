@@ -48,10 +48,10 @@ function tabHeaderChecked() {
 
 function candidateStageSelection() {
   statusSelect.disabled = stageSelect.value.includes('Interview')? false: true
-  dateSelect.disabled = !statusSelect.disabled && statusSelect.value === 'Rescheduled' || statusSelect.value.includes('Rescheduled') ? true: false
+  dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled') || statusSelect.value.includes('Rescheduled')) ? false: true
   stageSelect.addEventListener('change', (e) => {
     statusSelect.disabled = e.target.value.includes('Interview')? false: true
-    dateSelect.disabled = !statusSelect.disabled && statusSelect.value === 'Rescheduled' || statusSelect.value.includes('Rescheduled') ? true: false
+    dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled') || statusSelect.value.includes('Rescheduled')) ? false: true
   })
   statusSelect.addEventListener('change', () => {
     dateSelect.disabled = statusSelect.value.includes('Scheduled') || statusSelect.value=== 'Rescheduled' ? false: true
@@ -101,10 +101,10 @@ function candidateStageUpdate() {
         const jobStage = jobSection.querySelector('li[data-title=Stage]')
         const jobStatus = jobSection.querySelector('li[data-title=Status]')
         const interview = jobSection.querySelector('li[data-title=Interview]')
-        const intervewDateFormat = stageFormData.get('interviewDate').split('T')[0] + " " +stageFormData.get('interviewDate').split('T')[1]
+        const intervewDateFormat = stageFormData.has('interviewDate') ? stageFormData.get('interviewDate').split('T')[0] + " " +stageFormData.get('interviewDate').split('T')[1] : 'N/A'
         jobStage.textContent = stageFormData.get('name')
         jobStatus.textContent = stageFormData.has('status')? stageFormData.get('status'): 'N/A'
-        interview.textContent = stageFormData.has('interviewDate')? intervewDateFormat: 'N/A'
+        interview.textContent = intervewDateFormat
       })
     } else {
       renderErrorMsg(result)
@@ -145,7 +145,6 @@ async function getAllCandidates() {
     tbodyCandidate.appendChild(h3)
   } else if (result.data) {
     renderCandidatesAndJobs(result.data)
-
     showResume()
   } else {
     renderErrorMsg(result)
@@ -257,7 +256,7 @@ function renderCandidatesAndJobs(candidateData) {
       inputCheck.dataset.id = job.jobCandidateId
 
       const jobStatus = document.createElement('small')
-      jobStatus.className = job.jobStage === 'Open'? 'job-status active': 'job-status'
+      jobStatus.className = job.jobStatus === 'Open'? 'job-status active': 'job-status'
       jobStatus.textContent = job.jobStatus
       const candidateNameLi = li.cloneNode()
       candidateNameLi.append(inputCheck, "  ",job.jobName, jobStatus)
@@ -398,13 +397,15 @@ function closeJob () {
 function showResume() {
   tbodyCandidate.addEventListener('click', (e) => {
     e.stopPropagation()
-    const resumeModal = tbodyCandidate.querySelector('.resume-modal')
     const previewResumeBtn = e.target.closest('.preview-resume')
+
     if (previewResumeBtn) {
+      const resumeModal = previewResumeBtn.nextSibling
       resumeModal.showModal()
     }
-    if (e.target === resumeModal) {
-      resumeModal.close()
+    const openMdal = e.target.closest('dialog[open]')
+    if (openMdal) {
+      openMdal.close()
     }
 
   })

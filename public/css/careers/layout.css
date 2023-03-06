@@ -65,7 +65,8 @@ a {
 }
 .logo-img {
   width: 100%;
-  object-fit: fill;
+  object-fit: scale-down;
+  object-position: 0% 0%;
 }
 
 .nav-items {

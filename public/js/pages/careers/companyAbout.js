@@ -1,11 +1,8 @@
-
 import { pageNotFound } from "../../components/common/404.js";
 import { getCompany, getCareersCompany, renderCompanyLogo } from "../../components/common/navCareers.js";
 
-renderCompany()
 
-async function renderCompany() {
-  const company = await getCareersCompany()
+async function renderCompany(company) {
   // render banner
   const companyImg = document.querySelector('.company-img')
   let element

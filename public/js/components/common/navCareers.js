@@ -1,3 +1,4 @@
+import { renderCompany } from "../../pages/careers/companyAbout.js"
 import { pageNotFound } from "./404.js"
 import { renderErrorMsg } from "./errorMsg.js"
 const navLink = document.querySelectorAll('.nav-link')
@@ -65,9 +66,10 @@ async function getCareersCompany() {
   const response = await fetch(careerCompanyApi)
   const result = await response.json()
   if (response.status === 200) {
-
+    if (window.location.pathname.includes('about')) {
+      renderCompany(result.data)
+    } 
     renderCompanyLogo(result.data)
-    return result.data
   } else {
     // show 404 not found
     pageNotFound()
@@ -75,6 +77,7 @@ async function getCareersCompany() {
 }
 
 function renderCompanyLogo(companyData) {
+  // companyLink.innerHTML = ''
   let element;
   if (companyData.logo === null) {
     element = document.createElement('h3')
