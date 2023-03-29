@@ -1,74 +1,52 @@
 :root {
-
-  --onyx: #3F403F;
-  --baby-powder:#F7F7F2;
-  --ivory: #FFFFF3;
-
-  --additional-pumbkim: #80413E;
-  --yellow: #F2CD5D;
-  --dark-yellow: #DEA45B;
-  
-  --light-blue-gray: #CDD6DD;
-  --green-blue: #BBDBD1;
-  --cambridge-blue: #A7CDBD;
-  --morning-blue: #9CAEA9;
-  --blue-yonder: #607196;
-
-  --light-gray: #E6E8E6;
-  --mid-gray: #CED0CE;
-  --opal: #9FB8AD;
-  --ash-gray: #CCDAD1;
-  --battleship-grey: #788585;
-  --dim-gray: #6F6866;
-  --cultured: #E8E9ED;
-  --sliver-chalice: #A0ACAD;
-
-
-  --rifle-green: #475841;
-  --green: #626D58;
-  --artichoke: #869D7A;
-  --pink-beige: #CCBCBC;
-
   --primary-button-color: #475841;
   --primary-button-backgrond:white;
   --secondary-button-color: #FFFFF3;
   --secondary-button-background: #475841;
-  --primary-button-hover-color: white;
+  --third-button-color: #F7F7F2;
+  --third-button-background: #F7F7F2;
+  --small-button-background: #ECECECE1;
   --close-button-color: #6F6866;
-  --active-button-color: #475841;
   --inactive-button-color: #CED0CE;
 
- 
+
+  --header-text-color: #3F403F;
+  --success-text-color: #70855b;
+  --small-text-color: #6F6866;
   --primary-text-color: #38302E;
   --secondary-text-color: #FFFFF3;
   --third-text-color: #A0ACAD;
   --forth-text-color: #515357;
-  --success-text-color: #70855b;
-  --small-text-color: #6F6866;
-  --additional-text-color: #626D58;
-  --primary-black-color: #111D4A;
-  --additional-drak: #1D1D21;
+  --fifth-text-color: #869D7A;
   --another-text-color: #868383;
-
+  --additional-text-color: #E6E8E6 ;
+  --logo-text-color: #626D58;
 
 
   --primary-background-color: #CCDAD1;
-  --secondary-background-color: black;
+  --secondary-background-color: #9CAEA9;
   --third-background-color:#fafafa;
   --forth-background-color:#E8E9ED;
-  --fifth-background-color: #cdd6dd8f ;
+  --fifth-background-color: #CDD6DD8F;
+  --six-background-color: #869D7A ;
   --additional-background-color: #A0ACAD;
   --small-background-color: #CDD6DD;
   --small-active-background-color: #9FB8AD;
+  --white-background-color: white;
 
-  --footer--secondary-color:#9CAEA9;
-  --footer--primary-color: #9FB8AD;
 
-  --primary-hover-backgound: #ececece1;
-  --secondary-hover-color:#869D7A;
-  --black-text-hover: #6F6866;
-  --header-text-color: #3F403F;
-  --border-color: #475841;
+  --footer-primary-color: #9FB8AD;
+  --footer-secondary-color:#9CAEA9;
+  --footer-third-color: #E6E8E6;
+  --footer-primary-background-color: #475841;
+  --footer-secondary-background-color: #626D58;
+  --footer-third-background-color: #FAFAFA;
 
+
+  --primary-border-color: #FFFFF3;
+  --secondary-border-color: #475841;
+  --third-border-color: #111D4A;
+
+  
   --shadow-gray: rgba(0, 0, 0, .4);
 }

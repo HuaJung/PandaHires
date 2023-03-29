@@ -11,21 +11,30 @@
   color: var(--black-coffee);
   font-family: 'Nunito', sans-serif;
 }
+
 body {
+  padding: 4.5rem 0 0 0;
   overflow-x: hidden;
 }
+
 [class*="grid-"] {
   display: grid;
 }
+
 a {
   text-decoration: none;
 }
+
 .primary-header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right:0;
   padding: 1rem 0;
   box-shadow: 0 0 30px rgba(21, 55, 44, .1) ;
-
+  background-color: var(--white-background-color);
 }
+
 .navbar {
   max-width: 1200px;
   margin: auto;
@@ -37,29 +46,23 @@ a {
 
 .logo, .mobile-logo {
   font-family: 'Alegreya Sans SC', sans-serif;
-  /* font-family: 'Bubbler One', sans-serif; */
-  /* font-family: 'Crimson Text', serif; */
-  /* font-family: 'Euphoria Script', cursive; */
-  /* font-family: 'Libre Baskerville', serif; */
-  /* font-family: 'Montez', cursive; */
-  /* font-family: 'Nunito', sans-serif; */
-  /* font-family: 'Voltaire', sans-serif; */
-  /* margin: 0 2rem; */
-  color: var(--green);
+  color: var(--logo-text-color);
   font-weight: 400;
 }
 
 .primary-nav .nav-items {
   font-size: 18px;
 }
+
 .nav-items {
   display: flex;
   gap: 2.5rem;
 }
+
 .nav-items a {
-  /* margin-inline-end: 0.75em; */
   color: var(--black-coffee);
 }
+
 .auth-nav .nav-items{
   gap: 1.5rem
 }
@@ -68,9 +71,9 @@ a {
   display: inline-block;
   padding: 10px 20px;
   text-align: center;
-  border: 1px solid var(--rifle-green);
+  border: 1px solid var(--secondary-border-color);
   border-radius: 100px;
-  color: var(--rifle-green);
+  color: var(--primary-button-color);
 }
 
 .signin {
@@ -89,21 +92,15 @@ a {
 .hero-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* gap: 0 3rem ; */
   padding: 3rem;
-  /* grid-template-areas: 
-  " headline image"
-  " headline image"
-  ; */
 }
 
 .hero-headline {
   display: grid;
   padding: 2rem 3rem 2rem 1rem;
-  /* grid-template-rows: min-content; */
   gap: 2rem;
-  /* grid-area: headline; */
 }
+
 .hero-headline h1 {
   font-family: 'Libre Baskerville', serif;
   align-self: end;
@@ -115,9 +112,6 @@ a {
   padding: 2rem 0 2rem 3rem; 
 }
 
-.hero-image{
-  /* grid-area: image; */
-}
 .hero-image img{
   width: 100%;
   height: 100%;
@@ -127,14 +121,15 @@ a {
 .primary-nav a {
   transition: all 300ms 200ms;
 }
-.primary-nav a:hover {
-  color: var(--artichoke);
-  border-bottom: 1px solid var(--artichoke);
 
+.primary-nav a:hover {
+  color: var(--fifth-text-color);
+  border-bottom: 1px solid var(--fifth-text-color);
 }
+
 .auth-nav a:hover {
-  background-color: var(--rifle-green);
-  color: var(--baby-powder);
+  background-color: var(--secondary-button-background);
+  color: var(--third-button-color);
 }
 
 footer {
@@ -143,8 +138,8 @@ footer {
   text-align: center;
   line-height: 70px;
   padding: 1rem 4rem;
-  color: var(--light-gray);
-  background-color: var(--green);
+  color: var(--footer-third-color);
+  background-color: var(--footer-secondary-background-color);
 }
 
 @media (max-width: 767px) {
@@ -153,7 +148,7 @@ footer {
     margin-left: 2rem;
   }
   .logo {
-    color: var(--ivory);
+    color: var(--secondary-text-color);
   }
   .navbar {
     position: fixed;
@@ -175,7 +170,6 @@ footer {
     top: 73px;
     margin: auto;
   }
-
   .mobile-nav-toggle {
     display: block;
     position: absolute;
@@ -202,7 +196,7 @@ footer {
     opacity 0ms 300ms;
   }
   #toggle-expanded:checked ~ .mobile-nav-toggle .hamburger{
-    fill:var(--light-gray)
+    fill:var(--additional-text-color)
   }
   #toggle-expanded:checked ~ .mobile-nav-toggle :is(.top, .bottom) {
     y: 45px;
@@ -216,37 +210,27 @@ footer {
   #toggle-expanded:checked ~ .mobile-nav-toggle .bottom {
     transform: rotate(-45deg);
   }
-
   #toggle-expanded:checked ~ .navbar {
     transform: translateX(0%);
-    background-color: var(--artichoke);
+    background-color: var(--six-background-color);
     transition: transform 350ms ease-out;
   }
-
-  /* .navbar[data-visible="true"] {
-    transform: translateX(0%);
-  } */
-
   .primary-nav a {
     font-size: 22px;
   }
-
   .nav-items a {
-    color: var(--baby-powder);
+    color: var(--third-button-color);
   }
   .nav-items {
     flex-direction: column;
   }
-
   .auth-nav{
     align-self: center;
-
   }
   .auth-nav a {
     width: 70vw;
-    border: 1px solid var(--ivory);
+    border: 1px solid var(--primary-border-color);
   }
-
   .hero-section {
     grid-template-columns: 1fr;
     grid-template-areas: 

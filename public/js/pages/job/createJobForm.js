@@ -32,7 +32,7 @@ async function renderJobFormContent(jobData) {
     } else  {
       document.querySelector(`.${key}`).value = value
     }
-  });
+  })
 
 }
 
@@ -51,7 +51,6 @@ function jobForm() {
     } else {
       location.assign(previewCreatePage)
     }
-
   })
 }
 

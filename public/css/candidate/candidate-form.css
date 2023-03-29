@@ -4,8 +4,6 @@
 
 .header {
   color: var(--header-text-color);
-  /* font-family: 'Libre Baskerville', serif; */
-  /* font-family: 'Nunito', sans-serif; */
   font-family: 'Merriweather', serif;
   text-align: center;
   padding: 0 1rem 1rem 1rem;
@@ -15,16 +13,16 @@
 .card {
   margin: 1rem 0;
   padding:0 2rem;
-  /* background-color: var(--ash-gray); */
 }
+
 form {
   max-width: 700px;
   margin: auto;
   padding: 2rem;
 }
+
 .grid-form {
   gap: 0.5rem;
-  /* align-items: center; */
   padding-bottom: 2rem;
 }
 
@@ -32,21 +30,17 @@ input, select, .resume.btn {
   height: 3rem;
   border-radius: 7px;
   padding: 0 1rem;
-
 }
+
 .city, .origin-name {
   margin-top: 0.8rem;
   width: 100%;
 }
+
 .origin {
   width: 100%;
 }
 
-/* option {
-  overflow: hidden;
-  width: 100px;
-  text-overflow: ellipsis;
-} */
 
 input[type=file] {
   opacity: 0;
@@ -65,9 +59,11 @@ input[type=file] {
   font-size: 14px;
   max-width: 180px; 
 }
+
 .resume {
   cursor: pointer;
 }
+
 .preview {
   padding: 3px 0 3px 1rem;
   font-style: italic;
@@ -75,6 +71,7 @@ input[type=file] {
   word-break: break-all;
   font-size: 14px;
 }
+
 .label {
   margin-top: 1rem;
   font-weight: 500;

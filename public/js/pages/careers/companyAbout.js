@@ -1,4 +1,3 @@
-import { pageNotFound } from "../../components/common/404.js";
 import { getCompany, getCareersCompany, renderCompanyLogo } from "../../components/common/navCareers.js";
 
 
@@ -29,11 +28,12 @@ async function renderCompany(company) {
     img.src= '/icons/cone-striped.svg'
     h2.append(img, `Wait more info to come`)
     conatiner.appendChild(h2)
-
   }
 
   Object.entries(company).forEach(([key, value]) => {
     if (key === 'id' || key === 'name' || key === 'tel'|| key === 'address' ||key === 'logo') return
+
+    if (value === null) return
 
     document.querySelector(`.${key}`).textContent = value
   });

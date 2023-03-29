@@ -5,16 +5,14 @@
 
 .header {
   color: var(--header-text-color);
-  /* font-family: 'Libre Baskerville', serif; */
-  /* font-family: 'Nunito', sans-serif; */
   font-family: 'Merriweather', serif;
   text-align: center;
   padding: 0 1rem 1rem 1rem;
   border-bottom: 1px solid black;
 }
+
 .account-card {
   padding: 3rem;
-  /* background-color: var(--ash-gray); */
 }
 
 .grid-user-form {
@@ -22,8 +20,8 @@
   max-width: 700px;
   margin: auto;
   align-items: center;
-  /* padding-bottom: 2rem; */
 }
+
 .label {
   font-weight: 500;
 }
@@ -32,6 +30,7 @@
   cursor: pointer;
   fill: var(--inactive-button-color)
 }
+
 .bi-pencil-squar, .btn {
   cursor: pointer;
 }
@@ -45,13 +44,12 @@
   padding: 0 1rem;
   margin-bottom: 1rem;
   background-color: var(--forth-background-color);
-  /* width: 100%; */
 }
 
 .delete-button {
   padding: 4rem;
-  /* text-align: end; */
 }
+
 .delete {
   font-size: 10px;
   padding:0.3rem 0.9rem;
@@ -79,13 +77,11 @@
   border: 0;
   border-radius: 50px;
 }
-/* .modal-dialog h2 {
-  padding: 1rem;
-} */
 
 .card {
   padding: 2rem 3rem;
 }
+
 .close-btn {
   display: flex;
   align-items: center;
@@ -95,21 +91,26 @@
   cursor: pointer;
   padding: 0.5rem;
 }
+
 .bi-x-lg {
   fill: var(--close-button-color)
 }
+
 .close-btn:hover {
-  background-color: var(--mid-gray);
+  background-color: var(--inactive-button-color);
   border-radius: 50px;
 }
+
 .close-btn:hover svg{
   fill: white;
 }
+
 input[type=file] {
   position: fixed;
   right: 100%;
   bottom: 100%;
 }
+
 form {
   max-width: 700px;
   margin: auto;
@@ -125,7 +126,6 @@ form {
   height: 2.5rem;
   border-radius: 7px;
   padding: 0 1rem;
-  /* margin-bottom: 1rem; */
   width: 65%;
 }
 
@@ -152,7 +152,6 @@ form {
   color: var(--primary-text-color);
 }
 
-
 h3 {
   margin: 1rem 0;
 }
@@ -166,7 +165,6 @@ h3 {
   height: 2.5rem;
   border-radius: 7px;
   padding: 0 1rem;
-  /* margin-bottom: 1rem; */
   width: 100%;
 }
 .paragraph {
@@ -188,8 +186,6 @@ h3 {
   font-size: 16px;
 }
 
-
-
 @media (min-width: 600px) {
   .grid-user-form, .grid-company-form{
     grid-template-columns: 1fr 1fr;
@@ -198,9 +194,6 @@ h3 {
   .input {
     width:100%;
   }
-  /* .company-description {
-    grid-column: 1/-1;
-  } */
   .user{
     margin-bottom: 0;
   }

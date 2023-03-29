@@ -1,49 +1,44 @@
 @import url(layout.css);
 @import url(company-banner.css);
 
+
 .grid-list-group {
-  padding: 2rem;
+  padding: 2rem 0;
   gap: 1rem
 }
+
 .team {
   color:var(--primary-text-color);
   font-weight: 600;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--secondary-border-color);
 }
+
 .grid-job {
   grid-template-columns: 80% 20%;
   padding: 5px 0;
-  /* justify-content: space-between; */
 }
+
 .grid-job-link {
   grid-template-columns: 80% 20%;
   padding: 1rem 0;
-  /* margin: 1rem 0; */
 }
+
 .name {
   font-weight: 500;
   color: var(--forth-text-color);
-  margin-bottom: 10px;
 }
-.name:hover {
-  color: var(--secondary-hover-color);
+
+.grid-job-link:hover > .name {
+  color: var(--fifth-text-color);
 }
 
 .updatedAt {
   text-align: end;
 }
+
 .info {
-  font-size: 13px;
+  font-size: 14px;
   color:var(--small-text-color);
 }
 
-
-
-
-@media (min-width:800px) {
-  /* .location {
-    grid-row: 3/4;
-  } */
-
-}

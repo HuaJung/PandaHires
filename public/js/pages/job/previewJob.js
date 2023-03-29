@@ -4,6 +4,7 @@ const loginPage = new URL('/signin', `${window.origin}`)
 const dashboardPage = new URL('/recruiting/dashboard', `${window.origin}`)
 const jobData = JSON.parse(localStorage.getItem('job')) 
 const postBtn = document.querySelector('.btn-post')
+const errorGroup = document.querySelector('.error-group')
 
 
 renderPreviewJob()
@@ -62,6 +63,7 @@ function back() {
 
 async function publish () {
   postBtn.addEventListener('click', async(e) => {
+    errorGroup.innerHTML = ''
     const jobApi = new URL('/api/job/create', `${window.origin}`)
     const company = await getCompany()
     jobData['companyId'] = company.id
@@ -91,11 +93,11 @@ async function publish () {
 
 async function update () {
   postBtn.addEventListener('click', async() => {
+    errorGroup.innerHTML = ''
     const company = await getCompany()
     const jobId = window.location.pathname.split('/')[3]
-
     const jobApi = new URL(`/api/job/${jobId}`, `${window.origin}`)
-    console.log(jobApi)
+
     jobData['companyId'] = company.id
     const request = {
       'method': 'PATCH',

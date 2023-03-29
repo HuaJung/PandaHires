@@ -1,6 +1,5 @@
 import Sequelize from 'sequelize'
 import { sequelize } from './dbConn.js'
-// import {prebuildSatgeModel} from './prebuild.js';
 
 
 const User = sequelize.define('user', {
@@ -21,7 +20,7 @@ const User = sequelize.define('user', {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
-    // Using `unique: true` in an attribute above is exactly the same as creating the index in the model's options:
+    // Using `unique: true` in an attribute above is exactly the same as creating the index in the model's options
     unique: true
   },
   password: {
@@ -38,14 +37,6 @@ const Company = sequelize.define('company', {
     allowNull: false,
     primaryKey: true
   },
-  // user_id: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   references: {
-  //     model: Users,
-  //     key: 'id'
-  //   }
-  // },
   name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -83,14 +74,6 @@ const Job = sequelize.define('job', {
     allowNull: false,
     primaryKey: true
   },
-  // company_id: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull:false,
-  //   refernces: { 
-  //     model: Companies,
-  //     key: 'id'
-  //   }
-  // },
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -176,13 +159,19 @@ const Candidate = sequelize.define('candidate', {
     type: Sequelize.STRING,
     allowNull: false
   },
-
   linkedin: Sequelize.STRING,
   website: Sequelize.STRING,
   github: Sequelize.STRING
 },
+{
+  indexes: [{
+    unique: true,
+    fields: ['email', 'companyId']
+  }]
+},
 {initialAutoIncrement:6000000}
 )
+
 
 const JobCandidate = sequelize.define('jobCandidate', {
   id: {
@@ -204,22 +193,6 @@ const JobCandidate = sequelize.define('jobCandidate', {
     type: Sequelize.STRING,
     allowNull: false
   }
-  // jobId: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   references: {
-  //     model: Job,
-  //     key: 'id'
-  //   }
-  // },
-  // candidateId: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   references: {
-  //     model: Candidate,
-  //     key: 'id'
-  //   }
-  // }
 })
 
 const Stage = sequelize.define('stage', {
@@ -236,6 +209,7 @@ const Stage = sequelize.define('stage', {
   status: Sequelize.STRING
 })
 
+
 const StageRecord = sequelize.define('stageRecord', {
   id: {
     type: Sequelize.INTEGER,
@@ -244,23 +218,8 @@ const StageRecord = sequelize.define('stageRecord', {
     primaryKey: true
   },
   interviewDate: Sequelize.DATE,
-  // job_candidate_id: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   references: {
-  //     model: JobCandidate,
-  //     key: 'id'
-  //   } 
-  // },
-  // stage_id: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false,
-  //   references: {
-  //     model: Stages,
-  //     key: 'id'
-  //   }
-  // }
 })
+
 
 User.hasOne(Company, {foreignKey: {allowNull: false}})
 Company.belongsTo(User)

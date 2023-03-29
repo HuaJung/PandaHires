@@ -4,7 +4,7 @@ import { emptyFieldChecker } from '../../components/validator/emptyFieldChecker.
 
 const emailError = document.querySelector('.email.error')
 const pwdError = document.querySelector('.password.error')
-
+const errorGroup = document.querySelector('.error-group')
 
 signinForm()
 
@@ -15,7 +15,8 @@ function signinForm () {
     // reset error from server-side
     emailError.textContent = ''
     pwdError.textContent = ''
-
+    errorGroup.innerHTML = ''
+    
     // get input for frontend validation
     const userEmail = form.email
     const userPassword = form.password
@@ -48,7 +49,6 @@ async function userSignIn(data){
     emailError.textContent = result.message.email
     pwdError.textContent = result.message.password
   } else if (response.status === 401 || response.status === 403) {
-    console.log('hihihihi')
     renderErrorMsg(result)
   } else {
     renderErrorMsg(result)

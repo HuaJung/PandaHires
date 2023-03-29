@@ -10,18 +10,12 @@ const handleRegister = async (req, res) => {
   if (error) return res.status(400).json({'error': true, 'message': error})
 
   const { name, position, email, password } = req.body
-  // const errors = validationResult(req)
-  // if (!errors.isEmpty()) {
-  //   return res.status(400).json({errors: errors.array()})
-  // }
-  // if (!name || !email || !position || !pwd) return res.status(400).json({ 'error': true, 'message': 'fields are required.' })
-  // check for duplicate email in the db
   const duplicate = await User.findOne({where: {email: email}})
+
   if (duplicate) return res.status(409).json({'error': true, 'message': {'email': 'email already exists.'}}); //Conflict 
   try {
     //encrypt the password
     const hashedPwd = await bcrypt.hash(password, 10)
-
     //store the new user
     const newUser = await User.create({
       name: name,
@@ -40,6 +34,7 @@ const handleRegister = async (req, res) => {
   }
 }
 
+
 const handleLogin = async (req, res) => {
   const error = authError(validationResult(req)) 
   if (error) return res.status(400).json({'error': true, 'message': error})
@@ -55,13 +50,14 @@ const handleLogin = async (req, res) => {
     const token = jwt.sign(
       {'id': foundUser.id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' }
     )
-    // saving refresh token with current user
     res.cookie('token', token, {httpOnly: true, maxAge: 24*60*60*1000})
     res.status(200).json({'ok': true})
+
   } catch (err) {
     res.status(500).json({ 'error': true, 'message': err.message })
   }
 }
+
 
 const getUserNameId = async (req, res) => {
   const userID = req.id
@@ -72,9 +68,8 @@ const getUserNameId = async (req, res) => {
 
 
 const handleLogout = async (req, res) => {
-  // res.cookie('token', '', { maxAge: -1})
   res.clearCookie('token', {httpOnly: true})
-  return res.status(204).json({'ok': true})
+  res.sendStatus(204)
 }
 
 export { handleRegister, handleLogin, getUserNameId, handleLogout }

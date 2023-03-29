@@ -9,7 +9,7 @@ async function signInChecker ()  {
 
   if (result.data === null) {
     window.location = homePage;
-  } else if (response.status === 401) {
+  } else if (response.status === 401 || response.status === 403) {
     location.assign(loginPage)
   } else {
     return result.data

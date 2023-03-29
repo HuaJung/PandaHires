@@ -28,7 +28,7 @@ function renderOpenings(jobData) {
     const span = document.createElement('span')
     const teamGroup = div.cloneNode()
     teamGroup.className = 'team-group'
-    const teamName = document.createElement('h3')
+    const teamName = document.createElement('h2')
     teamName.className = 'team'
     teamName.textContent = team
     teamGroup.appendChild(teamName)
@@ -38,7 +38,7 @@ function renderOpenings(jobData) {
       jobLink.className = 'grid-job-link'
       jobLink.href = `/careers/${companyName}/jobs/${job.id}`
       
-      const jobName = document.createElement('h4')
+      const jobName = document.createElement('h3')
       jobName.className = 'name'
       jobName.textContent = job.name
 

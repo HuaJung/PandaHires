@@ -3,12 +3,11 @@ import { deleteAccount, getUser, updateUser } from "../../controllers/userContro
 
 const userRoute = express.Router()
 
+
 userRoute.route('/')
   .get(getUser)
   .patch(updateUser)
   .delete(deleteAccount)
-
-
 
 
 export {userRoute}

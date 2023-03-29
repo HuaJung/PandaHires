@@ -2,28 +2,24 @@
 @import url(company-banner.css);
 
 
-
 .company {
   margin: 2rem;
   padding: 2rem;
 }
+
 .company h2 {
   margin: 1rem 0;
 }
+
 .company p {
   padding: 0.5rem 0;
 }
+
 .company p {
   line-height: 2rem;
 }
+
 .company li {
   list-style: disc;
   line-height: 2rem;
-}
-
-@media (min-width:800px) {
-  /* .location {
-    grid-row: 3/4;
-  } */
-
 }

@@ -1,11 +1,8 @@
-import { Job, JobCandidate, Candidate, StageRecord, Stage, Company } from "../models/db.js";
-import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { Job, JobCandidate, Candidate, StageRecord, Stage } from "../models/db.js"
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
 import dotenv from 'dotenv'
-import { QueryTypes, Sequelize } from "sequelize";
-import { sequelize } from "../models/dbConn.js";
-// import multer from 'multer';
-// const upload = multer({storage: storage})
-
+import { QueryTypes, Sequelize } from "sequelize"
+import { sequelize } from "../models/dbConn.js"
 
 dotenv.config()
 
@@ -26,29 +23,22 @@ const s3 = new S3Client({
 
 const addNewCandidate = async(req, res) => {
   const jobID = Number(req.params.jobID)
-  const companyID = Number(req.params.companyID)
   const candidate = req.body
-  const resume = req.files
-  console.log(resume)
   
-  if (!resume || Object.keys(resume).length === 0) return res.status(400).json({'error': true, 'message': 'No file is uploaded'})
+  if (!req.files || Object.keys(req.files).length === 0) return res.status(400).json({'error': true, 'message': 'No file is uploaded'})
   
   if (Object.keys(candidate).length < 6) return res.status(400).json({'error': true, 'message': 'missing fields'})
 
+  let foundCandidate
   try {
     const job = await Job.findByPk(jobID)
-    if (job.companyId !== companyID) return res.status(400).json({'error': true, 'message': 'job doesn\'t exist'})
-    
-    // find all the jobs that candidate has applied
-    const foundCandidate = await Candidate.findAll({
-      where: {email: candidate.email, companyId: companyID},
-      include: Job
-    })
-    candidate['companyId'] = companyID
+    if (!job) return res.status(400).json({'error': true, 'message': 'job doesn\'t exist'})
 
+    const companyID = job.companyId
+    candidate['companyId'] = companyID
+    const resume = req.files.resume
     const resumeName = `resume-${Date.now()}.pdf`
 
-    let jobCandidate
     let origin
     let originName
     if (Object.keys(candidate).includes('origin')) {
@@ -66,23 +56,29 @@ const addNewCandidate = async(req, res) => {
       originName: originName
     }
 
+    // find all the jobs that candidate has applied
+    foundCandidate = await Candidate.findAll({
+      where: {email: candidate.email, companyId: companyID},
+      include: Job
+    })
+
+    let jobCandidate
 
     if (foundCandidate.length > 0 ) {
       foundCandidate[0].jobs.forEach((job) => {
         if (job.id === jobID) throw 400  // alread existed
       })
-      
-      // don't know if candidate update info or not, still update anyway
       // save PDF to S3
       const params = {
         Bucket: bucketName,
         Key: `pandahires/${resumeName}`,
         Body: resume.data,
         ContentType: resume.mimetype
-      };
+      }
       const putCommand = new PutObjectCommand(params);
       await s3.send(putCommand);
 
+      // candidate may have different info for different jobs, update info
       await Candidate.update(candidate, { where: {id: foundCandidate[0].id}})
       const updatedCandidate = await Candidate.findByPk(foundCandidate[0].id)
       jobCandidate = await job.addCandidate(updatedCandidate, { through: jobCandidateAttributes})
@@ -94,22 +90,21 @@ const addNewCandidate = async(req, res) => {
         Key: `pandahires/${resumeName}`,
         Body: resume.data,
         ContentType: resume.mimetype
-      };
+      }
       const putCommand = new PutObjectCommand(params);
       await s3.send(putCommand);
       
       const createCandidate = await Candidate.create(candidate)
-      // after create candidate, updating join talbe
+      // after creating candidate, updating join talbe
       jobCandidate = await job.addCandidate(createCandidate, { through: jobCandidateAttributes})
     }
     
-    
     const initialStage = await Stage.findByPk(1)
     await jobCandidate[0].addStage(initialStage)
-    // await initialStage.addStage(jobCandidate)
     res.status(201).json({'ok': true})
+
   } catch (err) {
-    if (err === 400) return res.status(400).json({'error': 'already applied'}) // then ask if still want to update resume
+    if (err === 400) return res.status(400).json({'error': true, 'message': 'This candidate already applied the job', 'candidateId': foundCandidate[0].id}) 
     res.status(500).json({ 'error': true, 'message': err.message })
   }
 }
@@ -142,7 +137,6 @@ const getAllCandidates = async(req, res) => {
         type: QueryTypes.SELECT
       }
     )
-
     if (allCandidates.length < 1) return res.status(200).json({'data': null})
     const candidates = allCandidates.map(({id, firstName, lastName, jobDetails}) => {
       return {
@@ -151,11 +145,7 @@ const getAllCandidates = async(req, res) => {
         lastName,
         jobs: jobDetails.split(',,').reduce((acc, curr, index, arr) => {
           if (index % 9 === 0) {
-            // let interviewTimeFormat 
             const interviewTime  = arr[index+8]!== 'N/A'? arr[index+8].split(':')[0]+':'+arr[index+8].split(':')[1]: arr[index+8]
-            // if(arr[index+8]!== 'N/A') {
-            //   interviewTimeFormat= arr[index+8].split(':')[0]+':'+arr[index+8].split(':')[1]
-            // }
             acc.push({
               jobCandidateId: parseInt(curr),
               jobName: arr[index+1],
@@ -172,7 +162,6 @@ const getAllCandidates = async(req, res) => {
         }, [])
       }
     })
-
     res.status(200).json({'data': candidates})
 
   } catch (err) {
@@ -181,9 +170,9 @@ const getAllCandidates = async(req, res) => {
 
 }
 
+
 const getCandidate = async(req, res) => {
   const candidateID = req.params.candidateID
-  console.log(candidateID)
   try {
     const singleCandidate = await Candidate.findOne({
       attributes: ['id', 'firstName', 'lastName', 'email', 'country', 'city'],
@@ -223,7 +212,6 @@ const getCandidate = async(req, res) => {
       }
       jobList.push(j)
     })
-
     const data = {
       'id': singleCandidate.id,
       'firstName': singleCandidate.firstName,
@@ -233,7 +221,6 @@ const getCandidate = async(req, res) => {
       'email':singleCandidate.email,
       'job': jobList
     }
-
     res.status(200).json({'data': data})
 
   } catch (err) {
@@ -241,28 +228,26 @@ const getCandidate = async(req, res) => {
   }
 }
 
+
 const updateCandidate = async(req, res) => {
   const candidateID = req.params.candidateID
   const candidate = req.body
   
   if (Object.keys(candidate).length < 1) return res.status(400).json({'error': true, 'message': 'no fields to update'})
 
-  let jobID
- 
   try {
     if (candidate.origin && candidate.originName) {
-      jobID = candidate.jobID
       await JobCandidate.update(
         {origin: candidate.origin, originName: candidate.originName}, 
-        {where: {jobId: jobID, candidateId: candidateID}}
+        {where: {jobId: candidate.jobID, candidateId: candidateID}}
       )
       delete candidate.origin
       delete candidate.originName
-      delete candidate.jobID
-
     } else if (candidate.origin || candidate.originName) return res.status(400).json({'error': true, 'message': 'both fields are required'})
-  
-    await Candidate.update(candidate, {where: {id: candidateID}})
+
+    const filteredCandidate = Object.entries(candidate).filter(([key, value]) => key !== 'jobID')
+    const candidateObj = Object.fromEntries(filteredCandidate)
+    await Candidate.update(candidateObj, {where: {id: candidateID}})
     res.status(200).json({'ok': true})
     
   } catch (err) {
@@ -271,55 +256,9 @@ const updateCandidate = async(req, res) => {
 }  
 
 
-const updateResume = async(req, res) => {
-  if (!req.files || Object.keys(req.files).length === 0) return res.status(400).json({'error': true, 'message': 'No file is uploaded'})
-
-  let jobID
-  // career page uses query string, recruiting page uses params
-  if (req.query.id) {jobID = req.query.id} 
-  else { jobID = req.params.jobID }
-
-  try {
-    const candidateID = req.params.candidateID
-    const newResume = req.files.resume
-    const newResumeName = `resume-${Date.now()}.pdf`
-    const oldResume = await JobCandidate.findOne({
-      attributes: ['resume'],
-      where: {jobId: jobID , candidateId: candidateID}
-    })
-    if (!oldResume.resume) return res.status(404).json({'error': true, 'message': 'resume not found'})
-  
-    // update resume in S3
-    const deleteParams = {
-      Bucket: bucketName,
-      Key: `pandahires/${oldResume.resume}`,
-    }
-    const updateParams = {
-      Bucket: bucketName,
-      Key: `pandahires/${newResumeName}`,
-      Body: newResume.data,
-      ContentType: newResume.mimetype
-    };
-    const deleteCommand = new DeleteObjectCommand(deleteParams)
-    const putCommand = new PutObjectCommand(updateParams);
-    await s3.send(deleteCommand)
-    await s3.send(putCommand)
-  
-    // update resume in RDS
-    await JobCandidate.update(
-      {resume: newResumeName}, 
-      {where: {jobId: jobID , candidateId: candidateID}}
-    )
-    res.status(200).json({"ok": true})
-
-  } catch (err) {
-    res.status(500).json({ 'error': true, 'message': err.message })
-  }
-}
-
 const deleteCandidate = async(req, res) => {
   const candidateID = req.params.candidateID
-  try{
+  try {
     const candidate = await Candidate.findByPk(candidateID)
     if (!candidate) return res.status(400).json({'error': true, 'message': 'not exist'})
     await Candidate.destroy({where: {id: candidateID}})
@@ -327,8 +266,8 @@ const deleteCandidate = async(req, res) => {
   } catch (err) {
     res.status(500).json({ 'error': true, 'message': err.message })
   }
-
 }
+
 
 const addNewStage = async(req, res) => {
   const jobCandidateIdList = req.body.jobCandidateId
@@ -352,4 +291,4 @@ const addNewStage = async(req, res) => {
   }
 }
 
-export {addNewCandidate, getCandidate, updateCandidate, deleteCandidate, updateResume, getAllCandidates, addNewStage}
+export {addNewCandidate, getCandidate, updateCandidate, deleteCandidate, getAllCandidates, addNewStage}

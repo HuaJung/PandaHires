@@ -1,10 +1,9 @@
 @import url(../common/layout.css);
 @import url(../common/error.css);
 
+
 .header {
   color: var(--header-text-color);
-  /* font-family: 'Libre Baskerville', serif; */
-  /* font-family: 'Nunito', sans-serif; */
   font-family: 'Merriweather', serif;
   text-align: center;
   padding: 0 1rem 1rem 1rem;
@@ -14,16 +13,16 @@
 .card {
   margin: 1rem 0;
   padding:0 2rem;
-  /* background-color: var(--ash-gray); */
 }
+
 form {
   max-width: 700px;
   margin: auto;
   padding: 2rem;
 }
+
 .grid-form {
   gap: 0.5rem;
-  /* align-items: center; */
   padding-bottom: 2rem;
 }
 
@@ -48,6 +47,7 @@ input, select {
   grid-column: 1/-1;
   gap: 1rem;
 }
+
 textarea {
   border-radius: 7px;
   padding: 0.5rem 1rem;

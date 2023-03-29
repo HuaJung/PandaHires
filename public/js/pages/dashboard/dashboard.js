@@ -8,7 +8,6 @@ const tbodyOverview = document.querySelector('.tbody-td.overview')
 const tbodyJob = document.querySelector('.tbody-td.jobs')
 const tbodyCandidate = document.querySelector('.tbody-td.candidates')
 const li = document.createElement('li')
-const div = document.createElement('div')
 const h4 = document.createElement('h4')
 const ul = document.createElement('ul')
 const img = document.createElement('img')
@@ -168,7 +167,7 @@ async function getAllJobs() {
   } else if (result.data) {
     renderTeamsAndJobs(result.data)
   } else {
-    renderErrorMsg()
+    renderErrorMsg(result)
   }
 }
 
@@ -221,8 +220,8 @@ function renderOverview(overviewData) {
       })
     }
   }
-
 }
+
 
 function renderCandidatesAndJobs(candidateData) {
   candidateData.forEach(({id, firstName, lastName, jobs})=> {
@@ -230,7 +229,6 @@ function renderCandidatesAndJobs(candidateData) {
     gridTd.className = 'grid-td candidates'
 
     const candidateLink = a.cloneNode()
-    // candidateLink.href = `/candidates/${id}`
     candidateLink.textContent = `${firstName} ${lastName}`
 
     const personIcon = img.cloneNode()
@@ -272,7 +270,6 @@ function renderCandidatesAndJobs(candidateData) {
       const resumeIcon = img.cloneNode()
       resumeIcon.className = 'preview-resume'
       resumeIcon.src = '/icons/pdf.svg'
-      // resumeObj.appendChild(resumeIcon)
       const resumeLi = li.cloneNode()
       resumeLi.dataset.title = 'Resume'
       resumeLi.append(resumeIcon, resumeModal)
@@ -283,7 +280,6 @@ function renderCandidatesAndJobs(candidateData) {
         { content: job.interviewDate, data: 'Interview'},
         { content: job.appliedDate.split(' ')[0], data: 'Applied Date'},
         { content: job.origin, data: 'Origin' }
-
       ]
       jobEle.forEach((ele) => {
         let element = li.cloneNode()
@@ -409,6 +405,4 @@ function showResume() {
     }
 
   })
-
-
 }

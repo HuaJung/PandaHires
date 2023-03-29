@@ -1,9 +1,11 @@
 import { renderErrorMsg } from "../../components/common/errorMsg.js";
 import { renderNavData, signout, dashboardPage, companyInfo } from "../../components/common/navRecruiting.js";
 
+
 const jobSelect = document.querySelector('select[name=jobId]')
 const inputFile = document.querySelector('input[type=file]')
 const form = document.querySelector('form')
+const errorGroup = document.querySelector('.error-group')
 
 
 getAllJobs()
@@ -54,9 +56,11 @@ function updateFileDisplay() {
 function addCandidate() {
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
+    errorGroup.innerHTML = ''
+
     const jobId = document.querySelector('select[name=jobId]').value
     const company = await companyInfo()
-    const candidateApi = new URL(`/api/candidate/${company.id}/${jobId}`, window.origin)
+    const candidateApi = new URL(`/api/candidate/${jobId}`, window.origin)
     const submitBtn = document.querySelector('.btn-submit')
     submitBtn.disabled= true
     const submitBtnTxt = submitBtn.querySelector('span')
@@ -71,11 +75,13 @@ function addCandidate() {
     const result = await response.json()
     if (response.status === 201) {
       location.assign(dashboardPage)
+    } if(response.status === 400) {
+      renderErrorMsg(result)
     } else {
       renderErrorMsg(result)
     }
     submitBtn.disabled= false
-    submitBtnTxt.textContent = 'Submit'
+    submitBtnTxt.textContent = 'Create'
   })
 }
 

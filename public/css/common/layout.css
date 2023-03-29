@@ -2,6 +2,7 @@
 
 @import url(../util/color.css);
 @import url(../util/button.css);
+@import url(./error.css);
 
 
 * {
@@ -12,6 +13,7 @@
   color: var(--primary-text-color);
   font-family: 'Poppins', sans-serif;
 }
+
 body {
   padding-top: 70px;
 }
@@ -28,6 +30,7 @@ body {
 a {
   text-decoration: none;
 }
+
 .primary-header {
   position: fixed;
   right: 0;
@@ -35,15 +38,11 @@ a {
   top: 0;
   padding: 15px 0;
   box-shadow: 0 0 30px rgba(21, 55, 44, .1) ;
-  /* background-color: var(--secondary-background-color); */
-  background-color: var(--primary-button-color);
+  background-color: var(--secondary-button-background);
   z-index: 5;
-
-  /* color: var(--secondary-text-color); */
 }
 
 .navbar {
-
   max-width: 1200px;
   margin: auto;
   padding: 0 2rem;
@@ -52,6 +51,7 @@ a {
   align-items: center;
   position: relative;
 }
+
 .logo-item {
   margin-right: 2rem;
 }
@@ -61,7 +61,6 @@ a {
   color: white;
   font-weight: 400;
   font-size: 25px;
-  /* border-right: 2px solid var(--rifle-green); */
 }
 
 nav {
@@ -84,13 +83,10 @@ nav {
   margin-right: 1rem;
 }
 
-/* .primary-items li:first-of-type {
-  border-bottom: 1px solid var(--secondary-text-color);
-} */
-
 .primary-nav a {
   transition: all 300ms 200ms;
 }
+
 .bi-gear, .bi-plus-lg {
   fill: var(--third-text-color)
 }
@@ -98,6 +94,7 @@ nav {
 .bi-gear:hover {
   fill: var(--secondary-text-color);
 }
+
 .settings {
   display: flex;
   align-items: center;
@@ -112,7 +109,6 @@ nav {
 }
 
 .user-menu a{
-  /* margin-inline-end: 0.75em; */
   display: flex;
   align-items: center;
 }
@@ -140,9 +136,10 @@ nav {
   text-align: center;
   width: 40px;
   height: 40px;
-  background-color: var(--ash-gray);
+  background-color: var(--primary-background-color);
   border-radius: 50%;
   font-size: 28px;
+  text-transform: uppercase;
   color: aliceblue;
   cursor: pointer;
   box-shadow: 0 3px 6px 0 var(--shadow-gray);
@@ -158,8 +155,8 @@ nav {
   top: 135%;
   right: 0;
   padding: min(30vh, 1rem) 0;
-  border: 1px solid var(--rifle-green);
-  background-color: white;
+  border: 1px solid var(--secondary-border-color);
+  background-color: var(--white-background-color);
   box-shadow: 0 3px 6px 0 var(--shadow-gray);
   border-radius: 0 0 10px 10px;
   transform: translateX(-200%); 
@@ -174,7 +171,6 @@ nav {
 
 .user-menu a:hover {
   font-weight: 500;
-  /* background-color: var(--primary-hover-backgound); */
 }
 
 .menu-items {
@@ -185,38 +181,30 @@ nav {
 
 .menu-items li {
   padding: 1rem 2rem;
-  border-bottom: 1px solid var(--rifle-green);
+  border-bottom: 1px solid var(--secondary-border-color);
 }
 
 .menu-items a {
-  /* color: var(--baby-powder); */
+
   font-weight: 400;
 }
 
 #toggle-expanded:checked ~ .user-menu {
-  /* opacity: 1; */
   display: block;
-  /* height: 60vh; */
   transform: translateX(0%);
 }
-
-
-
-
 
 footer {
   width: 100%;
   height: auto;
   text-align: center;
-  /* line-height: 70px; */
   padding: 1rem 4rem;
-  color: var(--light-gray);
-  background-color: var(--rifle-green);
+  color: var(--footer-third-color);
+  background-color: var(--footer-primary-background-color);
   font-size: 14px;
 }
 
 @media (max-width: 850px) {
-
   .settings, .secondary-items {
     display: none;
   }
@@ -226,6 +214,7 @@ footer {
     padding: min(30vh, 1rem) 3em;
     transform: translateX(100%);
   }
+
   .user-menu a:hover{
     transform: translateX(18px);
   }
@@ -234,43 +223,30 @@ footer {
     padding: 0 15px;
     font-size: 18px;
     border-radius: 10px;
-    /* text-align: end; */
   }
+
   .mobile-menu-items li, .menu-items li {
     text-align: start;
     padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--secondary-border-color);
   }
+
   .mobile-menu-items a {
     color: var(--primary-text-color);
     font-weight: 400;
   }
+
   #toggle-expanded:checked ~ .user-menu .mobile-menu-items {
     display: block;
     transform: translateX(0%);
     transition: all 350ms ease-out;
   } 
 
-  /* .nav-items a {
-    color: var(--baby-powder);
-  } */
   .menu-items {
     text-align: start;
   }
-  /* .nav-items {
-    flex-direction: column;
-  } */
-
-  /* .secondary-nav{
-    align-self: center;
-  } */
-  /* .secondary-nav a {
-    width: 70vw;
-    border: 1px solid var(--ivory);
-  } */
-
-
 }
+
 @media (max-width: 490px) {
   .logo-item {
     margin-right: 1rem;

@@ -12,7 +12,9 @@
   color: var(--black-coffee);
   font-family: 'Poppins', sans-serif;
 }
+
 body {
+  padding-top: 5rem;
   overflow-x: hidden;
 }
 
@@ -30,17 +32,23 @@ body {
 a {
   text-decoration: none;
 }
+
 .primary-header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
   padding: 1rem 0;
-  /* box-shadow: 0 0 20px rgba(21, 55, 44, .1) ; */
-  border-bottom: 0.5px solid var(--primary-background-color);
+  box-shadow: 0 0 20px rgba(21, 55, 44, .1) ;
   font-family: 'Nunito', sans-serif;
+  background-color: var(--white-background-color);
+  z-index: 1;
 }
+
 .navbar {
   max-width: 1200px;
   margin: auto;
-  padding: 0 2rem;
+  padding: 0 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,18 +59,14 @@ a {
   width: 180px;
   overflow: hidden;
 }
+
 .logo-txt{
-  /* font-family: 'Barlow', sans-serif; */
-  /* font-family: 'Heebo', sans-serif; */
-  /* font-family: 'Nunito', sans-serif; */
-  /* font-family: 'Poppins', sans-serif; */
-  /* font-family: 'Work Sans', sans-serif; */
-  /* margin: 0 2rem; */
-  color: var(--green);
+  color: var(--logo-text-color);
   font-weight: 400;
   font-size: 20px;
   line-height: 50px;
 }
+
 .logo-img {
   width: 100%;
   height: 100%;
@@ -74,18 +78,18 @@ a {
   display: flex;
   gap: 2.5rem;
 }
+
 .nav-items a {
-  /* margin-inline-end: 0.75em; */
   color: var(--black-coffee);
   font-size: 1rem;
 }
 
 .nav-link.active{
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--secondary-border-color);
 }
 
 .nav-link:hover {
-  color: var(--black-text-hover)
+  color: var(--small-text-color)
 }
 
 footer {
@@ -95,13 +99,13 @@ footer {
   height: 10vh;
   text-align: center;
   font-size: 13px;
-  color: var(--footer--primary-color);
-  background-color: var(--third-background-color);
+  color: var(--footer-primary-color);
+  background-color: var(--footer-third-background-color);
 }
+
 footer a {
   font-family: 'Voltaire', sans-serif;
-  color: var(--footer--secondary-color);
+  color: var(--footer-secondary-color);
   font-weight: 400;
   font-size: 16px;
-
 }

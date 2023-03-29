@@ -1,12 +1,15 @@
 const homePage = (req, res) => {
   res.render('home/index')
 }
+
 const signInPage = (req, res) => {
   res.render('auth/signin', {pageTitle: 'Sign In'})
 }
+
 const signUpPage = (req, res) => {
   res.render('auth/signup', {pageTitle: 'Sign Up'})
 }
+
 const signUpCompanyPage = (req, res) => {
   res.render('auth/signup-company', {pageTitle: 'Sing Up'})
 }

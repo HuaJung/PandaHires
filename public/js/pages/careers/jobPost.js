@@ -1,6 +1,7 @@
+import { renderErrorMsg } from "../../components/common/errorMsg.js"
+import { getCompany, getCareersCompany, renderCompanyLogo, getSingleJob } from "../../components/common/navCareers.js"
 
-import { renderErrorMsg } from "../../components/common/errorMsg.js";
-import { getCompany, getCareersCompany, renderCompanyLogo, getSingleJob } from "../../components/common/navCareers.js";
+
 const applyBtn = document.querySelector('.button-wrapper') 
 const applyModal = document.querySelector('.modal-dialog')
 const closeModal = document.querySelector('.close-btn')
@@ -47,7 +48,6 @@ async function renderSingleJob() {
       document.querySelector(`.${key}`).textContent = value
     }
   })
-
 }
 
 function showApplicationForm() {
@@ -79,6 +79,7 @@ function submitApplication() {
   const form = document.querySelector('form')
   const errorGroup = document.querySelector('.error-group')
   errorGroup.innerHTML = ''
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
     const submitBtn = document.querySelector('.btn-submit')
@@ -87,7 +88,7 @@ function submitApplication() {
     submitBtnTxt.textContent = 'Submitting...'
 
     const jobId = window.location.pathname.split('/')[4]
-    const candidateApi = new URL(`/api/career/apply?id=${jobId}`, window.origin)
+    const candidateApi = new URL(`/api/career/apply?job=${jobId}`, window.origin)
     const formData = new FormData(form)
     const request = {
       'method': 'POST',

@@ -1,6 +1,5 @@
 .card {
   padding: 1rem;
-  /* background-color: var(--ash-gray); */
 }
 
 /* ------------Modal CSS------------ */
@@ -11,9 +10,11 @@
   border: 0;
   border-radius: 50px;
 }
+
 .modal-dialog h2 {
   padding: 1rem;
 }
+
 .close-btn {
   display: flex;
   align-items: center;
@@ -23,26 +24,28 @@
   cursor: pointer;
   padding: 0.5rem;
 }
+
 svg {
-  fill: var(--light-blue-gray)
+  fill: var(--small-background-color)
 }
+
 .close-btn:hover {
-  background-color: var(--mid-gray);
+  background-color: var(--inactive-button-color);
   border-radius: 50px;
 }
+
 .close-btn:hover svg{
   fill: white;
 }
+
 form {
   max-width: 700px;
   margin: auto;
-
 }
+
 .grid-form {
   gap: 0.5rem;
   padding: 1rem 0 2rem 0;
-
-  /* padding-bottom: 2rem; */
 }
 
 input, select, .resume.btn {
@@ -52,6 +55,7 @@ input, select, .resume.btn {
   margin-bottom: 1rem;
   width: 100%;
 }
+
 input[name=city] {
   margin-top: 1rem;
   width: 100%;
@@ -60,7 +64,6 @@ input[name=city] {
 input[type=file] {
   opacity: 0;
   height: 0;
-  /* display: none; */
 }
 
 .resume.btn{
@@ -75,9 +78,11 @@ input[type=file] {
   font-size: 14px;
   max-width: 180px; 
 }
+
 .resume {
   cursor: pointer;
 }
+
 .preview {
   padding: 3px 0 3px 1rem;
   font-style: italic;
@@ -85,9 +90,6 @@ input[type=file] {
   word-break: break-all;
   font-size: 14px;
 }
-/* .label {
-  margin-top: 1rem;
-} */
 
 .thankyou {
   background-color: var(--third-background-color);
@@ -104,14 +106,16 @@ input[type=file] {
   color: var(--success-text-color);
   display: none;
   z-index: 999;
+}
 
-}
 .thankyou::backdrop{
-  background: var(--third-text-color);
+  background: var(--additional-background-color);
 }
+
 .bi-file-earmark-check {
   fill: var(--success-text-color);
 }
+
 .thankyou h2 {
   margin-top: 1.5rem;
   font-weight: 500;

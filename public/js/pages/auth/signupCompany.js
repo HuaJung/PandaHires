@@ -6,7 +6,7 @@ const nameError = document.querySelector('.name.error')
 const countryError = document.querySelector('.country.error')
 const addError = document.querySelector('.address.error')
 const telError = document.querySelector('.tel.error')
-
+const errorGroup = document.querySelector('.error-group')
 
 
 signInChecker()
@@ -20,6 +20,7 @@ function companyForm() {
     countryError.textContent = ''
     addError.textContent = ''
     telError.textContent = ''
+    errorGroup.innerHTML = ''
 
     const companyName = form.name
     const companyCountry = form.country

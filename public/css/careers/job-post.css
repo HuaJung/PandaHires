@@ -2,9 +2,7 @@
 
 
 .banner {
-  background-color: var(--morning-blue);
-  /* background-size: cover;
-  background-repeat: no-repeat; */
+  background-color: var(--secondary-background-color);
   min-height: 300px;
 }
 
@@ -13,7 +11,7 @@
   max-width: 1200px;
   margin: auto;
   padding: 2rem;
-  color: var(--ivory);
+  color: var(--secondary-text-color);
   grid-auto-rows: min-content;
 }
 
@@ -43,7 +41,7 @@
   padding: 0 1rem;
   align-self: center;
   font-size: 2rem;
-  color: var(--ivory);
+  color: var(--secondary-text-color);
   grid-row: 2/3;
 }
 
@@ -58,9 +56,11 @@
   padding-bottom: 1.5rem;
   font-weight: 500;
 }
+
 .job p {
   line-height: 2rem;
 }
+
 .job li {
   list-style: disc;
   line-height: 2rem;
@@ -69,8 +69,6 @@
 .button-wrapper {
   grid-row: 4/5;
 }
-
-
 
 @media (min-width:800px) {
   .button-wrapper {

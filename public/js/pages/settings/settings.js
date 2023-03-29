@@ -8,6 +8,7 @@ const editCompanyBtn = document.querySelector('.company .bi-pencil-square')
 const companyModal = document.querySelector('.modal-dialog')
 const closeModal = document.querySelector('.close-btn')
 const homePage = new URL('/', window.origin)
+const errorGroup = document.querySelector('.error-group')
 
 
 getUser()
@@ -32,6 +33,7 @@ function showCompanyForm() {
 }
 
 async function getCompany() {
+  errorGroup.innerHTML = ''
   const response = await fetch(companyApi)
   const result = await response.json()
   if (response.status === 200) {
@@ -48,6 +50,7 @@ async function getCompany() {
 }
 
 async function getUser() {
+  errorGroup.innerHTML = ''
   const response = await fetch(userApi)
   const result = await response.json()
   if (response.status === 200) {
@@ -84,6 +87,7 @@ function updateUser() {
   const userForm = document.querySelector('.grid-user-form')
   userForm.addEventListener('click', async(e) => {
     e.stopPropagation()
+    errorGroup.innerHTML = ''
     if (e.target.tagName === 'svg' || e.target.tagName === 'path') {     
       if (e.target.closest('svg').className.baseVal === 'bi bi-check-circle') {    
         const currentUpdateBtn = e.target.closest('svg')
@@ -105,7 +109,6 @@ function updateUser() {
           renderErrorMsg(result)
         }
       } 
-
     }
   })
 }
@@ -113,6 +116,7 @@ function updateUser() {
 function updateCompany() {
   companyForm.addEventListener('submit', async (e)=> {
     e.preventDefault()
+    errorGroup.innerHTML = ''
     const formData = new FormData(companyForm)
     const request = {
       'method': 'PATCH',
@@ -155,6 +159,7 @@ function updateFileDisplay() {
 function deleteAccount() {
   const deleteBtn = document.querySelector('.delete')
   deleteBtn.addEventListener('click', async() => {
+    errorGroup.innerHTML = ''
     const response = await fetch(userApi, {"method": "DELETE"})
     const result = await response.json()
     if (response.status === 204 ) {

@@ -26,7 +26,6 @@ async function renderNavData() {
   if (head.textContent.includes('Settings')) {
     settingLink.querySelector('.bi-gear').style.fill = 'var(--secondary-text-color)'
   } else if (head.textContent.includes('Dashboard')) {
-    dashboardLink.parentNode.style.borderBottom = '1px solid var(--secondary-text-color)'
     dashboardLink.style.color = 'var(--secondary-text-color)'
   } else if (head.textContent.includes('Job')) {
     addJob.style.backgroundColor='var(--primary-button-backgrond)'

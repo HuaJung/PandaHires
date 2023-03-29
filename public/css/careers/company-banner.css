@@ -1,6 +1,6 @@
 .banner {
   position: relative;
-  color: var(--ivory);
+  color: var(--secondary-text-color);
   overflow: hidden;
   height: 500px;
   box-shadow: 0 0 30px rgba(35, 41, 39, 0.1) ;
@@ -14,19 +14,20 @@
   height: 100%;
   background-color: var(--additional-background-color);
 }
+
 .image {
   width: 100%;
-  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 .image-txt {
-  color: var(--primary-button-hover-color);
+  color: var(--white-background-color);
   font-size: 3rem;
   text-align: center;
   font-weight: 500;
-
 }
+
 .location {
   display: flex;
   align-items: center;

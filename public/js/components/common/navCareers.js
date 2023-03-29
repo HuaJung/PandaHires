@@ -33,7 +33,7 @@ if (window.location.pathname.includes('preview')) {
 
 async function getSingleJob() {
   const jobID = window.location.pathname.split('/')[4]
-  const singleJobApi = new URL(`api/career/singlejob?id=${jobID}`, window.origin)
+  const singleJobApi = new URL(`api/career/singlejob?job=${jobID}`, window.origin)
   const response = await fetch(singleJobApi)
   const result = await response.json()
   if (response.status === 200) {

@@ -13,9 +13,7 @@ async function companyInfo() {
   } else {
     return result.data
   }
-
 }
-
 
 
 export {companyInfo}

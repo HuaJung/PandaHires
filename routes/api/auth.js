@@ -6,6 +6,7 @@ import { verifyJWT } from "../../middleware/verifyUser.js"
 
 const authRoute = express.Router()
 
+
 authRoute.route('/')
   .get(verifyJWT, getUserNameId)
   .post(registerValidator, handleRegister)
