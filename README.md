@@ -55,7 +55,7 @@
   
 ### 📍Frontend
 
-  + Javascript
+  + JavaScript
   + HTML
   + CSS
 
