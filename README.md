@@ -9,10 +9,9 @@
 - [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
 - [Database Schema](#database-schema)
-- [API Doc](#api-doc)
 ---
 
-### Features
+## Features
 + Recruiting system frontend: 
   + Companies can have their own public recruiting website with opening job list and compay profile
   + Individual candidate applying job through company's recruiting website will be recoded in talent pool
@@ -22,15 +21,30 @@
   + Receive New Applications
   + Track and Update candidates' stages
 
+<br>
 
-### Live Demo
+## Live Demo
+  ### 📍 Test Account
+  | Email | test@email.com |
+  | :--- | :--- |
+  | Password | test |
+  
+ ![image](https://github.com/HuaJung/PandaHires/blob/main/create_job.gif)
+ ---
+ ![image](https://github.com/HuaJung/PandaHires/blob/main/candidate_create%26update_status.gif)
+ ---
+ ![image](https://github.com/HuaJung/PandaHires/blob/main/apply_job.gif)
 
-### Architecture
-  ![image]
+<br>
 
-### Tech Stack
-#### 📍Backend
----
+## Architecture
+> ![image](https://github.com/HuaJung/PandaHires/blob/main/PandaHires%20Architecure%20Design.png)
+
+<br>
+
+## Tech Stack
+### 📍Backend
+
   + Node.js / Express
   + AWS EC2
   + AWS RDS / MySql
@@ -39,16 +53,14 @@
   + NGINX
   + SSL
   
-#### 📍Frontend
----
+### 📍Frontend
+
   + Javascript
   + HTML
   + CSS
 
+<br>
 
+## Database Schema
+> ![image](https://github.com/HuaJung/PandaHires/blob/main/PandaHires%20ERD.png)
 
-
-### Database Schema
-  ![image]
-
-### API Doc
