@@ -1,9 +1,9 @@
 import { renderErrorMsg } from "../../components/common/errorMsg.js";
 import { renderNavData, signout } from "../../components/common/navRecruiting.js";
 let page = 1
-const overviewApi = new URL('api/job/overview', window.origin)
-const jobApi = new URL(`api/job/all?page=${page}`, window.origin) 
-const candidateApi = new URL(`api/candidate?page=${page}`, window.origin)
+const overViewTap = document.querySelector('#radio1')
+const allJobsTap = document.querySelector('#radio2')
+const allCandidatesTap = document.querySelector('#radio3')
 const tbodyOverview = document.querySelector('.tbody-td.overview')
 const tbodyJob = document.querySelector('.tbody-td.jobs')
 const tbodyCandidate = document.querySelector('.tbody-td.candidates')
@@ -29,9 +29,6 @@ candidateJobBoxChecked()
 
 
 function tabHeaderChecked() {
-  const overViewTap = document.querySelector('#radio1')
-  const allJobsTap = document.querySelector('#radio2')
-  const allCandidatesTap = document.querySelector('#radio3')
   if (overViewTap.checked) {
     getOverview()
   } else if (allJobsTap.checked) {
@@ -79,7 +76,7 @@ function candidateStageUpdate() {
     const stageFormData = new FormData(updateForm)
     const stageData = {
       jobCandidateId: jobCandidateList,
-      interviewDate: stageFormData.has('interviewDate')? stageFormData.get('interviewDate'):null,
+      interviewDate: stageFormData.has('interviewDate')? stageFormData.get('interviewDate'): null,
       stage: {
         name: stageFormData.get('name'), 
         status: stageFormData.has('status')? stageFormData.get('status'): null
@@ -95,16 +92,8 @@ function candidateStageUpdate() {
     const response = await fetch(stageApi, request)
     const result = await response.json()
     if (response.status === 200) {
-      jobCandidateList.forEach((number) => {
-        const jobSection = document.querySelector(`ul[data-id="${number}"]`)
-        const jobStage = jobSection.querySelector('li[data-title=Stage]')
-        const jobStatus = jobSection.querySelector('li[data-title=Status]')
-        const interview = jobSection.querySelector('li[data-title=Interview]')
-        const intervewDateFormat = stageFormData.has('interviewDate') ? stageFormData.get('interviewDate').split('T')[0] + " " +stageFormData.get('interviewDate').split('T')[1] : 'N/A'
-        jobStage.textContent = stageFormData.get('name')
-        jobStatus.textContent = stageFormData.has('status')? stageFormData.get('status'): 'N/A'
-        interview.textContent = intervewDateFormat
-      })
+      location.reload()
+      allCandidatesTap.checked
     } else {
       renderErrorMsg(result)
     }
@@ -114,6 +103,7 @@ function candidateStageUpdate() {
 async function getOverview() {
   errorGroup.innerHTML = ''
   tbodyOverview.innerHTML = ''
+  const overviewApi = new URL('api/job/overview', window.origin)
   const response = await fetch(overviewApi)
   const result = await response.json()
   if (result.data === null) {
@@ -133,6 +123,7 @@ async function getOverview() {
 async function getAllCandidates() {
   errorGroup.innerHTML = ''
   tbodyCandidate.innerHTML = ''
+  const candidateApi = new URL(`api/candidate?page=${page}`, window.origin)
   const response = await fetch(candidateApi)
   const result = await response.json()
   if (result.data === null){
@@ -155,6 +146,7 @@ async function getAllCandidates() {
 async function getAllJobs() {
   errorGroup.innerHTML = ''
   tbodyJob.innerHTML = ''
+  const jobApi = new URL(`api/job/all?page=${page}`, window.origin) 
   const response = await fetch(jobApi)
   const result = await response.json()
   if (result.data === null) {
@@ -285,6 +277,7 @@ function renderCandidatesAndJobs(candidateData) {
         let element = li.cloneNode()
         if (ele.content.includes('N/A')) {
           element.style.fontSize = '12px'
+          element.style.color = 'var(--third-text-color)'
         }
         element.textContent = ele.content
         element.dataset.title = ele.data
@@ -374,24 +367,9 @@ function closeJob () {
         renderErrorMsg(result)
       }
     }
-
   })
-  const closeBtns = document.querySelectorAll('.close')
-  closeBtns.forEach(closeBtn => 
-    closeBtn.addEventListener('click', async() => {
-      const company = await comapnyInfo()
-      const jobId = closeBtn.name
-      const jobApi = new URL(`/api/job/${company.id}/jobs/${jobId}`, `${window.origin}`)
-      const response = await fetch(jobApi, {'method': 'DELETE'})
-      const result = await response.json()
-      if (response.status === 200) {
-        closeBtn.parentNode.parentElement.remove()
-      } else {
-        renderErrorMsg(result)
-      }
-    } )
-    )
 }
+
 
 function showResume() {
   tbodyCandidate.addEventListener('click', (e) => {
@@ -406,6 +384,5 @@ function showResume() {
     if (openMdal) {
       openMdal.close()
     }
-
   })
 }
