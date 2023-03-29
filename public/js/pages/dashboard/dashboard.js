@@ -283,6 +283,9 @@ function renderCandidatesAndJobs(candidateData) {
       ]
       jobEle.forEach((ele) => {
         let element = li.cloneNode()
+        if (ele.content.includes('N/A')) {
+          element.style.fontSize = '12px'
+        }
         element.textContent = ele.content
         element.dataset.title = ele.data
         gridTr.appendChild(element)

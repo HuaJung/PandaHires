@@ -145,7 +145,7 @@ const getOverviewJobs = async (req, res) => {
       RIGHT JOIN jobs ON jc.jobId = jobs.id 
       LEFT JOIN stageRecords sr ON jc.id = sr.jobCandidateId
       INNER JOIN companies ON companies.id = jobs.companyId
-      WHERE jobs.companyId = ?
+      WHERE jobs.companyId = ? AND jobs.status = 'Open'
       GROUP BY jobs.id, jobs.name WITH ROLLUP`,
       {
         replacements:[userID],

@@ -10,6 +10,7 @@
 /* edit company form, job form, candidate form, signout button, preview, apply */
 .button-wrapper {
   margin: 1rem 0;
+  padding: 1rem 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
