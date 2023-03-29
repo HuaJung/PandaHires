@@ -27,7 +27,7 @@
   ### 📍 Test Account
   | Email | test@email.com |
   | :--- | :--- |
-  | Password | test |
+  | Password | test123 |
   
  ![image](https://github.com/HuaJung/PandaHires/blob/main/create_job.gif)
  ---
