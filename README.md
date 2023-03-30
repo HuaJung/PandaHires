@@ -13,7 +13,7 @@
 
 ## Features
 + Recruiting system frontend: 
-  + Companies can have their own public recruiting website with opening job list and compay profile
+  + Companies can have their own public recruiting website with opening job list and company profile
   + Individual candidate applying job through company's recruiting website will be recoded in talent pool
 + Recruiting system backend: 
   + Create jobs 
