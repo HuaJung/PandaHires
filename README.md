@@ -1,4 +1,4 @@
-# PandaHires (https://pandaloverrr.com)
+# [PandaHires](https://pandaloverrr.com)
 
 🐼 PandaHires is a streamlined recruiting system designed to offer small enterprises an uncomplicated and sophisticated hiring solution. It aims to provide a one-stop-shop service, generating frontend recruitment website and integrating with backend system to manage job postings and candidate stages with ease. With PandaHires, businesses can enjoy a simple, yet professional hiring process that streamlines the recruitment experience from start to finish.
 
