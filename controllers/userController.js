@@ -1,5 +1,5 @@
 import { User } from '../models/db.js'
-import bcrypt from "bcrypt"
+import { userUpdate } from '../models/userModel.js'
 
 
 
@@ -15,20 +15,33 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const userID = req.id
   const user = req.body
-  const foundUser = await User.findByPk(userID)
-  if (!foundUser) return res.status.json({'error': true, 'message': 'invalid user'})
+  try {
+    const updatedUser = await userUpdate(userID, user)
 
-  if (user.password) {
-    const hashedPwd = await bcrypt.hash(user.password, 10)
-    await User.update({password: hashedPwd}, {where: {id: userID}})
-    return res.status(200).json({'ok': true})
+    if (!updatedUser) return res.status.json({'error': true, 'message': 'invalid user'})
 
-  } else if (user.email) {
-    const duplicate = await User.findOne({where: {email: email}})
-    if (duplicate) return res.status(409).json({'error': true, 'message': {'email': 'email is in use.'}}); //Conflict 
+    if (updatedUser.statusCode === 409) return res.status(409).json({'error': true, 'message': {'email': 'email is in use.'}})
+
+    res.status(200).json({'ok': true})
+
+  } catch (err) {
+    res.status(500).json({'error': true, 'message': err.message})
   }
-  await User.update(user, {where: {id: userID}})
-  res.status(200).json({'ok': true})
+
+  // const foundUser = await User.findByPk(userID)
+  // if (!foundUser) return res.status.json({'error': true, 'message': 'invalid user'})
+
+  // if (user.password) {
+  //   const hashedPwd = await bcrypt.hash(user.password, 10)
+  //   await User.update({password: hashedPwd}, {where: {id: userID}})
+  //   return res.status(200).json({'ok': true})
+
+  // } else if (user.email) {
+  //   const duplicate = await User.findOne({where: {email: email}})
+  //   if (duplicate) return res.status(409).json({'error': true, 'message': {'email': 'email is in use.'}}); //Conflict 
+  // }
+  // await User.update(user, {where: {id: userID}})
+  
 }
 
 

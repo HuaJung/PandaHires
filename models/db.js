@@ -207,6 +207,12 @@ const Stage = sequelize.define('stage', {
     allowNull: false
   },
   status: Sequelize.STRING
+},
+{
+  indexes: [{
+    unique: true,
+    fields: ['name', 'status']
+  }]
 })
 
 

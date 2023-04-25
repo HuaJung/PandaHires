@@ -13,17 +13,14 @@
       </div>
       <form class="grid-form" method="POST">
         <%-include('../common/error.ejs')  %> 
-        <input type="email" placeholder="Email" class="user-email" name="email">
+        <input type="email" placeholder="Email" class="user-email" name="email" value="'test@email.com">
         <div class="email error"></div>
-        <input type="password" placeholder="Password" class="user-password" name="password">
+        <input type="password" placeholder="Password" class="user-password" name="password" value="test123">
         <div class="password error"></div>
         <div class="other-options">
           <div class="remember-me">
             <input type="checkbox" id="user-remember-me">          
             <label for="user-remember-me">Keep me signed in</label>
-          </div>
-          <div class="help-link">
-            <a href="">Forget your password?</a>
           </div>
         </div>
         <div class="large-button-wrapper">

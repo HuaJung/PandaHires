@@ -1,83 +1,33 @@
 import { Candidate, Company, Job, Stage, JobCandidate } from "../models/db.js"
-import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
-import dotenv from 'dotenv'
-import { Sequelize } from "sequelize"
-
-
-dotenv.config()
-const cloudfrontUrl = 'https://d1kd77tnohewk3.cloudfront.net'
-const bucketName=process.env.BUCKET_NAME
-const bucketRegion=process.env.BUCKET_REGION
-const accessKey=process.env.ACCESS_KEY
-const secretAccessKey=process.env.SECRET_ACCESS_KEY
-const s3 = new S3Client({ 
-  credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey
-  },
-  region: bucketRegion 
-});
+import { careerCompany, careerAllJobs } from "../models/careerModel.js"
+import { updateResume } from "../models/candidateToJobModel.js"
+import { jobApplication } from "../models/applicationModel.js"
 
 
 
-const careerCompany = async (req, res) => {
+const careerCompanyController = async (req, res) => {
   const companyName = req.query.company
-  const company = await Company.findOne({
-    attributes: {exclude: ['logoOriginName', 'imageOriginName', 'createdAt', 'updatedAt', 'userId']},
-    where: {name: companyName}})
+  try {
+    const company = await careerCompany(companyName)
 
-  if (!company) return res.status(404).json({'data': null})
+    if (!company) return res.status(404).json({'data': null})
+  
+    res.status(200).json({'data': company})
 
-  if (company.logo !== null) {
-    company.logo = `${cloudfrontUrl}/${company.logo}`
+  } catch (err) {
+    res.status(500).json({ 'error': true, 'message': err.message })
   }
-  if (company.image !== null) {
-    company.image = `${cloudfrontUrl}/${company.image}`
-  }
-  res.status(200).json({'data': company})
 }
 
 
-const careerAllJobs = async (req, res) => {
+const careerAllJobsController = async (req, res) => {
   const {company, ...otherQuery} = req.query
   if (!company) return res.status(400).json({'error': true, 'message': 'missing query'})
 
-  const allJobs = await Job.findAll({
-    attributes:['team', [Sequelize.fn('GROUP_CONCAT', 
-    Sequelize.literal('CONCAT_WS(",,", job.id, job.name, job.country, job.city, workType, employmentType, job.updatedAt) ORDER BY job.updatedAt DESC SEPARATOR ",,"')), 'jobs']],
-    include:[
-      {
-        model: Company,
-        attributes:[],
-        where: {name: company}
-      }
-    ],
-    where: {status: 'Open'},
-    group: ['team' ],
-    raw: true
-  })
+  const allJobs = await careerAllJobs(company)
   if (allJobs.length < 1) return res.status(200).json({'data': null})
 
-  const jobs = allJobs.map(({team, jobs}) => {
-    return {
-      team,
-      jobs: jobs.split(',,').reduce((acc, curr, index, arr) => {
-        if (index % 7 === 0) {
-          acc.push({
-            id: parseInt(curr),
-            name: arr[index+1],
-            country: arr[index+2],
-            city: arr[index+3],
-            workType: arr[index+4],
-            employmentType: arr[index +5],
-            updatedAt: arr[index+6]
-          })
-        }
-        return acc
-      }, [])
-    }
-  })
-  res.status(200).json({'data': jobs})
+  res.status(200).json({'data': allJobs})
 }
 
 
@@ -93,7 +43,7 @@ const careerSingleJob = async (req, res) => {
 }
 
 
-const candidateApply = async (req, res) => {
+const careerApplyForJob = async (req, res) => {
   const jobID = Number(req.query.job)
   const candidate = req.body
 
@@ -101,95 +51,33 @@ const candidateApply = async (req, res) => {
   
   if (Object.keys(candidate).length < 6) return res.status(400).json({'error': true, 'message': 'missing fields'})
 
-  let foundCandidate
   try {
-    let jobCandidate
-    const job = await Job.findByPk(jobID)
-    candidate['companyId'] = job.companyId
     const resume = req.files.resume
-    const resumeName = `resume-${Date.now()}.pdf` 
-    const jobCandidateAttributes = {
-      resume: resumeName,
-      origin: 'Official',
-      originName: 'Website'
-    }
-    foundCandidate = await Candidate.findAll({
-      where: {email: candidate.email, companyId: job.companyId},
-      include: Job
-    })
-    if (foundCandidate.length > 0) {
-      foundCandidate[0].jobs.forEach((job) => {
-        if (job.id === jobID) throw 400  // alread existed
-      })
-      await Candidate.update(candidate, { where: {id: foundCandidate[0].id}})
-      const updatedCandidate = await Candidate.findByPk(foundCandidate[0].id)
-      jobCandidate = await job.addCandidate(updatedCandidate, { through: jobCandidateAttributes})
 
-    } else {
-      const createCandidate = await Candidate.create(candidate)
-      jobCandidate = await job.addCandidate(createCandidate, { through: jobCandidateAttributes})
-    }
-    const initialStage = await Stage.findByPk(1)
-    await jobCandidate[0].addStage(initialStage)
-
-    // save PDF to S3
-    const params = {
-      Bucket: bucketName,
-      Key: `pandahires/${resumeName}`,
-      Body: resume.data,
-      ContentType: resume.mimetype
-    };
-    const putCommand = new PutObjectCommand(params);
-    await s3.send(putCommand);
-
+    await jobApplication(jobID, candidate, resume)
     res.status(201).json({'ok': true})
 
   } catch (err) {
-    if (err === 400) return res.status(400).json({'error': true, 'message': 'You already applied the job', 'candidateId': foundCandidate[0].id}) 
+    if (err.message === 'Already Applied') return res.status(400).json({'error': true, 'message': 'You already applied the job', 'candidateId': err.candidateId}) 
     res.status(500).json({ 'error': true, 'message': err.message })
   }
 }
 
 
-const updateResume = async(req, res) => {
+const careerUpdateApplication = async(req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) return res.status(400).json({'error': true, 'message': 'No file is uploaded'})
 
-  let jobID
-  // career page uses query string, recruiting page uses params
-  if (req.query.job) jobID = req.query.job
-  else jobID = req.params.jobID 
+  const candidateID = req.query.candidate
+  const jobID = req.query.job
+  const candidate = req.body
+  const newResume = req.files.resume
+
+  if (Object.keys(candidate).length < 6) return res.status(400).json({'error': true, 'message': 'missing fields'})
 
   try {
-    const candidateID = req.query.candidate
-    const newResume = req.files.resume
-    const newResumeName = `resume-${Date.now()}.pdf`
-    const oldResume = await JobCandidate.findOne({
-      attributes: ['resume'],
-      where: {jobId: jobID , candidateId: candidateID}
-    })
-    if (!oldResume.resume) return res.status(404).json({'error': true, 'message': 'resume not found'})
-  
-    // update resume in S3
-    const deleteParams = {
-      Bucket: bucketName,
-      Key: `pandahires/${oldResume.resume}`,
-    }
-    const updateParams = {
-      Bucket: bucketName,
-      Key: `pandahires/${newResumeName}`,
-      Body: newResume.data,
-      ContentType: newResume.mimetype
-    }
-    const deleteCommand = new DeleteObjectCommand(deleteParams)
-    const putCommand = new PutObjectCommand(updateParams);
-    await s3.send(deleteCommand)
-    await s3.send(putCommand)
-  
-    // update resume in RDS
-    await JobCandidate.update(
-      {resume: newResumeName}, 
-      {where: {jobId: jobID , candidateId: candidateID}}
-    )
+    await Candidate.update(candidate, {where: {id: candidateID}})
+    await updateResume(jobID, candidateID, newResume)
+
     res.status(200).json({"ok": true})
 
   } catch (err) {
@@ -198,4 +86,5 @@ const updateResume = async(req, res) => {
 }
 
 
-export {candidateApply, careerAllJobs, careerSingleJob, careerCompany,updateResume}
+
+export {careerApplyForJob, careerAllJobsController, careerSingleJob, careerCompanyController, careerUpdateApplication}

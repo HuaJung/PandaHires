@@ -1,22 +1,21 @@
 import express from "express"
-import { candidateUpdate } from "../../middleware/candidateUpdate.js"
-import { candidateApply, careerAllJobs, careerSingleJob, careerCompany, updateResume } from "../../controllers/careerController.js"
+import { careerApplyForJob, careerAllJobsController, careerSingleJob, careerCompanyController, careerUpdateApplication } from "../../controllers/careerController.js"
 
 const careerRoute = express.Router()
 
 
 careerRoute.route('/')  //  querystring ?company=xxxxxx(companyName)
-  .get(careerCompany)
+  .get(careerCompanyController)
 
 careerRoute.route('/alljobs')  // querystring ?company=xxxxx(companyName)
-  .get(careerAllJobs)
+  .get(careerAllJobsController)
 
 careerRoute.route('/singlejob')  //querystring ?job=xxxxx(id)
   .get(careerSingleJob)
 
 careerRoute.route('/apply')   
-  .post(candidateApply)  //querystring ?job=xxxxx(id)
-  .patch(candidateUpdate, updateResume)   //querystring ?job=xxxxx(id)&candidate(id)
+  .post(careerApplyForJob)  //querystring ?job=xxxxx(id)
+  .patch(careerUpdateApplication)   //querystring ?job=xxxxx(id)&candidate(id)
 
 
 export { careerRoute }
