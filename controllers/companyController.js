@@ -6,14 +6,14 @@ import { updateCompany, getCompany } from '../models/companyModel.js';
 
 
 const createNewCompany = async(req, res) => {
-  const error = authError(validationResult(req.body)) 
+  const error = authError(validationResult(req)) 
   if (error) return res.status(400).json({'error': true, 'message': error})
 
   const company = req.body
   company['userId'] = req.id
 
-  const foundCompany = await Company.findOne({where: {name: company.name}})
-  if (foundCompany) return res.status(409).json({ 'error': true, 'message': 'company already exists' })
+  // const foundCompany = await Company.findOne({where: {name: company.name}})
+  // if (foundCompany) return res.status(409).json({ 'error': true, 'message': 'company already exists' })
 
   try {
     await Company.create(company)

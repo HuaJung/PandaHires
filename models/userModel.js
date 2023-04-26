@@ -4,12 +4,8 @@ import bcrypt from "bcrypt"
 
 
 const userRegister = async (userInfo) => {
-  const foundUser = await User.findOne({where: {email: userInfo.email}})
-
-  if (foundUser) return 1
-
   //encrypt the password
-  const hashedPwd = await bcrypt.hash(password, 10)
+  const hashedPwd = await bcrypt.hash(userInfo.password, 10)
 
   //store the new user
   userInfo.password = hashedPwd
@@ -19,13 +15,11 @@ const userRegister = async (userInfo) => {
 
 
 const userLogin = async (email, password) => {
-  const foundUser = await User.findOne({where: {email: email}})
-  if (!foundUser) return foundUser
+  // const foundUser = await User.findOne({where: {email: email}})
+  // if (!foundUser) return foundUser
 
   const pwdMatch = await bcrypt.compare(password, foundUser.password)
   if (!pwdMatch) return {'message': 'email or password not correct'}
-
-  return foundUser
 }
 
 

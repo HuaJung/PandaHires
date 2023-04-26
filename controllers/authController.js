@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken"
 
 const handleRegister = async (req, res) => {
   const error = authError(validationResult(req)) 
+  console.log(req.body)
   if (error) return res.status(400).json({'error': true, 'message': error})
   const userInfo = req.body
 
@@ -26,8 +27,6 @@ const handleRegister = async (req, res) => {
   //   })
   try {
     const user = await userRegister(userInfo)
-    if (user === 1) return res.status(409).json({'error': true, 'message': {'email': 'email already exists.'}})
-
     const token = jwt.sign(
       {'id': user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'}
     )
@@ -42,7 +41,8 @@ const handleRegister = async (req, res) => {
 
 const handleLogin = async (req, res) => {
   const error = authError(validationResult(req)) 
-  if (error) return res.status(400).json({'error': true, 'message': error})
+  console.log(req.body)
+  if (error) return res.status(400).json({'error': true, 'message': 'Email or password is incorrect'})
   const {email, password} = req.body
 
   try {

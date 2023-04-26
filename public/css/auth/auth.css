@@ -6,6 +6,7 @@ body {
 
 .grid-container {
   grid-template-rows: 1fr;
+  height: 100vh;
 }
 
 .background-pic {
@@ -14,7 +15,7 @@ body {
 
 .background-pic img{
   width: 100%;
-  height: 100vh;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -37,7 +38,6 @@ body {
 }
 
 .header-text h1 {
-
   font-family: 'Libre Baskerville', serif;
   font-size: 55px;
   font-weight: 500;
@@ -66,10 +66,16 @@ body {
   padding: 0 3px;
 }
 
-input:not(:focus):invalid {
-  border-color: brown;
+
+input.submitted {
+  border-color: rgb(190, 99, 99);
   box-shadow: 0 0 4px 0 brown;
 }
+
+/* input.submitted:focus{
+  border-color: initial;
+  box-shadow: none;
+} */
 
 
 @media (min-width: 680px) {
