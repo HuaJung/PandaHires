@@ -32,6 +32,7 @@ const loginValidator = [
     .custom(async (value, {req}) => {
       const foundUser = await User.findOne({where: {email: value}})
       if (!foundUser) return Promise.reject('The user doesn\'t exist')
+      req.foundUser = foundUser
     }),
   check("password", "Must at least 4 letters long")
     .trim()

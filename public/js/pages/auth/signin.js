@@ -5,8 +5,8 @@ const errorGroup = document.querySelector('.error-group')
 
 signinForm()
 
-function signinForm () {
 
+function signinForm () {
   signInForm.addEventListener('submit', (e) => {
     e.preventDefault()
     // reset error from server-side

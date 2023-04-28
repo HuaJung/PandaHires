@@ -14,27 +14,22 @@ const userRegister = async (userInfo) => {
 }
 
 
-const userLogin = async (email, password) => {
-  // const foundUser = await User.findOne({where: {email: email}})
-  // if (!foundUser) return foundUser
-
+const userLogin = async (foundUser, password) => {
   const pwdMatch = await bcrypt.compare(password, foundUser.password)
   if (!pwdMatch) return {'message': 'email or password not correct'}
 }
 
 
 const userUpdate = async (userID, user) => {
-  const foundUser = await User.findByPk(userID)
-  if (!foundUser) return foundUser
-
   if (user.password) {
     const hashedPwd = await bcrypt.hash(user.password, 10)
     user.password = hashedPwd
   } else if (user.email) {
     const duplicate = await User.findOne({where: {email: user.email}})
-    if (duplicate) return {'statusCode': 409}
+    if (duplicate) return {'duplicated': true}
   }
   await User.update(user, {where: {id: userID}})
 }
+
 
 export {userRegister, userLogin, userUpdate}

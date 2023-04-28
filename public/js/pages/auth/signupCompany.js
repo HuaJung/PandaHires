@@ -10,7 +10,7 @@ const telError = document.querySelector('.tel.error')
 const errorGroup = document.querySelector('.error-group')
 
 
-signInChecker()
+// signInChecker()
 companySignupForm()
 
 function companySignupForm() {

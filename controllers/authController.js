@@ -41,15 +41,13 @@ const handleRegister = async (req, res) => {
 
 const handleLogin = async (req, res) => {
   const error = authError(validationResult(req)) 
-  console.log(req.body)
   if (error) return res.status(400).json({'error': true, 'message': 'Email or password is incorrect'})
-  const {email, password} = req.body
 
+  const password = req.body.password
+  const foundUser = req.foundUser
   try {
-    const user = await userLogin(email, password)
-    if (!user) return res.status(401).json({'error':true, 'message': 'email or password not correct'})
-
-    if (user.message) return res.status(401).json({'error':true, 'message': user.message})
+    const invalidUser = await userLogin(foundUser, password)
+    if (invalidUser) return res.status(401).json({'error':true, 'message': user.message})
   // const foundUser = await User.findOne({where: {email: email}})
   // if (!foundUser) return res.status(401).json({'error':true, 'message': 'email or password not correct'})
 
@@ -58,7 +56,7 @@ const handleLogin = async (req, res) => {
 
   // try {
     const token = jwt.sign(
-      {'id': user.id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' }
+      {'id': foundUser.id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' }
     )
     res.cookie('token', token, {httpOnly: true, maxAge: 24*60*60*1000})
     res.status(200).json({'ok': true})

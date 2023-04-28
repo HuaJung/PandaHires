@@ -34,13 +34,14 @@ app.use('/careers', express.static('public'))
 
 // routes
 app.use('/', baseRoute)
-app.use('/recruiting', recruitRoute)
+
 app.use('/careers', careersRoute)
 app.use('/api/career', careerRoute)
 app.use('/api/auth', authRoute) 
 
 // apply jwt verificaion before these routes
 app.use(verifyJWT)
+app.use('/recruiting', recruitRoute)
 app.use('/api/user', userRoute)
 app.use('/api/job', jobRoute)
 app.use('/api/candidate', candidateRoute)
