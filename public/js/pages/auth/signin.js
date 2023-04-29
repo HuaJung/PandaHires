@@ -3,6 +3,7 @@ import { renderErrorMsg } from '../../components/common/errorMsg.js'
 const signInForm = document.querySelector('form')
 const errorGroup = document.querySelector('.error-group')
 
+
 signinForm()
 
 

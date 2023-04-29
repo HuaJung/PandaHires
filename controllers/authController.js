@@ -11,20 +11,6 @@ const handleRegister = async (req, res) => {
   if (error) return res.status(400).json({'error': true, 'message': error})
   const userInfo = req.body
 
-  // const { name, position, email, password } = req.body
-  // const duplicate = await User.findOne({where: {email: email}})
-
-  // if (duplicate) return res.status(409).json({'error': true, 'message': {'email': 'email already exists.'}}); //Conflict 
-  // try {
-  //   //encrypt the password
-  //   const hashedPwd = await bcrypt.hash(password, 10)
-  //   //store the new user
-  //   const newUser = await User.create({
-  //     name: name,
-  //     email: email,
-  //     position: position,
-  //     password: hashedPwd
-  //   })
   try {
     const user = await userRegister(userInfo)
     const token = jwt.sign(
@@ -47,14 +33,8 @@ const handleLogin = async (req, res) => {
   const foundUser = req.foundUser
   try {
     const invalidUser = await userLogin(foundUser, password)
-    if (invalidUser) return res.status(401).json({'error':true, 'message': user.message})
-  // const foundUser = await User.findOne({where: {email: email}})
-  // if (!foundUser) return res.status(401).json({'error':true, 'message': 'email or password not correct'})
+    if (invalidUser) return res.status(401).json({'error':true, 'message': invalidUser.message})
 
-  // const pwdMatch = await bcrypt.compare(password, foundUser.password)
-  // if (!pwdMatch) return res.status(401).json({'error':true, 'message': 'email or password not correct'})
-
-  // try {
     const token = jwt.sign(
       {'id': foundUser.id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' }
     )

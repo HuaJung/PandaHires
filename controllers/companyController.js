@@ -12,9 +12,6 @@ const createNewCompany = async(req, res) => {
   const company = req.body
   company['userId'] = req.id
 
-  // const foundCompany = await Company.findOne({where: {name: company.name}})
-  // if (foundCompany) return res.status(409).json({ 'error': true, 'message': 'company already exists' })
-
   try {
     await Company.create(company)
     res.status(201).json({'ok': true})

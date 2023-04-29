@@ -1,4 +1,4 @@
-import { Candidate, Company, Job, Stage, JobCandidate } from "../models/db.js"
+import { Candidate, Job } from "../models/db.js"
 import { careerCompany, careerAllJobs } from "../models/careerModel.js"
 import { updateResume } from "../models/candidateToJobModel.js"
 import { jobApplication } from "../models/applicationModel.js"

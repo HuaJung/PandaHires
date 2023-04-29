@@ -44,10 +44,10 @@ function tabHeaderChecked() {
 
 function candidateStageSelection() {
   statusSelect.disabled = stageSelect.value.includes('Interview')? false: true
-  dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled') || statusSelect.value.includes('Rescheduled')) ? false: true
+  dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled'))? false: true
   stageSelect.addEventListener('change', (e) => {
     statusSelect.disabled = e.target.value.includes('Interview')? false: true
-    dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled') || statusSelect.value.includes('Rescheduled')) ? false: true
+    dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled')) ? false: true
   })
   statusSelect.addEventListener('change', () => {
     dateSelect.disabled = statusSelect.value.includes('Scheduled') || statusSelect.value=== 'Rescheduled' ? false: true

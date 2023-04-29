@@ -39,8 +39,9 @@ const careerAllJobs = async (company) => {
     group: ['team' ],
     raw: true
   })
+  let allJobsByTeams
   if (allJobs.length >= 1) {
-    allJobs = allJobs.map(({team, jobs}) => {
+    allJobsByTeams = allJobs.map(({team, jobs}) => {
       return {
         team,
         jobs: jobs.split(',,').reduce((acc, curr, index, arr) => {
@@ -60,7 +61,7 @@ const careerAllJobs = async (company) => {
       }
     })
   }
-  return allJobs
+  return allJobsByTeams
 }
 
 

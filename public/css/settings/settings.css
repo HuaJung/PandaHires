@@ -48,6 +48,7 @@
 
 .delete-button {
   padding: 4rem;
+  cursor: pointer;
 }
 
 .delete {

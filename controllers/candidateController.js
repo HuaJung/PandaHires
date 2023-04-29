@@ -1,4 +1,4 @@
-import { Job, JobCandidate, Candidate, StageRecord, Stage } from "../models/db.js"
+import { Job, Candidate } from "../models/db.js"
 import { updateResume, updateResumeAndOrigin, updateOrigin } from "../models/candidateToJobModel.js"
 import { getCandidatesToJobToStage, getCandidate } from "../models/candidateModel.js"
 import { jobApplication } from "../models/applicationModel.js"
