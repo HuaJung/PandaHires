@@ -36,9 +36,10 @@ const getAllCandidatesController = async(req, res) => {
   const userID = req.id
   const {page, ...queries} =req.query
   if (!page) return res.status(400).json({'error': true, 'message': 'missing query'})
-  
-  const offset = (page-1)*10
-  const limit = 10
+
+  const limit = 20
+  const offset = (page-1)*limit
+
 
   try {
     const allCandidates = await getCandidatesToJobToStage(userID, limit, offset)

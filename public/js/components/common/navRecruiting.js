@@ -5,7 +5,6 @@ const authApi = new URL('/api/auth', window.origin)
 
 
 
-// signInChecker()
 renderNavData()
 signout() 
 

@@ -1,12 +1,11 @@
-import { Company, Job, Candidate, JobCandidate, Stage} from '../models/db.js'
-import { S3Client,PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
+import { Job, Candidate, Stage} from '../models/db.js'
+import { S3Client,PutObjectCommand } from "@aws-sdk/client-s3"
 import { findCandidateByEmailAndCompanyId } from './candidateModel.js'
 import { addResumeAndOrigin } from './candidateToJobModel.js'
 import dotenv from 'dotenv'
 
 
 dotenv.config()
-const cloudfrontUrl = process.env.CLOUDFRONT_DOMAIN
 const bucketName=process.env.BUCKET_NAME
 const bucketRegion=process.env.BUCKET_REGION
 const accessKey=process.env.ACCESS_KEY
@@ -39,18 +38,18 @@ const jobApplication = async (jobID, candidate, resume) => {
     await Candidate.update(candidate, {where: {id: candidateID}})
     resumeAdded = await addResumeAndOrigin(candidateID, jobID, candidate, resumeName)
   }
-  const initialStage = await Stage.findByPk(1)
-  await resumeAdded.addStage(initialStage)
-
   // save PDF to S3
   const params = {
     Bucket: bucketName,
     Key: `pandahires/${resumeName}`,
     Body: resume.data,
     ContentType: resume.mimetype
-  };
+  }
   const putCommand = new PutObjectCommand(params);
-  await s3.send(putCommand);
+  await s3.send(putCommand)
+
+  const initialStage = await Stage.findByPk(1)
+  await resumeAdded.addStage(initialStage)
 }
 
 export { jobApplication}

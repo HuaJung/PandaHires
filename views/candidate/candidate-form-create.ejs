@@ -10,7 +10,7 @@
           <form action="" method="POST" enctype="multipart/form-data">
             <div class="grid-form">
               <label class="label">APPLY FOR <small style="color: red;">*</small></label>
-              <select name="jobId">
+              <select name="jobId" required>
                 <option selected disabled value="" label="SELECT A JOB"></option>
               </select>
               <label class="label">ORIGIN <small style="color: red;">*</small></label>
@@ -59,6 +59,8 @@
       </div>
     </div>
   </main>
+
+  <%- include('../common/footer.ejs') %>
 
   <script type="module"  src="/js/pages/candidate/addCandidateForm.js"></script>
 </body>

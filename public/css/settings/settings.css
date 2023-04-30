@@ -31,7 +31,7 @@
   fill: var(--inactive-button-color)
 }
 
-.bi-pencil-squar, .btn {
+.bi-pencil-square, .btn {
   cursor: pointer;
 }
 
@@ -48,7 +48,6 @@
 
 .delete-button {
   padding: 4rem;
-  cursor: pointer;
 }
 
 .delete {
@@ -56,6 +55,7 @@
   padding:0.3rem 0.9rem;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .success-msg {

@@ -39,28 +39,26 @@ const careerAllJobs = async (company) => {
     group: ['team' ],
     raw: true
   })
-  let allJobsByTeams
-  if (allJobs.length >= 1) {
-    allJobsByTeams = allJobs.map(({team, jobs}) => {
-      return {
-        team,
-        jobs: jobs.split(',,').reduce((acc, curr, index, arr) => {
-          if (index % 7 === 0) {
-            acc.push({
-              id: parseInt(curr),
-              name: arr[index+1],
-              country: arr[index+2],
-              city: arr[index+3],
-              workType: arr[index+4],
-              employmentType: arr[index +5],
-              updatedAt: arr[index+6]
-            })
-          }
-          return acc
-        }, [])
-      }
-    })
-  }
+  if (allJobs.length < 1) return allJobs
+  const allJobsByTeams = allJobs.map(({team, jobs}) => {
+    return {
+      team,
+      jobs: jobs.split(',,').reduce((acc, curr, index, arr) => {
+        if (index % 7 === 0) {
+          acc.push({
+            id: parseInt(curr),
+            name: arr[index+1],
+            country: arr[index+2],
+            city: arr[index+3],
+            workType: arr[index+4],
+            employmentType: arr[index +5],
+            updatedAt: arr[index+6]
+          })
+        }
+        return acc
+      }, [])
+    }
+  })
   return allJobsByTeams
 }
 

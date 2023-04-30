@@ -41,7 +41,7 @@ const getCandidatesToJobToStage = async (userID, limit, offset) => {
       INNER JOIN companies ON c.companyId = companies.id 
       WHERE companies.userId = ?
       GROUP BY c.id 
-      ORDER BY MAX(sr.updatedAt) DESC
+      ORDER BY MAX(jc.createdAt) DESC
       LIMIT ? OFFSET ?`,
     {
       replacements: [userID, limit, offset],

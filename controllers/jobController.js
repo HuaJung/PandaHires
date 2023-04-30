@@ -26,8 +26,8 @@ const getAllJobs = async (req, res) => {
   const {page, ...queries} =req.query
   if (!page) return res.status(400).json({'error': true, 'message': 'missing query'})
 
-  const offset = (page-1)*10
-  const limit = 10
+  const limit = 20
+  const offset = (page-1)*limit
   const offerStage = 22
   const sortedJobs = await allJobs(offerStage, userID, limit, offset)
 

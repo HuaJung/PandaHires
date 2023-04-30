@@ -7,7 +7,6 @@
   color: rgba(165, 42, 42, 0.707);
   border: 2px solid rgba(165, 42, 42, 0.707);
   border-radius: 8px;
-  z-index: 7;
 }
 
 .error-msg span {
