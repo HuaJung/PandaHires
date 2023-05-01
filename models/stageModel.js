@@ -9,7 +9,6 @@ const addNewStageRecord = async (jobCandidateIdList, stage, interviewDate) => {
   const stageRecordAttributes = []
   for (const id of jobCandidateIdList) {
     if (!await JobCandidate.findByPk(id)) throw {'message': 'Not a valid application'}
-
     const data = {
       jobCandidateId: id,
       stageId: foundStage.id,

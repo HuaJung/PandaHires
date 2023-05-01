@@ -30,49 +30,58 @@ const findCandidateByEmailAndCompanyId = async (email, companyID) => {
 
 const getCandidatesToJobToStage = async (userID, limit, offset) => {
   const allCandidateJobStage = await sequelize.query(
-    `SELECT c.id ,c.firstName, c.lastName, GROUP_CONCAT(
-      CONCAT_WS(",,", jc.id, jobs.name, jobs.status, jc.resume, jc.origin, jc.createdAt, stages.name, COALESCE(stages.status, 'N/A'), COALESCE(sr.interviewDate, 'N/A')) ORDER BY sr.createdAt DESC SEPARATOR ",,") AS jobDetails FROM candidates c 
-      INNER JOIN jobCandidates jc ON c.id = jc.candidateID 
-      INNER JOIN jobs ON jobs.id = jc.jobId 
-      INNER JOIN (SELECT jobCandidateId, MAX(sr.createdAt) AS maxCreatedAt 
-      FROM stageRecords sr GROUP BY jobCandidateId) latest_sr ON latest_sr.jobCandidateId= jc.id
-      INNER JOIN stageRecords sr ON sr.jobCandidateId = jc.id AND sr.createdAt = latest_sr.maxCreatedAt
-      INNER JOIN stages ON stages.id = sr.stageId
-      INNER JOIN companies ON c.companyId = companies.id 
-      WHERE companies.userId = ?
-      GROUP BY c.id 
-      ORDER BY MAX(jc.createdAt) DESC
-      LIMIT ? OFFSET ?`,
+    `SELECT c.id, c.firstName, c.lastName, jc.id AS jobCandidateId, 
+      j.name, j.status AS jobStatus, jc.resume, jc.origin, jc.createdAt, s.name AS stage, 
+      COALESCE(s.status, '-') AS status, 
+      COALESCE(sr.interviewDate, '-') AS interviewDate
+    FROM candidates c
+    INNER JOIN jobCandidates jc ON c.id = jc.candidateID
+    INNER JOIN jobs j ON j.id = jc.jobId
+    INNER JOIN stageRecords sr ON sr.jobCandidateId = jc.id
+    INNER JOIN (
+      SELECT jobCandidateId, MAX(sr.createdAt) AS latestRecord
+        FROM stageRecords sr 
+        GROUP BY jobCandidateId
+    ) latestSr ON latestSr.jobCandidateId = sr.jobCandidateId AND latestSr.latestRecord = sr.createdAt
+    INNER JOIN stages s ON s.id = sr.stageId
+    INNER JOIN companies ON c.companyId = companies.id
+    WHERE companies.userId = ?
+    ORDER BY jc.createdAt DESC, c.id ASC
+    LIMIT ? OFFSET ?`,
     {
       replacements: [userID, limit, offset],
       type: QueryTypes.SELECT
     }
   )
   if (allCandidateJobStage.length < 1) return allCandidateJobStage
-  const sortedCandidates = allCandidateJobStage.map(({id, firstName, lastName, jobDetails}) => {
-    return {
-      id,
-      firstName,
-      lastName,
-      jobs: jobDetails.split(',,').reduce((acc, curr, index, arr) => {
-        if (index % 9 === 0) {
-          const interviewTime  = arr[index+8]!== 'N/A'? arr[index+8].split(':')[0]+':'+arr[index+8].split(':')[1]: arr[index+8]
-          acc.push({
-            jobCandidateId: parseInt(curr),
-            jobName: arr[index+1],
-            jobStatus: arr[index+2],
-            resume: `${cloudfrontUrl}/${arr[index+3]}`,
-            origin: arr[index+4],
-            appliedDate: arr[index+5],
-            stage: arr[index+6],
-            stageStatus: arr[index+7],
-            interviewDate: interviewTime
-          })
-        }
-        return acc
-      }, [])
+
+  const sortedCandidates = allCandidateJobStage.reduce((acc, candidate) => {
+    const candidateId = acc.findIndex((item)=> item.id === candidate.id)
+    const jobData = {
+      jobCandidateId: candidate.jobCandidateId,
+      jobName: candidate.name,
+      jobStatus: candidate.jobStatus,
+      resume: `${cloudfrontUrl}/${candidate.resume}`,
+      origin: candidate.origin,
+      appliedDate: candidate.createdAt,
+      stage: candidate.stage,
+      stageStatus: candidate.status,
+      interviewDate: candidate.interviewDate
     }
-  })
+    if(candidateId !== -1) {
+      acc[candidateId].jobs.push(jobData)
+    } else {
+      acc.push(
+        {
+          id: candidate.id,
+          firstName: candidate.firstName,
+          lastName: candidate.lastName,
+          jobs: [jobData]
+        }
+      )
+    }
+    return acc
+  }, [])
   return sortedCandidates
 }
 

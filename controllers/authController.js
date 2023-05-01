@@ -7,14 +7,13 @@ import jwt from "jsonwebtoken"
 
 const handleRegister = async (req, res) => {
   const error = authError(validationResult(req)) 
-  console.log(req.body)
   if (error) return res.status(400).json({'error': true, 'message': error})
   const userInfo = req.body
 
   try {
     const user = await userRegister(userInfo)
     const token = jwt.sign(
-      {'id': user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'}
+      {'id': user.id, 'timezoneoffset': userInfo.timezoneoffset}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'}
     )
     res.cookie('token', token, {httpOnly: true, maxAge: 24*60*60*1000})
     res.status(201).json({ 'ok': true })
@@ -36,7 +35,7 @@ const handleLogin = async (req, res) => {
     if (invalidUser) return res.status(401).json({'error':true, 'message': invalidUser.message})
 
     const token = jwt.sign(
-      {'id': foundUser.id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' }
+      {'id': foundUser.id, 'timezoneOffset': req.body.timezoneOffset}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' }
     )
     res.cookie('token', token, {httpOnly: true, maxAge: 24*60*60*1000})
     res.status(200).json({'ok': true})

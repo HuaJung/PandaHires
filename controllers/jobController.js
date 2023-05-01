@@ -80,8 +80,9 @@ const updateJob = async (req, res) => {
 
 const getOverviewJobs = async (req, res) => {
   const userID = req.id
+  const timezoneOffset = req.timezoneOffset
   try {
-    const sortedJobs = await  overviewJobs(userID)
+    const sortedJobs = await  overviewJobs(userID, timezoneOffset)
 
     if (sortedJobs.length < 1) return res.status(200).json({'data': null}) 
 

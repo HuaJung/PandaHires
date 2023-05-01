@@ -245,16 +245,11 @@ JobCandidate.belongsTo(Job)
 Candidate.hasMany(JobCandidate)
 JobCandidate.belongsTo(Candidate)
 
-JobCandidate.belongsToMany(Stage, {through: StageRecord, foreignKey: {name: 'jobCandidateId', allowNull: false}})
-Stage.belongsToMany(JobCandidate, {through: StageRecord, foreignKey: {name: 'stageId', allowNull: false}})
-
-JobCandidate.hasMany(StageRecord)
+JobCandidate.hasMany(StageRecord, {foreignKey: {allowNull: false}})
 StageRecord.belongsTo(JobCandidate)
 
-Stage.hasMany(StageRecord);
+Stage.hasMany(StageRecord, {foreignKey: {allowNull: false}});
 StageRecord.belongsTo(Stage);
-
-
 
 
 

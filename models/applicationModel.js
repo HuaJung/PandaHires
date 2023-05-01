@@ -45,11 +45,11 @@ const jobApplication = async (jobID, candidate, resume) => {
     Body: resume.data,
     ContentType: resume.mimetype
   }
+  await resumeAdded.createStageRecord({stageId: 1})
+
   const putCommand = new PutObjectCommand(params);
   await s3.send(putCommand)
 
-  const initialStage = await Stage.findByPk(1)
-  await resumeAdded.addStage(initialStage)
 }
 
 export { jobApplication}

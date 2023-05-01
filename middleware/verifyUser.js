@@ -7,6 +7,7 @@ const verifyJWT = (req, res, next) => {
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
     if (err) return res.redirect('/')
     req.id = decode.id
+    req.timezoneOffset = decode.timezoneOffset
     next() 
   }) 
 }
@@ -17,6 +18,7 @@ const verifyLogin = (req, res, next) => {
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
     if (err) return res.status(403).json({'error': true, 'message': 'forbidden'})
     req.id = decode.id
+    req.timezoneOffset = decode.timezoneOffset
     next() 
   })  
 }

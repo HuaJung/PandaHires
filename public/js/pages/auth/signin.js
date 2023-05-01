@@ -12,8 +12,9 @@ function signinForm () {
     e.preventDefault()
     // reset error from server-side
     errorGroup.innerHTML = ''
-
+    const timezoneOffset = new Date().getTimezoneOffset()
     const formData = new FormData(signInForm) 
+    formData.append('timezoneOffset', timezoneOffset)
     userSignIn(formData)
   })
 }

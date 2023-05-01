@@ -55,14 +55,16 @@ const allJobs = async (offerStage, userID, limit, offset) => {
   }
 }
 
-const overviewJobs = async (userID) => {
+const overviewJobs = async (userID, timezoneOffset) => {
+  const offerStage = 22
+  const toTZ = timezoneOffset < 0 ? `+0${-(timezoneOffset / 60)}:00` : `${-(timezoneOffset / 60)}:00`
   const applicantInterviewOfferCount = await sequelize.query(
     `SELECT jobs.id, jobs.name,
-      COUNT(DISTINCT CASE WHEN DATE(jc.createdAt) = CURDATE() THEN jc.id END) AS applicantToday, 
-      COUNT(DISTINCT CASE WHEN jc.createdAt >= CURDATE() - INTERVAL 7 DAY THEN jc.id END) AS applicantPast7Day,
+      COUNT(DISTINCT CASE WHEN DATE(CONVERT_TZ(jc.createdAt, '+00:00', ?)) = CURDATE() THEN jc.id END) AS applicantToday, 
+      COUNT(DISTINCT CASE WHEN CONVERT_TZ(jc.createdAt, '+00:00', ?) >= CURDATE() - INTERVAL 7 DAY THEN jc.id END) AS applicantPast7Day,
       COUNT(DISTINCT CASE WHEN sr.interviewDate = CURDATE() THEN sr.jobCandidateId END) AS interviewToday,
-      COUNT(DISTINCT CASE WHEN CURDATE() < sr.interviewDate <= CURDATE() + INTERVAL 7 DAY THEN sr.jobCandidateId END) AS interviewNext7Day,
-      COUNT(DISTINCT CASE WHEN sr.stageId = 26 THEN sr.jobCandidateId END) AS offerPast7Day
+      COUNT(DISTINCT CASE WHEN sr.interviewDate > CURDATE() AND sr.interviewDate <= CURDATE() + INTERVAL 7 DAY THEN sr.jobCandidateId END) AS interviewNext7Day,
+      COUNT(DISTINCT CASE WHEN sr.stageId = ? THEN sr.jobCandidateId END) AS offerPast7Day
     FROM jobCandidates jc
     RIGHT JOIN jobs ON jc.jobId = jobs.id 
     LEFT JOIN(
@@ -78,7 +80,7 @@ const overviewJobs = async (userID) => {
     WHERE jobs.companyId = ? AND jobs.status = 'Open'
     GROUP BY jobs.id, jobs.name WITH ROLLUP`,
     {
-      replacements:[userID],
+      replacements:[toTZ, toTZ, offerStage, userID],
       type: QueryTypes.SELECT
     }
   )

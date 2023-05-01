@@ -42,6 +42,7 @@ async function getCompany() {
     delete result.data.image
     const companyData = result.data 
     renderCompanyData(companyData)
+
   } else if (response.status === 401) {
     location.assign(loginPage)
   } else {

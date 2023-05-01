@@ -1,5 +1,4 @@
 import { Company, Job} from '../models/db.js'
-import { Sequelize } from 'sequelize'
 import dotenv from 'dotenv'
 
 
@@ -26,40 +25,46 @@ const careerCompany = async (companyName) => {
 
 const careerAllJobs = async (company) => {
   const allJobs = await Job.findAll({
-    attributes:['team', [Sequelize.fn('GROUP_CONCAT', 
-    Sequelize.literal('CONCAT_WS(",,", job.id, job.name, job.country, job.city, workType, employmentType, job.updatedAt) ORDER BY job.updatedAt DESC SEPARATOR ",,"')), 'jobs']],
-    include:[
-      {
+    attributes: [
+      'team', 'id', 'name', 'country', 'city', 'workType', 'employmentType', 'updatedAt'
+    ],
+    include: [
+      {      
         model: Company,
-        attributes:[],
+        attributes: [],
         where: {name: company}
       }
     ],
     where: {status: 'Open'},
-    group: ['team' ],
-    raw: true
+    order: [['team', 'ASC'], ['updatedAt', 'DESC']]
   })
+
   if (allJobs.length < 1) return allJobs
-  const allJobsByTeams = allJobs.map(({team, jobs}) => {
-    return {
-      team,
-      jobs: jobs.split(',,').reduce((acc, curr, index, arr) => {
-        if (index % 7 === 0) {
-          acc.push({
-            id: parseInt(curr),
-            name: arr[index+1],
-            country: arr[index+2],
-            city: arr[index+3],
-            workType: arr[index+4],
-            employmentType: arr[index +5],
-            updatedAt: arr[index+6]
-          })
-        }
-        return acc
-      }, [])
+  const allJobsByTeams = {}
+  allJobs.forEach(job => {
+    const team = job.team
+    if (!allJobsByTeams[team]) {
+      allJobsByTeams[team] = []
     }
+    allJobsByTeams[team].push({
+      id: job.id,
+      name: job.name,
+      country: job.country,
+      city: job.city,
+      workType: job.workType,
+      employmentType: job.employmentType,
+      updatedAt: job.updatedAt
+    })
   })
-  return allJobsByTeams
+  const sortedJobs = Object.keys(allJobsByTeams).map((team) => {
+    return {
+      team: team,
+      jobs:allJobsByTeams[team]
+    }
+
+  })
+
+  return sortedJobs
 }
 
 

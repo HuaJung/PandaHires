@@ -9,11 +9,14 @@ signupForm()
 
 
 
+
 function signupForm () {
   signUpForm.addEventListener('submit', (e) => {
     e.preventDefault()
     errorGroup.innerHTML = ''
+    const timezoneOffset = new Date().getTimezoneOffset()
     const formData = new FormData(signUpForm)
+    formData.append('timezoneOffset', timezoneOffset)
     userSignUp(formData)
   })
 }

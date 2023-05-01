@@ -1,4 +1,5 @@
 import { getCareersCompany, renderCompanyLogo } from "../../components/common/navCareers.js";
+import { convertUtcToLocalDate } from "../../components/common/convertLocalDate.js";
 const conatiner = document.querySelector('.container')
 const companyName = window.location.pathname.split('/')[2]
 
@@ -44,7 +45,7 @@ function renderOpenings(jobData) {
 
       const updatedAt = document.createElement('small')
       updatedAt.className = 'updatedAt'
-      updatedAt.textContent = job.updatedAt.split(' ')[0]
+      updatedAt.textContent = convertUtcToLocalDate(job.updatedAt)
 
       const jobInfo = div.cloneNode()
       jobInfo.className = 'info'

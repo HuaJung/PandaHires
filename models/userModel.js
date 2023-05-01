@@ -8,7 +8,9 @@ const userRegister = async (userInfo) => {
   const hashedPwd = await bcrypt.hash(userInfo.password, 10)
 
   //store the new user
+  delete userInfo.timezoneOffset
   userInfo.password = hashedPwd
+  console.log(userInfo)
   const newUser = await User.create(userInfo)
   return newUser
 }
