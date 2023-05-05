@@ -28,7 +28,7 @@ const userUpdate = async (userID, user) => {
     user.password = hashedPwd
   } else if (user.email) {
     const duplicate = await User.findOne({where: {email: user.email}})
-    if (duplicate) return {'duplicated': true}
+    if (duplicate) return 'duplicatedEmail'
   }
   await User.update(user, {where: {id: userID}})
 }

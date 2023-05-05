@@ -5,12 +5,16 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "@babel/preset-env": "^7.21.5",
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.20",
+    "supertest": "^6.3.3"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.272.0",

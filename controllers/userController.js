@@ -7,6 +7,8 @@ const getUser = async (req, res) => {
   const userID = req.id
   const user = await User.findOne({attributes: ['name', 'position', 'email'], where: {id: userID}})
 
+  if (!user) return res.status(400).json({'error': true, 'message': 'invalid user'})
+
   res.status(200).json({'data':  user})
 }
 
@@ -17,7 +19,7 @@ const updateUser = async (req, res) => {
   try {
     const updatedUser = await userUpdate(userID, user)
 
-    if (updatedUser.duplicated) return res.status(409).json({'error': true, 'message': {'email': 'email is in use.'}})
+    if (updatedUser === 'duplicatedEmail') return res.status(409).json({'error': true, 'message': 'email is in use.'})
 
     res.status(200).json({'ok': true})
 

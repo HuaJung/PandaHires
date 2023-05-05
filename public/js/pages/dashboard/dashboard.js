@@ -1,6 +1,6 @@
 import { renderErrorMsg } from "../../components/common/errorMsg.js";
 import { renderNavData, signout } from "../../components/common/navRecruiting.js";
-import { convertUtcToLocalDate } from "../../components/common/convertLocalDate.js";
+import { convertUtcToLocalDate, convertDateTimeFormat } from "../../components/common/convertLocalDate.js";
 let page = 1
 const overViewTap = document.querySelector('#radio1')
 const allJobsTap = document.querySelector('#radio2')
@@ -271,16 +271,12 @@ function renderCandidatesAndJobs(candidateData) {
       const jobEle = [
         { content: job.stage, data: 'Stage'},
         { content: job.stageStatus, data: 'Status'},
-        { content: job.interviewDate, data: 'Interview'},
+        { content: convertDateTimeFormat(job.interviewDate), data: 'Interview'},
         { content: convertUtcToLocalDate(job.appliedDate), data: 'Applied Date'},
         { content: job.origin, data: 'Origin' }
       ]
       jobEle.forEach((ele) => {
         let element = li.cloneNode()
-        // if (ele.content.includes('N/A')) {
-        //   element.style.fontSize = '12px'
-        //   element.style.color = 'var(--third-text-color)'
-        // }
         element.textContent = ele.content
         element.dataset.title = ele.data
         gridTr.appendChild(element)
