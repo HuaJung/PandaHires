@@ -2,10 +2,10 @@ name: CI pipline
 
 on:
   push:
-    branches: [develop]
-  pull_request:
-    branches: [main]
-
+    branches: 
+      - develop
+      - main
+      
 jobs: 
   test:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-verson: '18'
+        node-verson: 18
     - run: npm ci
     - run: npm test
 
