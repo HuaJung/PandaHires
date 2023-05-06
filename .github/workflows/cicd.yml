@@ -5,17 +5,18 @@ on:
     branches: 
       - develop
       - main
-      
+
 jobs: 
   test:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
 
     steps:
     - uses: actions/checkout@v3
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-verson: 18
+        node-version: 18
     - run: npm ci
     - run: npm test
 
