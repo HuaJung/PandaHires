@@ -1,30 +1,19 @@
 import { User } from '../models/db.js'
 import { validationResult } from "express-validator"
 import { authError } from './errorController.js'
-import bcrypt from "bcrypt"
+import { userRegister, userLogin } from '../models/userModel.js'
 import jwt from "jsonwebtoken"
 
 
 const handleRegister = async (req, res) => {
   const error = authError(validationResult(req)) 
   if (error) return res.status(400).json({'error': true, 'message': error})
+  const userInfo = req.body
 
-  const { name, position, email, password } = req.body
-  const duplicate = await User.findOne({where: {email: email}})
-
-  if (duplicate) return res.status(409).json({'error': true, 'message': {'email': 'email already exists.'}}); //Conflict 
   try {
-    //encrypt the password
-    const hashedPwd = await bcrypt.hash(password, 10)
-    //store the new user
-    const newUser = await User.create({
-      name: name,
-      email: email,
-      position: position,
-      password: hashedPwd
-    })
+    const user = await userRegister(userInfo)
     const token = jwt.sign(
-      {'id': newUser.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'}
+      {'id': user.id, 'timezoneoffset': userInfo.timezoneoffset}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'}
     )
     res.cookie('token', token, {httpOnly: true, maxAge: 24*60*60*1000})
     res.status(201).json({ 'ok': true })
@@ -37,18 +26,16 @@ const handleRegister = async (req, res) => {
 
 const handleLogin = async (req, res) => {
   const error = authError(validationResult(req)) 
-  if (error) return res.status(400).json({'error': true, 'message': error})
-  const {email, password} = req.body
+  if (error) return res.status(400).json({'error': true, 'message': 'Email or password is incorrect'})
 
-  const foundUser = await User.findOne({where: {email: email}})
-  if (!foundUser) return res.status(401).json({'error':true, 'message': 'email or password not correct'})
-
-  const pwdMatch = await bcrypt.compare(password, foundUser.password)
-  if (!pwdMatch) return res.status(401).json({'error':true, 'message': 'email or password not correct'})
-
+  const password = req.body.password
+  const foundUser = req.foundUser
   try {
+    const invalidUser = await userLogin(foundUser, password)
+    if (invalidUser) return res.status(401).json({'error':true, 'message': invalidUser.message})
+
     const token = jwt.sign(
-      {'id': foundUser.id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' }
+      {'id': foundUser.id, 'timezoneOffset': req.body.timezoneOffset}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' }
     )
     res.cookie('token', token, {httpOnly: true, maxAge: 24*60*60*1000})
     res.status(200).json({'ok': true})

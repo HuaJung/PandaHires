@@ -1,6 +1,6 @@
 import express from "express"
 import { companyValidator } from "../../controllers/validationController.js"
-import { createNewCompany, getCompany, updateCompany, getCompanyNameId } from "../../controllers/companyController.js"
+import { createNewCompany, getCompanyController, updateCompanyController, getCompanyNameId } from "../../controllers/companyController.js"
 
 
 const companyRoute = express.Router()
@@ -11,8 +11,8 @@ companyRoute.route('/')
   .post(companyValidator, createNewCompany)
 
 companyRoute.route('/settings')
-  .get(getCompany)
-  .patch(updateCompany)
+  .get(getCompanyController)
+  .patch(updateCompanyController)
 
 
 export {companyRoute}

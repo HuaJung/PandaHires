@@ -42,6 +42,7 @@ async function getCompany() {
     delete result.data.image
     const companyData = result.data 
     renderCompanyData(companyData)
+
   } else if (response.status === 401) {
     location.assign(loginPage)
   } else {
@@ -143,7 +144,7 @@ function updateFileDisplay() {
   const previews = document.querySelectorAll('.preview')
   previews.forEach(preview => preview.innerHTML = "")
 
-  companyForm,addEventListener('change', (e) => {
+  companyForm.addEventListener('change', (e) => {
     const inputFile = e.target.closest('input[type=file]')
     const curFile = inputFile.files[0]
     const curPreview = companyForm.querySelector(`.preview.${inputFile.id}`)

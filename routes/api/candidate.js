@@ -1,27 +1,32 @@
 import express from "express"
-import { addNewCandidate, getCandidate, updateCandidate, deleteCandidate, getAllCandidates, addNewStage } from "../../controllers/candidateController.js"
-import { updateResume } from "../../controllers/careerController.js"
+import { addNewCandidate, getCandidateController, updateCandidateController, deleteCandidate, getAllCandidatesController, addNewStageController, updateApplication, udpateResumeController, updateOriginController } from "../../controllers/candidateController.js"
 
 
 const candidateRoute = express.Router()
 
 
 candidateRoute.route('/')  // query string page=xxx
-  .get(getAllCandidates);
-
-candidateRoute.route('/:candidateID')
-  .get(getCandidate)
-  .patch(updateCandidate)
-  .delete(deleteCandidate);
-
-candidateRoute.route('/:candidateID/:jobID/resume')  
-  .patch(updateResume);
+  .get(getAllCandidatesController)
 
 candidateRoute.route('/stage')  
-  .post(addNewStage);
+  .post(addNewStageController)
+
+candidateRoute.route('/:candidateID')
+  .get(getCandidateController)
+  .patch(updateCandidateController)
+  .delete(deleteCandidate)
+
+candidateRoute.route(':candidateID/:jobID')
+  .patch(updateApplication)
+
+candidateRoute.route('/:candidateID/:jobID/resume')  
+  .patch(udpateResumeController)
+
+candidateRoute.route('/:candidateID/:jobID/origin')
+  .patch(updateOriginController)
 
 candidateRoute.route('/:jobID')
-  .post(addNewCandidate);
+  .post(addNewCandidate)
 
 
 

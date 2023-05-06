@@ -11,19 +11,18 @@
         <a href="/"><h3 class="mini-logo">PandaHires</h1></a>
         <h1>Let's start hiring.</h1>
       </div>
-      <form class="grid-form" method="POST">
+      <form class="grid-form" method="PUT" enctype="multipart/form-data">
         <%-include('../common/error.ejs')  %> 
-        <input type="email" placeholder="Email" class="user-email" name="email">
+        <input type="email" placeholder="Email" class="user-email" name="email" value="test@email.com" required>
         <div class="email error"></div>
-        <input type="password" placeholder="Password" class="user-password" name="password">
+
+        <input type="password" placeholder="Password" class="user-password" name="password" value="test123" required>
         <div class="password error"></div>
+
         <div class="other-options">
           <div class="remember-me">
             <input type="checkbox" id="user-remember-me">          
             <label for="user-remember-me">Keep me signed in</label>
-          </div>
-          <div class="help-link">
-            <a href="">Forget your password?</a>
           </div>
         </div>
         <div class="large-button-wrapper">

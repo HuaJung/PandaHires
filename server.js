@@ -13,7 +13,7 @@ import { jobRoute } from "./routes/api/job.js"
 import { candidateRoute } from "./routes/api/candidate.js"
 import { error404 } from "./controllers/errorController.js"
 import { sequelize } from "./models/dbConn.js"
-import { verifyJWT } from "./middleware/verifyUser.js"
+import { verifyLogin } from "./middleware/verifyUser.js"
 import { prebuildSatgeModel } from "./models/prebuild.js"
 
 
@@ -34,13 +34,14 @@ app.use('/careers', express.static('public'))
 
 // routes
 app.use('/', baseRoute)
-app.use('/recruiting', recruitRoute)
+
 app.use('/careers', careersRoute)
 app.use('/api/career', careerRoute)
 app.use('/api/auth', authRoute) 
 
 // apply jwt verificaion before these routes
-app.use(verifyJWT)
+app.use(verifyLogin)
+app.use('/recruiting', recruitRoute)
 app.use('/api/user', userRoute)
 app.use('/api/job', jobRoute)
 app.use('/api/candidate', candidateRoute)
@@ -57,6 +58,3 @@ sequelize.sync()
   .catch(err => {
     console.log(err)
   })
-
-
-

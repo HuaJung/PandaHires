@@ -4,6 +4,7 @@ import {handleLogin, handleRegister, handleLogout, getUserNameId } from '../../c
 import { verifyJWT } from "../../middleware/verifyUser.js"
 
 
+
 const authRoute = express.Router()
 
 

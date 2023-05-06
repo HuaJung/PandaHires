@@ -1,5 +1,6 @@
 import { renderErrorMsg } from "../../components/common/errorMsg.js";
 import { renderNavData, signout } from "../../components/common/navRecruiting.js";
+import { convertUtcToLocalDate, convertDateTimeFormat } from "../../components/common/convertLocalDate.js";
 let page = 1
 const overViewTap = document.querySelector('#radio1')
 const allJobsTap = document.querySelector('#radio2')
@@ -44,13 +45,13 @@ function tabHeaderChecked() {
 
 function candidateStageSelection() {
   statusSelect.disabled = stageSelect.value.includes('Interview')? false: true
-  dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled') || statusSelect.value.includes('Rescheduled')) ? false: true
+  dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled'))? false: true
   stageSelect.addEventListener('change', (e) => {
     statusSelect.disabled = e.target.value.includes('Interview')? false: true
-    dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled') || statusSelect.value.includes('Rescheduled')) ? false: true
+    dateSelect.disabled = !statusSelect.disabled && (statusSelect.value.includes('Scheduled')) ? false: true
   })
   statusSelect.addEventListener('change', () => {
-    dateSelect.disabled = statusSelect.value.includes('Scheduled') || statusSelect.value=== 'Rescheduled' ? false: true
+    dateSelect.disabled = statusSelect.value.includes('Scheduled') || statusSelect.value === 'Rescheduled' ? false: true
   })
 }
 
@@ -92,8 +93,9 @@ function candidateStageUpdate() {
     const response = await fetch(stageApi, request)
     const result = await response.json()
     if (response.status === 200) {
-      location.reload()
       allCandidatesTap.checked
+      jobCandidateList = []
+      getAllCandidates()
     } else {
       renderErrorMsg(result)
     }
@@ -269,16 +271,12 @@ function renderCandidatesAndJobs(candidateData) {
       const jobEle = [
         { content: job.stage, data: 'Stage'},
         { content: job.stageStatus, data: 'Status'},
-        { content: job.interviewDate, data: 'Interview'},
-        { content: job.appliedDate.split(' ')[0], data: 'Applied Date'},
+        { content: convertDateTimeFormat(job.interviewDate), data: 'Interview'},
+        { content: convertUtcToLocalDate(job.appliedDate), data: 'Applied Date'},
         { content: job.origin, data: 'Origin' }
       ]
       jobEle.forEach((ele) => {
         let element = li.cloneNode()
-        if (ele.content.includes('N/A')) {
-          element.style.fontSize = '12px'
-          element.style.color = 'var(--third-text-color)'
-        }
         element.textContent = ele.content
         element.dataset.title = ele.data
         gridTr.appendChild(element)
@@ -319,7 +317,7 @@ function renderTeamsAndJobs(jobData) {
         { content: job.applicants },
         { content: job.interviewCount},
         { content: job.offerCount },
-        { content: job.updatedAt.split('T')[0]}
+        { content: convertUtcToLocalDate(job.updatedAt)}
       ]
       jobEle.forEach(ele => {
         let element = li.cloneNode()
@@ -386,3 +384,4 @@ function showResume() {
     }
   })
 }
+

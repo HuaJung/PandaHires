@@ -1,168 +1,50 @@
-import { Job, JobCandidate, Candidate, StageRecord, Stage } from "../models/db.js"
-import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"
-import dotenv from 'dotenv'
-import { QueryTypes, Sequelize } from "sequelize"
-import { sequelize } from "../models/dbConn.js"
-
-dotenv.config()
-
-const cloudfrontUrl = 'https://d1kd77tnohewk3.cloudfront.net'
-const bucketName=process.env.BUCKET_NAME
-const bucketRegion=process.env.BUCKET_REGION
-const accessKey=process.env.ACCESS_KEY
-const secretAccessKey=process.env.SECRET_ACCESS_KEY
-const s3 = new S3Client({ 
-  credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey
-  },
-  region: bucketRegion 
-});
+import { Job, Candidate } from "../models/db.js"
+import { updateResume, updateResumeAndOrigin, updateOrigin } from "../models/candidateToJobModel.js"
+import { getCandidatesToJobToStage, getCandidate } from "../models/candidateModel.js"
+import { jobApplication } from "../models/applicationModel.js"
+import { addNewStageRecord } from "../models/stageModel.js"
 
 
 
-const addNewCandidate = async(req, res) => {
+const addNewCandidate = async (req, res) => {
   const jobID = Number(req.params.jobID)
   const candidate = req.body
-  
+  const job = await Job.findByPk(jobID)
+
   if (!req.files || Object.keys(req.files).length === 0) return res.status(400).json({'error': true, 'message': 'No file is uploaded'})
-  
+
   if (Object.keys(candidate).length < 6) return res.status(400).json({'error': true, 'message': 'missing fields'})
 
-  let foundCandidate
+  if (!job) return res.status(400).json({'error': true, 'message': 'job doesn\'t exist'})
+  
+  const companyID = job.companyId
+  candidate['companyId'] = companyID
+  const resume = req.files.resume
+
   try {
-    const job = await Job.findByPk(jobID)
-    if (!job) return res.status(400).json({'error': true, 'message': 'job doesn\'t exist'})
-
-    const companyID = job.companyId
-    candidate['companyId'] = companyID
-    const resume = req.files.resume
-    const resumeName = `resume-${Date.now()}.pdf`
-
-    let origin
-    let originName
-    if (Object.keys(candidate).includes('origin')) {
-      origin = candidate.origin
-      originName = candidate.originName
-      delete candidate.origin
-      delete candidate.originName
-    } else {
-      origin = 'Offical'
-      originName = 'Website'
-    }
-    const jobCandidateAttributes = {
-      resume: resumeName,
-      origin: origin,
-      originName: originName
-    }
-
-    // find all the jobs that candidate has applied
-    foundCandidate = await Candidate.findAll({
-      where: {email: candidate.email, companyId: companyID},
-      include: Job
-    })
-
-    let jobCandidate
-
-    if (foundCandidate.length > 0 ) {
-      foundCandidate[0].jobs.forEach((job) => {
-        if (job.id === jobID) throw 400  // alread existed
-      })
-      // save PDF to S3
-      const params = {
-        Bucket: bucketName,
-        Key: `pandahires/${resumeName}`,
-        Body: resume.data,
-        ContentType: resume.mimetype
-      }
-      const putCommand = new PutObjectCommand(params);
-      await s3.send(putCommand);
-
-      // candidate may have different info for different jobs, update info
-      await Candidate.update(candidate, { where: {id: foundCandidate[0].id}})
-      const updatedCandidate = await Candidate.findByPk(foundCandidate[0].id)
-      jobCandidate = await job.addCandidate(updatedCandidate, { through: jobCandidateAttributes})
-
-    } else {
-      // save PDF to S3
-      const params = {
-        Bucket: bucketName,
-        Key: `pandahires/${resumeName}`,
-        Body: resume.data,
-        ContentType: resume.mimetype
-      }
-      const putCommand = new PutObjectCommand(params);
-      await s3.send(putCommand);
-      
-      const createCandidate = await Candidate.create(candidate)
-      // after creating candidate, updating join talbe
-      jobCandidate = await job.addCandidate(createCandidate, { through: jobCandidateAttributes})
-    }
-    
-    const initialStage = await Stage.findByPk(1)
-    await jobCandidate[0].addStage(initialStage)
+    await jobApplication(jobID, candidate, resume)
     res.status(201).json({'ok': true})
 
   } catch (err) {
-    if (err === 400) return res.status(400).json({'error': true, 'message': 'This candidate already applied the job', 'candidateId': foundCandidate[0].id}) 
+    if (err.message === 'Already Applied') return res.status(400).json({'error': true, 'message': 'The candidate already applied the job', 'candidateId': err.candidateId})
     res.status(500).json({ 'error': true, 'message': err.message })
   }
 }
 
 
-const getAllCandidates = async(req, res) => {
+const getAllCandidatesController = async(req, res) => {
   const userID = req.id
   const {page, ...queries} =req.query
   if (!page) return res.status(400).json({'error': true, 'message': 'missing query'})
-  const offset = (page-1)*10
-  const limit = 10
+
+  const limit = 20
+  const offset = (page-1)*limit
+
 
   try {
-    const allCandidates = await sequelize.query(
-      `SELECT c.id ,c.firstName, c.lastName, GROUP_CONCAT(
-        CONCAT_WS(",,", jc.id, jobs.name, jobs.status, jc.resume, jc.origin, jc.createdAt, stages.name, COALESCE(stages.status, 'N/A'), COALESCE(sr.interviewDate, 'N/A')) ORDER BY sr.createdAt DESC SEPARATOR ",,") AS jobDetails FROM candidates c 
-        INNER JOIN jobCandidates jc ON c.id = jc.candidateID 
-        INNER JOIN jobs ON jobs.id = jc.jobId 
-        INNER JOIN (SELECT jobCandidateId, MAX(sr.createdAt) AS maxCreatedAt 
-        FROM stageRecords sr GROUP BY jobCandidateId) latest_sr ON latest_sr.jobCandidateId= jc.id
-        INNER JOIN stageRecords sr ON sr.jobCandidateId = jc.id AND sr.createdAt = latest_sr.maxCreatedAt
-        INNER JOIN stages ON stages.id = sr.stageId
-        INNER JOIN companies ON c.companyId = companies.id 
-        WHERE companies.userId = ?
-        GROUP BY c.id 
-        ORDER BY MAX(sr.updatedAt) DESC
-        LIMIT ? OFFSET ?`,
-      {
-        replacements: [userID, limit, offset],
-        type: QueryTypes.SELECT
-      }
-    )
+    const allCandidates = await getCandidatesToJobToStage(userID, limit, offset)
     if (allCandidates.length < 1) return res.status(200).json({'data': null})
-    const candidates = allCandidates.map(({id, firstName, lastName, jobDetails}) => {
-      return {
-        id,
-        firstName,
-        lastName,
-        jobs: jobDetails.split(',,').reduce((acc, curr, index, arr) => {
-          if (index % 9 === 0) {
-            const interviewTime  = arr[index+8]!== 'N/A'? arr[index+8].split(':')[0]+':'+arr[index+8].split(':')[1]: arr[index+8]
-            acc.push({
-              jobCandidateId: parseInt(curr),
-              jobName: arr[index+1],
-              jobStatus: arr[index+2],
-              resume: `${cloudfrontUrl}/${arr[index+3]}`,
-              origin: arr[index+4],
-              appliedDate: arr[index+5],
-              stage: arr[index+6],
-              stageStatus: arr[index+7],
-              interviewDate: interviewTime
-            })
-          }
-          return acc
-        }, [])
-      }
-    })
-    res.status(200).json({'data': candidates})
+    res.status(200).json({'data': allCandidates})
 
   } catch (err) {
     res.status(500).json({ 'error': true, 'message': err.message })
@@ -171,56 +53,11 @@ const getAllCandidates = async(req, res) => {
 }
 
 
-const getCandidate = async(req, res) => {
+const getCandidateController = async(req, res) => {
   const candidateID = req.params.candidateID
   try {
-    const singleCandidate = await Candidate.findOne({
-      attributes: ['id', 'firstName', 'lastName', 'email', 'country', 'city'],
-      where: {id: candidateID},
-      include: {
-        model: JobCandidate, attributes: ['resume', 'origin', 'originName'], 
-        include: [
-          { model: Job, attributes: ['id', 'name'], required: true}, 
-          { model: StageRecord, attributes: ['updatedAt'], requried: true,
-            include: { model: Stage, attributes: ['name', 'status'], required: true}}
-        ],
-        required: true
-      },
-      order:[[JobCandidate, StageRecord, 'updatedAt', 'DESC']]
-    })
-
+    const singleCandidate = await getCandidate(candidateID)
     if (!singleCandidate) return res.status(400).json({'error': true, 'message': 'not exist'})
-    
-    const jobList = []
-    singleCandidate.jobCandidates.forEach((job) => {
-      const recordList = []
-      job.stageRecords.forEach((record) => {
-        const r = {
-          'stage': record.stage.name,
-          'status': record.stage.status === null? 'N/A': record.stage.status,
-          'updatedAt': record.updatedAt
-        }
-        recordList.push(r)
-      })
-      const j = {
-        'id': job.job.id,
-        'name': job.job.name,
-        'resume': `${cloudfrontUrl}/${job.resume}`,
-        'origin': job.origin,
-        'originName': job.originName,
-        'stageRecord': recordList
-      }
-      jobList.push(j)
-    })
-    const data = {
-      'id': singleCandidate.id,
-      'firstName': singleCandidate.firstName,
-      'lastName': singleCandidate.lastName,
-      'city': singleCandidate.city,
-      'country': singleCandidate.country,
-      'email':singleCandidate.email,
-      'job': jobList
-    }
     res.status(200).json({'data': data})
 
   } catch (err) {
@@ -229,25 +66,36 @@ const getCandidate = async(req, res) => {
 }
 
 
-const updateCandidate = async(req, res) => {
+const updateApplication = async (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) return res.status(400).json({'error': true, 'message': 'No file is uploaded'})
+
+  const candidateID = req.params.candidate
+  const jobID = req.params.job
+  const candidate = req.body
+  const newResume = req.files.resume
+
+  if (Object.keys(candidate).length < 6) return res.status(400).json({'error': true, 'message': 'missing fields'})
+
+  try {
+    const candidateWithoutResumeAndOrigin = await updateResumeAndOrigin(candidateID, jobID, candidate, newResume)
+
+    await Candidate.update(candidateWithoutResumeAndOrigin, {where: {id: candidateID}})
+    res.status(200).json({"ok": true})
+
+  } catch (err) {
+    res.status(500).json({ 'error': true, 'message': err.message })
+  }
+}
+
+
+const updateCandidateController = async(req, res) => {
   const candidateID = req.params.candidateID
   const candidate = req.body
   
   if (Object.keys(candidate).length < 1) return res.status(400).json({'error': true, 'message': 'no fields to update'})
 
   try {
-    if (candidate.origin && candidate.originName) {
-      await JobCandidate.update(
-        {origin: candidate.origin, originName: candidate.originName}, 
-        {where: {jobId: candidate.jobID, candidateId: candidateID}}
-      )
-      delete candidate.origin
-      delete candidate.originName
-    } else if (candidate.origin || candidate.originName) return res.status(400).json({'error': true, 'message': 'both fields are required'})
-
-    const filteredCandidate = Object.entries(candidate).filter(([key, value]) => key !== 'jobID')
-    const candidateObj = Object.fromEntries(filteredCandidate)
-    await Candidate.update(candidateObj, {where: {id: candidateID}})
+    await Candidate.update(candidate, {where: {id: candidateID}})
     res.status(200).json({'ok': true})
     
   } catch (err) {
@@ -255,6 +103,39 @@ const updateCandidate = async(req, res) => {
   }
 }  
 
+
+const udpateResumeController = async (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) return res.status(400).json({'error': true, 'message': 'No file is uploaded'})
+
+  const candidateID = req.params.candidate
+  const jobID = req.params.job
+  const newResume = req.files.resume
+  try {
+    await updateResume(candidateID,jobID, newResume)
+    res.status(200).json({'ok': true})
+
+  } catch (err) {
+    res.status(500).json({ 'error': true, 'message': err.message })
+  }
+}
+
+const updateOriginController = async (req, res) => {
+  const candidateID = req.params.candidate
+  const jobID = req.params.job
+  const candidate = req.body
+
+  try {
+    if (candidate.origin && candidate.originName) {
+      await updateOrigin(candidateID, jobID, candidate)
+      res.status(200).json({'ok': true})
+
+    } else {
+      res.status(400).json({'error': true, 'message': 'missing fields'})
+    }
+  } catch (err) {
+    res.status(500).json({ 'error': true, 'message': err.message })
+  }
+}
 
 const deleteCandidate = async(req, res) => {
   const candidateID = req.params.candidateID
@@ -269,26 +150,21 @@ const deleteCandidate = async(req, res) => {
 }
 
 
-const addNewStage = async(req, res) => {
+const addNewStageController = async(req, res) => {
   const jobCandidateIdList = req.body.jobCandidateId
   const stage = req.body.stage
   const interviewDate = req.body.interviewDate
 
-  const foundStage = await Stage.findOne({where: stage})
-  if (!foundStage) return res.status(400).json({'error': true, 'message': 'not a valid stage'})
-
   try {
-    for (const id of jobCandidateIdList) {
-      if (!await JobCandidate.findByPk(id)) throw 400
+    const addStageRecord = await addNewStageRecord(jobCandidateIdList, stage, interviewDate)
+    if (!addStageRecord)return res.status(400).json({'error': true, 'message': 'not a valid stage'})
 
-      await StageRecord.create({jobCandidateId: id, stageId: foundStage.id, interviewDate: interviewDate})
-    }
     res.status(200).json({'ok': true})
 
   } catch (err) {
-    if (err === 400) return res.status(400).json({'error': true, 'message': 'not valid candidate'})
+    if (err.message === 'Not a valid application') return res.status(400).json({'error': true, 'message': err.message})
     res.status(500).json({ 'error': true, 'message': err.message })
   }
 }
 
-export {addNewCandidate, getCandidate, updateCandidate, deleteCandidate, getAllCandidates, addNewStage}
+export {addNewCandidate, getCandidateController, updateCandidateController, deleteCandidate, getAllCandidatesController, addNewStageController, updateApplication, updateOriginController, udpateResumeController}

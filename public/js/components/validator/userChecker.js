@@ -1,20 +1,19 @@
 const homePage = new URL('/', `${window.origin}`)
-const authApi = new URL('api/auth', `${window.origin}`)
+const userApi = new URL('api/user', `${window.origin}`)
 const loginPage = new URL('/signin', `${window.origin}`)
 
 
 async function signInChecker ()  {
-  const response = await fetch(authApi)
+  const response = await fetch(userApi)
   const result = await response.json()
-
-  if (result.data === null) {
+  if (response.status === 400) {
     window.location = homePage;
   } else if (response.status === 401 || response.status === 403) {
-    location.assign(loginPage)
+    location.replace(loginPage)
   } else {
     return result.data
   } 
 }
 
 
-export {signInChecker, homePage, authApi}
+export {signInChecker, homePage}

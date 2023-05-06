@@ -1,43 +1,19 @@
-import { signInChecker } from '../../components/validator/userChecker.js'
-import { emptyFieldChecker } from '../../components/validator/emptyFieldChecker.js'
+import { validityChecker } from "../../components/validator/inputFleidChecker.js"
 import { renderErrorMsg } from '../../components/common/errorMsg.js'
+const companySignUpForm = document.querySelector('form')
 const dashboardPage = new URL('/recruiting/dashboard', `${window.origin}`)
-const nameError = document.querySelector('.name.error')
-const countryError = document.querySelector('.country.error')
-const addError = document.querySelector('.address.error')
-const telError = document.querySelector('.tel.error')
 const errorGroup = document.querySelector('.error-group')
 
 
-signInChecker()
-companyForm()
+companySignupForm()
 
-function companyForm() {
-  const form = document.querySelector('form')
-  form.addEventListener('submit', async(e) => {
+function companySignupForm() {
+  companySignUpForm.addEventListener('submit', async(e) => {
     e.preventDefault()
-    nameError.textContent = ''
-    countryError.textContent = ''
-    addError.textContent = ''
-    telError.textContent = ''
     errorGroup.innerHTML = ''
 
-    const companyName = form.name
-    const companyCountry = form.country
-    const companyAddress = form.address
-    const companyTel = form.tel
-    emptyFieldChecker(companyName)
-    emptyFieldChecker(companyCountry)
-    emptyFieldChecker(companyAddress)
-    emptyFieldChecker(companyTel)
-    if (!companyName.value || !companyCountry.value || !companyAddress.value || !companyTel.value) return
-    const companyData = {
-      'name': companyName.value,
-      'country': companyCountry.value,
-      'address': companyAddress.value,
-      'tel': companyTel.value
-    }
-    companySignUp(companyData)
+    const formData = new FormData(companySignUpForm)
+    companySignUp(formData)
   })
 }
 
@@ -45,21 +21,21 @@ async function companySignUp(data) {
   const companyApi = new URL('api/company', `${window.origin}`)
   const request = {
     'method': 'POST',
-    'headers': {'Content-Type': 'application/json'},
-    'body': JSON.stringify(data)
+    'body': data
   }
   const response = await fetch(companyApi, request)
   const result = await response.json()
   if (response.status === 201) {
     window.location = dashboardPage
-  } else if (response.status === 401) {
-    errorText.textContent = 'please login first'
-    errorMsg.style.opacity = 1
   } else if (response.status === 400) {
-    nameError.textContent = result.message.name
-    countryError.textContent = result.message.country
-    addError.textContent = result.message.address
-    telError.textContent = result.message.tel
+    Object.entries(result.message).forEach(([key, value]) => {
+      if (value) {
+        companySignUpForm.querySelector(`.${key}.error`).textContent = value
+        signUpForm.querySelector(`input[name=${key}]`).classList.add('submitted')
+      }
+    })
+    validityChecker(companySignUpForm)
+
   } else {
     renderErrorMsg({message: 'something went wrong, please try again!'})
   }

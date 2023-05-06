@@ -59,7 +59,6 @@ function addCandidate() {
     errorGroup.innerHTML = ''
 
     const jobId = document.querySelector('select[name=jobId]').value
-    const company = await companyInfo()
     const candidateApi = new URL(`/api/candidate/${jobId}`, window.origin)
     const submitBtn = document.querySelector('.btn-submit')
     submitBtn.disabled= true
@@ -75,7 +74,7 @@ function addCandidate() {
     const result = await response.json()
     if (response.status === 201) {
       location.assign(dashboardPage)
-    } if(response.status === 400) {
+    } else if(response.status === 400) {
       renderErrorMsg(result)
     } else {
       renderErrorMsg(result)

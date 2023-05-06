@@ -28,9 +28,9 @@ input[type=radio] {
 }
 
 .fix-background {
-  position: sticky;
-  top: 9%;
-  height: 3rem;
+  position: fixed;
+  top: 7%;
+  height: 59px;
   right: 0;
   left:0;
   background-color: var(--white-background-color);
@@ -61,7 +61,6 @@ input[type=radio] {
   display: block;
   width: 100%;
   height: auto;
-  padding: 0 1rem;
   opacity: 1;
   transition: opacity 1s;
 }
@@ -70,6 +69,14 @@ input[type=radio] {
   color: var(--another-text-color);
   border-bottom: none;
   font-weight: 600;
+}
+
+.error-group {
+  position: fixed;
+  right: 0px;
+  left: 0px;
+  top: 7%;
+  z-index: 3;
 }
 
 /* ---------Overview Table------- */
@@ -183,10 +190,6 @@ input[type=radio] {
   padding-left: 1rem;
 }
 
-.grid-tr.primary.candidates > li:nth-child(1) {
-  padding-left: 1.5rem;
-}
-
 .edit {
   margin-right: 10px;
 }
@@ -254,9 +257,10 @@ option {
 }
 
 .grid-th.primary.candidates {
-  grid-template-columns: 29% 15% 15% 15% 12% 10% 4%;
+  grid-template-columns: 34% 13% 12% 12% 12% 10% 4%;
   padding: 2rem 1rem 0 1rem;
   border-bottom: 1px solid var(--third-border-color);
+  gap: 0.5rem
 }
 
 .grid-td.candidates {
@@ -266,9 +270,10 @@ option {
 }
 
 .grid-tr.primary.candidates {
-  grid-template-columns: 29% 15% 15% 15% 12% 10% 4%;
+  grid-template-columns: 34% 13% 12% 12% 12% 10% 4%;
   border-bottom: none;
   padding: 0.5rem 1rem;
+  gap: 0.5rem
 }
 
 .candidate-name {
