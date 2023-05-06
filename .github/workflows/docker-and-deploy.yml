@@ -40,7 +40,7 @@ jobs:
         with:
           host: ${{ secrets.AWS_EC2_HOST_IP }}
           username: ${{ secrets.AWS_EC2_USERNAME }}
-          key: ${{ secrets.AWS_EC2_ACCESS_KEY }}
+          key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           port: 22
           script: |
             export CONTINER_NAME=${{ secrets.CONTAINER_NAME }}
