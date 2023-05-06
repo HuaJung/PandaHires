@@ -2,13 +2,16 @@
 
 🐼 PandaHires is a streamlined recruiting system designed to offer small enterprises an uncomplicated and sophisticated hiring solution. It aims to provide a one-stop-shop service, generating frontend recruitment website and integrating with backend system to manage job postings and candidate stages with ease. With PandaHires, businesses can enjoy a simple, yet professional hiring process that streamlines the recruitment experience from start to finish.
 
+🔗Website URL: https://pandaloverrr.com/
+
 ### Table of Contents
 
 - [Features](#features)
 - [Live Demo](#live-demo)
-- [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
 - [Database Schema](#database-schema)
+- [Contact](#contact)
 ---
 
 ## Features
@@ -37,30 +40,39 @@
 
 <br>
 
-## Architecture
-> ![image](https://github.com/HuaJung/PandaHires/blob/main/PandaHires%20Architecure%20Design.png)
-
-<br>
-
 ## Tech Stack
 ### 📍Backend
 
   + Node.js / Express
   + AWS EC2
-  + AWS RDS / MySql
+  + AWS RDS / MySQL
   + AWS Cloudfront
   + Docker
   + NGINX
-  + SSL
+  + SSL(ZeroSSL)
+  + Unit Test: Jest, Supertest
+  + CI/CD: GitHub Action
   
 ### 📍Frontend
 
   + JavaScript
   + HTML
   + CSS
+  
+<br>
+
+## Architecture
+> ![image](https://github.com/HuaJung/PandaHires/blob/main/PandaHires%20Architecure%20Design.png)
 
 <br>
 
 ## Database Schema
 > ![image](https://github.com/HuaJung/PandaHires/blob/main/PandaHires%20ERD.png)
 
+<br/>
+
+## Contact
+
+HuaJung,Chang
+<br/>
+Email: mspanda1026@gmail.com
