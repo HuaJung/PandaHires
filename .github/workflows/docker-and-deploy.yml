@@ -43,7 +43,7 @@ jobs:
           key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
           port: 22
           script: |
-            export CONTINER_NAME=${{ secrets.CONTAINER_NAME }}
-            docker pull pandafairy/my_project:latest
-            docker stop \$CONTAINER_NAME
-            docker run -p 8080:3000 -d --env-file ~/.env --rm --name \$CONTAINER_NAME pandafairy/my_project:latest
+            sudo export CONTINER_NAME=${{ secrets.CONTAINER_NAME }}
+            sudo docker pull pandafairy/my_project:latest
+            sudo docker stop \$CONTAINER_NAME
+            sudo docker run -p 8080:3000 -d --env-file ~/.env --rm --name \$CONTAINER_NAME pandafairy/my_project:latest
