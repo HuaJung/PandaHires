@@ -73,6 +73,4 @@
 
 ## Contact
 
-HuaJung,Chang
-<br/>
 Email: mspanda1026@gmail.com
